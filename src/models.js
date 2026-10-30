@@ -46,9 +46,6 @@ export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35
  case 'feed':case 'books':
   if(type==='books'){box(g,0,.95,-.3,2.1,1.9,.5,color.dark);for(let r=0;r<3;r++){box(g,0,.1+r*.6,0,2.2,.09,.65,color.stone);for(let i=0;i<7;i++)box(g,-.88+i*.28,.36+r*.6,-.05,.19,.40+(i%2)*.1,.38,[color.red,color.gold,color.green][i%3]);}}
   else {for(let i=0;i<3;i++){box(g,-.8+i*.8,.9,-i*.15,.65,1.65,.12,color.cream);for(let j=0;j<3;j++){box(g,-.8+i*.8,1.43-j*.44,-i*.15+.07,.52,.24,.02,[color.green,color.dark,color.gold][j]);}}}break;
- case 'bike':
-  for(const x of [-.75,.75]){const wheel=new T.Mesh(new T.TorusGeometry(.42,.075,4,12),new T.MeshBasicMaterial({color:color.dark}));wheel.position.set(x,.48,0);g.add(wheel);wheel.userData.dynamic=true;for(const angle of [0,Math.PI/2]){const spoke=box(wheel,0,0,0,.76,.035,.035,color.stone);spoke.rotation.z=angle;}(ref.wheels??=[]).push(wheel);}
-  box(g,0,.65,0,1.5,.09,.1,color.red);box(g,0,.7,0,.09,1.0,.1,color.red);box(g,-.25,1.17,0,.6,.1,.3,color.ink);box(g,.7,1.05,0,.08,.85,.1,color.stone);box(g,.7,1.5,0,.45,.08,.1,color.ink);box(g,0,1.8,-.8,.65,.1,.15,color.dark);box(g,0,.9,-.8,.06,1.8,.06,color.stone);break;
  case 'printer':
   box(g,0,.65,0,1.7,.9,1.1,color.stone);box(g,0,1.14,-.2,1.4,.13,.6,color.dark);box(g,0,.5,.7,1.15,.04,.7,color.cream);box(g,0,.53,.75,.9,.02,.45,color.green);screen(g,-.65,1.6,-.55,.55,.6,'windows');break;
  case 'campus':
@@ -62,7 +59,6 @@ export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35
  if(type==='cleaner'){ref.bits=[];for(let i=0;i<6;i++){const bit=movable(box(g,(i%3-1)*.8,.2,.8,.14,.14,.14,[color.gold,color.cream,color.red][i%3]));bit.userData.home=bit.position.clone();bit.userData.homeScale=bit.scale.clone();ref.bits.push(bit);}}
  if(type==='feed'||type==='printer'){ref.flow=makeFlowScreen();g.add(ref.flow.group);ref.flow.update(0);ref.flow.group.visible=false;}
  if(type==='books'){ref.page=movable(new T.Group());g.add(ref.page);ref.page.position.set(-.7,1.15,.5);box(ref.page,.35,0,0,.7,.85,.035,color.cream);for(let i=0;i<5;i++)box(ref.page,.35,.25-i*.12,.03,.5,.025,.02,color.dark);}
- if(type==='bike'){ref.pedal=movable(new T.Group());g.add(ref.pedal);ref.pedal.position.set(0,.65,.15);box(ref.pedal,0,0,0,.6,.06,.08,color.gold);box(ref.pedal,.3,0,0,.15,.12,.18,color.dark);ref.sensor=movable(box(g,0,1.9,-.8,.15,.15,.15,color.gold));}
  if(type==='campus'){
   box(g,.6,1.05,-.5,.45,2.1,.45,color.cream);box(g,.6,2.15,-.5,.65,.16,.65,color.red);box(g,.6,2.35,-.5,.25,.25,.25,color.gold);
   box(g,.6,1.75,-.25,.3,.3,.02,color.dark);box(g,.6,1.78,-.23,.035,.15,.02,color.cream);box(g,.66,1.72,-.23,.14,.035,.02,color.cream);

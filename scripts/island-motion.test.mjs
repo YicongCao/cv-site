@@ -20,12 +20,12 @@ test('pong meets the paddle at each collision and stays within the display',()=>
 test('batching keeps animated descendants independent and merges static boxes',()=>{
  const group=new T.Group(),animated=new T.Group();animated.userData.dynamic=true;group.add(animated);const moving=box(animated,0,0,0,1,1,1),fixed=box(group,1,0,0,1,1,1);batchBoxes(group);assert.equal(moving.parent,animated);assert.equal(fixed.parent,null);assert.ok(group.children.some(o=>o.isInstancedMesh));
 });
-test('all fifteen model loops stay finite and reset without damaging static geometry',async()=>{
+test('all fourteen model loops stay finite and reset without damaging static geometry',async()=>{
  const {makeIsland}=await import('../src/models.js'),{makeWorld}=await import('../src/world.js'),{readFileSync}=await import('node:fs');
  globalThis.document={createElement:tag=>({style:{},dataset:{},setAttribute(){},offsetWidth:240,getContext:()=>({fillRect(){},drawImage(){},save(){},restore(){},beginPath(){},rect(){},clip(){}}),remove(){}})};
  const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',import.meta.url))),world=makeWorld(data.projects),islands=world.stations.map(s=>({group:makeIsland(s)})),element={dataset:{},append(){}};
  const controller=new IslandMotion({element,islands,world,onSound(){}}),camera=new T.OrthographicCamera(-40,40,30,-30,.1,300);camera.position.set(50,70,50);camera.lookAt(0,0,0);camera.updateMatrixWorld();
- for(let i=0;i<15;i++){
+ for(let i=0;i<world.stations.length;i++){
   for(let frame=0;frame<700;frame++)controller.update(.02,i,camera,1440,900);
   islands[i].group.traverse(o=>{for(const v of [...o.position,...o.scale])assert.ok(Number.isFinite(v),world.stations[i].id);if(o.geometry?.attributes.position){for(const v of o.geometry.attributes.position.array)assert.ok(Number.isFinite(v));}});
   controller.update(.02,-1,camera,1440,900);assert.equal(islands[i].group.userData.motion.exhibit.rotation.z,0);

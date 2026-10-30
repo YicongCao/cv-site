@@ -12,7 +12,7 @@ def copy(src,dst):
 def probe(p):return json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(p)]))
 assets=[];ledger=[]
 for a in data['assets']:
- included=a['status']=='included' and not a['duplicateOf'] and a['type']!='zip' and bool(a.get('project')) and a['id'] not in {'a184','a060','a061','a062','a063'}
+ included=a['status']=='included' and not a['duplicateOf'] and a['type']!='zip' and bool(a.get('project')) and a.get('project')!='kinect' and a['id'] not in {'a184','a060','a061','a062','a063'}
  entry=dict(a);entry['imported']=included;ledger.append(entry)
  if a['id']=='a184':entry['exclusionReason']='用户要求移除 PGOS 7 分 16 秒迁移和升级演示；Gallery 原件保留。'
  if a['id'] in {'a060','a061','a062','a063'}:entry['exclusionReason']='用户要求移除展示图片；Gallery 原件保留。'
@@ -34,6 +34,7 @@ for a in data['assets']:
 projects=[]
 ids={a['id'] for a in assets}
 for p in data['projects']:
+ if p['id']=='kinect':continue
  p={k:v for k,v in p.items() if k not in ['source']};p['assets']=[a for a in p['assets'] if a in ids]
  cover=source/'portfolio/planning/previews/covers'/(p['id']+'.webp')
  p['coverSrc']=copy(cover,public/'media/covers'/cover.name) if cover.exists() else None

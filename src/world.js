@@ -1,14 +1,14 @@
 // The same graph supplies bridge geometry, island lanes, and traveler navigation.
 export const themes = [
   {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
-  {id:'games',title:'2. 游戏与实时交互',hub:'pgos',members:['pgos','cloudgame','accelerator','kinect']},
+  {id:'games',title:'2. 游戏与实时交互',hub:'pgos',members:['pgos','cloudgame','accelerator']},
   {id:'clients',title:'3. 客户端与数字体验',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
 ];
 const layout = {
   nex: [-10,-7,.72,'code'], museum: [-18,-14,1.08,'photos'],
   brushline: [-19,1,.36,'race'], bot: [-7,-20,1.44,'bot'],
-  pgos: [0,10,.36,'servers'], cloudgame: [-9,19,0,'pong'],
-  accelerator: [0,24,.72,'network'], kinect: [9,19,.36,'bike'],
+  pgos: [0,10,.36,'servers'], cloudgame: [-8,20,0,'pong'],
+  accelerator: [8,20,.72,'network'],
   win10: [12,-6,.72,'windows'], desktop: [6,-18,1.08,'desktop'],
   cleaner: [16,-19,1.44,'cleaner'], uwp: [23,-11,1.08,'feed'],
   reader: [23,1,.36,'books'], ishowfx: [16,9,0,'printer'],

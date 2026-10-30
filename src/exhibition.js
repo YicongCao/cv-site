@@ -6,7 +6,7 @@ import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
 const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
 const direction=new T.Vector3(1,1,1).normalize();
-const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
+const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound,onOverview}){
   Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound,onOverview});

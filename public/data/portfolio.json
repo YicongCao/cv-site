@@ -522,24 +522,6 @@
       "coverSrc": "/media/covers/reader.webp"
     },
     {
-      "id": "kinect",
-      "title": "动感单车健身娱乐系统",
-      "period": "大学时期 · 2012",
-      "summary": "用 Kinect 动作识别连接健身与游戏。",
-      "contributions": [
-        "完成动感单车 Kinect 客户端，使用 Kinect API 实现相关动作识别。"
-      ],
-      "kind": "个人项目",
-      "keywords": [
-        "Kinect API",
-        "动作识别",
-        "健身游戏"
-      ],
-      "cover": null,
-      "assets": [],
-      "coverSrc": null
-    },
-    {
       "id": "ishowfx",
       "title": "iShowFX 图文精灵",
       "period": "高中时期 · 2010",

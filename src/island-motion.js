@@ -61,7 +61,6 @@ export class IslandMotion {
   else if(station.id==='accelerator'){const a=t*2.1;ref.packet.visible=true;ref.packet.position.set(Math.cos(a)*1.12,Math.sin(a)*.47,Math.sin(a)*1.05);}
   else if(station.id==='xidian'){const open=ease((t%5)/1)*(1-ease(((t%5)-3.5)/1));ref.map.visible=open>.01;ref.map.scale.setScalar(Math.max(.01,open));ref.map.children.forEach((p,i)=>p.rotation.y=(i-1)*(1-open)*1.4);}
   else if(station.id==='ishowfx'||station.id==='uwp'){ref.flow.group.visible=true;ref.flow.update(t);}
-  else if(station.id==='kinect'){ref.wheels.forEach(w=>w.rotation.z=t*5);ref.pedal.rotation.z=-t*5;ref.sensor.scale.setScalar(.15*(1+Math.sin(t*5)*.12));}
   else if(station.id==='reader'){ref.page.rotation.y=Math.sin(t*2)*1.35;}
   else if(station.id==='cleaner'){ref.bits.forEach((p,i)=>{const u=(t*.6+i*.23)%1;p.position.set((i%3-1)*.8,.2+Math.sin(u*Math.PI)*1.1,.9*(1-u));p.scale.copy(p.userData.homeScale).multiplyScalar(Math.max(.04,1-u));p.rotation.z=u*2;});}
   else if(station.id==='pgos'){ref.nodes.forEach((p,i)=>{const u=(t*.65+i*.33)%1;p.position.set((i-1)*.8*(1-u),.3+Math.sin(u*Math.PI)*.8,.95-u*1.2);p.scale.copy(p.userData.homeScale).multiplyScalar(1-u*.45);});}
@@ -76,7 +75,6 @@ export class IslandMotion {
   if(ref.ball){ref.ball.position.set(.14,1.28,-.28);ref.paddles.forEach(p=>p.position.y=1.18);}
   for(const key of ['packet','map','sync','cursor'])if(ref[key])ref[key].visible=false;
   if(ref.flow){ref.flow.group.visible=false;ref.flow.update(0);}
-  if(ref.wheels)ref.wheels.forEach(w=>w.rotation.z=0);if(ref.pedal)ref.pedal.rotation.z=0;if(ref.sensor)ref.sensor.scale.setScalar(.15);
   if(ref.page)ref.page.rotation.y=0;
   for(const key of ['bits','nodes','tiles'])if(ref[key])ref[key].forEach(p=>{p.position.copy(p.userData.home);p.rotation.set(0,0,0);p.scale.copy(p.userData.homeScale).multiplyScalar(key==='tiles'?.001:1);});
   this.element.dataset.hoverProject='';this.element.dataset.hoverTime='0';this.element.dataset.hoverPhase='';

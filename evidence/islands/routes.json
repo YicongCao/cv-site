@@ -1,11 +1,11 @@
 {
-  "nodes": 60,
-  "bridges": 15,
+  "nodes": 56,
+  "bridges": 14,
   "longest": {
-    "from": "accelerator",
+    "from": "cloudgame",
     "to": "reader",
-    "distance": 61.16367728771148,
-    "seconds": 6.116367728771148
+    "distance": 66.22033188955967,
+    "seconds": 6.622033188955967
   },
   "routes": [
     {
@@ -35,8 +35,8 @@
     {
       "from": "brushline",
       "to": "cloudgame",
-      "distance": 48.16099577644772,
-      "seconds": 4.816099577644772
+      "distance": 58.32543653392875,
+      "seconds": 5.832543653392875
     },
     {
       "from": "brushline",
@@ -47,8 +47,8 @@
     {
       "from": "brushline",
       "to": "accelerator",
-      "distance": 53.26878193208056,
-      "seconds": 5.326878193208056
+      "distance": 49.92543653392875,
+      "seconds": 4.992543653392875
     },
     {
       "from": "brushline",
@@ -79,12 +79,6 @@
       "to": "reader",
       "distance": 60.7606636449173,
       "seconds": 6.07606636449173
-    },
-    {
-      "from": "brushline",
-      "to": "kinect",
-      "distance": 48.152563819733885,
-      "seconds": 4.815256381973389
     },
     {
       "from": "brushline",
@@ -125,8 +119,8 @@
     {
       "from": "museum",
       "to": "cloudgame",
-      "distance": 46.749866913446574,
-      "seconds": 4.674986691344658
+      "distance": 56.91430767092761,
+      "seconds": 5.691430767092761
     },
     {
       "from": "museum",
@@ -137,8 +131,8 @@
     {
       "from": "museum",
       "to": "accelerator",
-      "distance": 51.85765306907942,
-      "seconds": 5.185765306907942
+      "distance": 48.51430767092761,
+      "seconds": 4.8514307670927606
     },
     {
       "from": "museum",
@@ -169,12 +163,6 @@
       "to": "reader",
       "distance": 59.34953478191615,
       "seconds": 5.9349534781916145
-    },
-    {
-      "from": "museum",
-      "to": "kinect",
-      "distance": 46.74143495673274,
-      "seconds": 4.674143495673274
     },
     {
       "from": "museum",
@@ -215,8 +203,8 @@
     {
       "from": "nex",
       "to": "cloudgame",
-      "distance": 37.02813980389811,
-      "seconds": 3.7028139803898106
+      "distance": 47.192580561379145,
+      "seconds": 4.719258056137915
     },
     {
       "from": "nex",
@@ -227,8 +215,8 @@
     {
       "from": "nex",
       "to": "accelerator",
-      "distance": 42.13592595953095,
-      "seconds": 4.213592595953095
+      "distance": 38.79258056137914,
+      "seconds": 3.879258056137914
     },
     {
       "from": "nex",
@@ -259,12 +247,6 @@
       "to": "reader",
       "distance": 49.62780767236768,
       "seconds": 4.962780767236768
-    },
-    {
-      "from": "nex",
-      "to": "kinect",
-      "distance": 37.01970784718427,
-      "seconds": 3.7019707847184273
     },
     {
       "from": "nex",
@@ -305,8 +287,8 @@
     {
       "from": "pgos",
       "to": "cloudgame",
-      "distance": 11.889264917672554,
-      "seconds": 1.1889264917672553
+      "distance": 22.05370567515359,
+      "seconds": 2.205370567515359
     },
     {
       "from": "pgos",
@@ -317,8 +299,8 @@
     {
       "from": "pgos",
       "to": "accelerator",
-      "distance": 16.997051073305393,
-      "seconds": 1.6997051073305394
+      "distance": 13.65370567515359,
+      "seconds": 1.3653705675153591
     },
     {
       "from": "pgos",
@@ -352,12 +334,6 @@
     },
     {
       "from": "pgos",
-      "to": "kinect",
-      "distance": 23.88083296095872,
-      "seconds": 2.388083296095872
-    },
-    {
-      "from": "pgos",
       "to": "ishowfx",
       "distance": 39.07477189598274,
       "seconds": 3.907477189598274
@@ -371,26 +347,26 @@
     {
       "from": "cloudgame",
       "to": "brushline",
-      "distance": 48.16099577644772,
-      "seconds": 4.816099577644772
+      "distance": 58.325436533928766,
+      "seconds": 5.832543653392877
     },
     {
       "from": "cloudgame",
       "to": "museum",
-      "distance": 46.74986691344657,
-      "seconds": 4.674986691344657
+      "distance": 56.91430767092761,
+      "seconds": 5.691430767092761
     },
     {
       "from": "cloudgame",
       "to": "nex",
-      "distance": 37.02813980389811,
-      "seconds": 3.7028139803898106
+      "distance": 47.192580561379145,
+      "seconds": 4.719258056137915
     },
     {
       "from": "cloudgame",
       "to": "pgos",
-      "distance": 11.889264917672554,
-      "seconds": 1.1889264917672553
+      "distance": 22.05370567515359,
+      "seconds": 2.205370567515359
     },
     {
       "from": "cloudgame",
@@ -401,62 +377,56 @@
     {
       "from": "cloudgame",
       "to": "bot",
-      "distance": 53.78662145968762,
-      "seconds": 5.378662145968763
+      "distance": 63.95106221716866,
+      "seconds": 6.395106221716866
     },
     {
       "from": "cloudgame",
       "to": "accelerator",
-      "distance": 28.88631599097795,
-      "seconds": 2.8886315990977947
+      "distance": 23.70741135030718,
+      "seconds": 2.370741135030718
     },
     {
       "from": "cloudgame",
       "to": "desktop",
-      "distance": 49.86413895463437,
-      "seconds": 4.986413895463437
+      "distance": 60.0285797121154,
+      "seconds": 6.00285797121154
     },
     {
       "from": "cloudgame",
       "to": "cleaner",
-      "distance": 49.25178346785331,
-      "seconds": 4.925178346785331
+      "distance": 59.41622422533434,
+      "seconds": 5.941622422533434
     },
     {
       "from": "cloudgame",
       "to": "win10",
-      "distance": 31.979748284871853,
-      "seconds": 3.1979748284871854
+      "distance": 42.144189042352885,
+      "seconds": 4.214418904235289
     },
     {
       "from": "cloudgame",
       "to": "uwp",
-      "distance": 50.262648753742795,
-      "seconds": 5.026264875374279
+      "distance": 60.427089511223826,
+      "seconds": 6.042708951122383
     },
     {
       "from": "cloudgame",
       "to": "reader",
-      "distance": 56.05589113207864,
-      "seconds": 5.605589113207865
-    },
-    {
-      "from": "cloudgame",
-      "to": "kinect",
-      "distance": 35.770097878631276,
-      "seconds": 3.5770097878631275
+      "distance": 66.22033188955967,
+      "seconds": 6.622033188955967
     },
     {
       "from": "cloudgame",
       "to": "ishowfx",
-      "distance": 50.9640368136553,
-      "seconds": 5.09640368136553
+      "distance": 61.12847757113633,
+      "seconds": 6.112847757113633
     },
     {
       "from": "cloudgame",
       "to": "xidian",
-      "distance": 47.91558446087482,
-      "seconds": 4.791558446087482
+      "distance": 58.08002521835585,
+      "seconds": 5.808002521835585
     },
     {
       "from": "bot",
@@ -485,8 +455,8 @@
     {
       "from": "bot",
       "to": "cloudgame",
-      "distance": 53.78662145968762,
-      "seconds": 5.378662145968763
+      "distance": 63.951062217168655,
+      "seconds": 6.3951062217168655
     },
     {
       "from": "bot",
@@ -497,8 +467,8 @@
     {
       "from": "bot",
       "to": "accelerator",
-      "distance": 58.89440761532046,
-      "seconds": 5.889440761532046
+      "distance": 55.551062217168656,
+      "seconds": 5.555106221716866
     },
     {
       "from": "bot",
@@ -532,12 +502,6 @@
     },
     {
       "from": "bot",
-      "to": "kinect",
-      "distance": 53.77818950297379,
-      "seconds": 5.377818950297379
-    },
-    {
-      "from": "bot",
       "to": "ishowfx",
       "distance": 49.29443500973385,
       "seconds": 4.9294435009733855
@@ -551,38 +515,38 @@
     {
       "from": "accelerator",
       "to": "brushline",
-      "distance": 53.26878193208057,
-      "seconds": 5.326878193208057
+      "distance": 49.92543653392876,
+      "seconds": 4.992543653392876
     },
     {
       "from": "accelerator",
       "to": "museum",
-      "distance": 51.85765306907942,
-      "seconds": 5.185765306907942
+      "distance": 48.51430767092761,
+      "seconds": 4.8514307670927606
     },
     {
       "from": "accelerator",
       "to": "nex",
-      "distance": 42.13592595953095,
-      "seconds": 4.213592595953095
+      "distance": 38.79258056137915,
+      "seconds": 3.879258056137915
     },
     {
       "from": "accelerator",
       "to": "pgos",
-      "distance": 16.997051073305396,
-      "seconds": 1.6997051073305396
+      "distance": 13.65370567515359,
+      "seconds": 1.3653705675153591
     },
     {
       "from": "accelerator",
       "to": "cloudgame",
-      "distance": 28.88631599097795,
-      "seconds": 2.8886315990977947
+      "distance": 23.70741135030718,
+      "seconds": 2.370741135030718
     },
     {
       "from": "accelerator",
       "to": "bot",
-      "distance": 58.89440761532047,
-      "seconds": 5.889440761532047
+      "distance": 55.55106221716866,
+      "seconds": 5.5551062217168665
     },
     {
       "from": "accelerator",
@@ -593,50 +557,44 @@
     {
       "from": "accelerator",
       "to": "desktop",
-      "distance": 54.97192511026721,
-      "seconds": 5.497192511026721
+      "distance": 51.628579712115396,
+      "seconds": 5.162857971211539
     },
     {
       "from": "accelerator",
       "to": "cleaner",
-      "distance": 54.359569623486145,
-      "seconds": 5.435956962348614
+      "distance": 51.01622422533434,
+      "seconds": 5.101622422533434
     },
     {
       "from": "accelerator",
       "to": "win10",
-      "distance": 37.08753444050469,
-      "seconds": 3.708753444050469
+      "distance": 33.744189042352886,
+      "seconds": 3.374418904235289
     },
     {
       "from": "accelerator",
       "to": "uwp",
-      "distance": 55.37043490937563,
-      "seconds": 5.537043490937563
+      "distance": 52.02708951122383,
+      "seconds": 5.202708951122383
     },
     {
       "from": "accelerator",
       "to": "reader",
-      "distance": 61.16367728771148,
-      "seconds": 6.116367728771148
-    },
-    {
-      "from": "accelerator",
-      "to": "kinect",
-      "distance": 28.877884034264113,
-      "seconds": 2.8877884034264114
+      "distance": 57.82033188955968,
+      "seconds": 5.782033188955968
     },
     {
       "from": "accelerator",
       "to": "ishowfx",
-      "distance": 56.071822969288135,
-      "seconds": 5.607182296928814
+      "distance": 52.72847757113633,
+      "seconds": 5.272847757113633
     },
     {
       "from": "accelerator",
       "to": "xidian",
-      "distance": 53.023370616507655,
-      "seconds": 5.302337061650766
+      "distance": 49.68002521835585,
+      "seconds": 4.968002521835585
     },
     {
       "from": "desktop",
@@ -665,8 +623,8 @@
     {
       "from": "desktop",
       "to": "cloudgame",
-      "distance": 49.86413895463436,
-      "seconds": 4.9864138954634365
+      "distance": 60.0285797121154,
+      "seconds": 6.00285797121154
     },
     {
       "from": "desktop",
@@ -677,8 +635,8 @@
     {
       "from": "desktop",
       "to": "accelerator",
-      "distance": 54.97192511026721,
-      "seconds": 5.497192511026721
+      "distance": 51.628579712115396,
+      "seconds": 5.162857971211539
     },
     {
       "from": "desktop",
@@ -709,12 +667,6 @@
       "to": "reader",
       "distance": 29.960533516969303,
       "seconds": 2.99605335169693
-    },
-    {
-      "from": "desktop",
-      "to": "kinect",
-      "distance": 49.85570699792053,
-      "seconds": 4.985570699792053
     },
     {
       "from": "desktop",
@@ -755,8 +707,8 @@
     {
       "from": "cleaner",
       "to": "cloudgame",
-      "distance": 49.25178346785331,
-      "seconds": 4.925178346785331
+      "distance": 59.416224225334346,
+      "seconds": 5.941622422533435
     },
     {
       "from": "cleaner",
@@ -767,8 +719,8 @@
     {
       "from": "cleaner",
       "to": "accelerator",
-      "distance": 54.35956962348615,
-      "seconds": 5.435956962348615
+      "distance": 51.01622422533434,
+      "seconds": 5.101622422533434
     },
     {
       "from": "cleaner",
@@ -799,12 +751,6 @@
       "to": "reader",
       "distance": 29.348178030188247,
       "seconds": 2.9348178030188246
-    },
-    {
-      "from": "cleaner",
-      "to": "kinect",
-      "distance": 49.24335151113947,
-      "seconds": 4.924335151113947
     },
     {
       "from": "cleaner",
@@ -845,8 +791,8 @@
     {
       "from": "win10",
       "to": "cloudgame",
-      "distance": 31.979748284871853,
-      "seconds": 3.1979748284871854
+      "distance": 42.14418904235289,
+      "seconds": 4.2144189042352895
     },
     {
       "from": "win10",
@@ -857,8 +803,8 @@
     {
       "from": "win10",
       "to": "accelerator",
-      "distance": 37.0875344405047,
-      "seconds": 3.70875344405047
+      "distance": 33.744189042352886,
+      "seconds": 3.374418904235289
     },
     {
       "from": "win10",
@@ -889,12 +835,6 @@
       "to": "reader",
       "distance": 24.076142847206793,
       "seconds": 2.407614284720679
-    },
-    {
-      "from": "win10",
-      "to": "kinect",
-      "distance": 31.971316328158018,
-      "seconds": 3.1971316328158017
     },
     {
       "from": "win10",
@@ -935,8 +875,8 @@
     {
       "from": "uwp",
       "to": "cloudgame",
-      "distance": 50.262648753742795,
-      "seconds": 5.026264875374279
+      "distance": 60.427089511223826,
+      "seconds": 6.042708951122383
     },
     {
       "from": "uwp",
@@ -947,8 +887,8 @@
     {
       "from": "uwp",
       "to": "accelerator",
-      "distance": 55.37043490937563,
-      "seconds": 5.537043490937563
+      "distance": 52.02708951122383,
+      "seconds": 5.202708951122383
     },
     {
       "from": "uwp",
@@ -979,12 +919,6 @@
       "to": "reader",
       "distance": 18.359043316077734,
       "seconds": 1.8359043316077734
-    },
-    {
-      "from": "uwp",
-      "to": "kinect",
-      "distance": 50.25421679702896,
-      "seconds": 5.025421679702896
     },
     {
       "from": "uwp",
@@ -1025,8 +959,8 @@
     {
       "from": "reader",
       "to": "cloudgame",
-      "distance": 56.05589113207864,
-      "seconds": 5.605589113207865
+      "distance": 66.22033188955967,
+      "seconds": 6.622033188955967
     },
     {
       "from": "reader",
@@ -1037,8 +971,8 @@
     {
       "from": "reader",
       "to": "accelerator",
-      "distance": 61.16367728771148,
-      "seconds": 6.116367728771148
+      "distance": 57.820331889559675,
+      "seconds": 5.7820331889559675
     },
     {
       "from": "reader",
@@ -1072,12 +1006,6 @@
     },
     {
       "from": "reader",
-      "to": "kinect",
-      "distance": 56.04745917536481,
-      "seconds": 5.604745917536481
-    },
-    {
-      "from": "reader",
       "to": "ishowfx",
       "distance": 31.06043137599024,
       "seconds": 3.1060431375990243
@@ -1087,96 +1015,6 @@
       "to": "xidian",
       "distance": 28.011979023209758,
       "seconds": 2.801197902320976
-    },
-    {
-      "from": "kinect",
-      "to": "brushline",
-      "distance": 48.152563819733885,
-      "seconds": 4.815256381973389
-    },
-    {
-      "from": "kinect",
-      "to": "museum",
-      "distance": 46.74143495673273,
-      "seconds": 4.674143495673273
-    },
-    {
-      "from": "kinect",
-      "to": "nex",
-      "distance": 37.01970784718427,
-      "seconds": 3.7019707847184273
-    },
-    {
-      "from": "kinect",
-      "to": "pgos",
-      "distance": 23.880832960958717,
-      "seconds": 2.3880832960958718
-    },
-    {
-      "from": "kinect",
-      "to": "cloudgame",
-      "distance": 35.77009787863127,
-      "seconds": 3.577009787863127
-    },
-    {
-      "from": "kinect",
-      "to": "bot",
-      "distance": 53.77818950297379,
-      "seconds": 5.377818950297379
-    },
-    {
-      "from": "kinect",
-      "to": "accelerator",
-      "distance": 28.877884034264113,
-      "seconds": 2.8877884034264114
-    },
-    {
-      "from": "kinect",
-      "to": "desktop",
-      "distance": 49.85570699792052,
-      "seconds": 4.985570699792052
-    },
-    {
-      "from": "kinect",
-      "to": "cleaner",
-      "distance": 49.243351511139466,
-      "seconds": 4.924335151113946
-    },
-    {
-      "from": "kinect",
-      "to": "win10",
-      "distance": 31.97131632815801,
-      "seconds": 3.1971316328158013
-    },
-    {
-      "from": "kinect",
-      "to": "uwp",
-      "distance": 50.25421679702895,
-      "seconds": 5.025421679702895
-    },
-    {
-      "from": "kinect",
-      "to": "reader",
-      "distance": 56.04745917536481,
-      "seconds": 5.604745917536481
-    },
-    {
-      "from": "kinect",
-      "to": "kinect",
-      "distance": 0,
-      "seconds": 0
-    },
-    {
-      "from": "kinect",
-      "to": "ishowfx",
-      "distance": 50.955604856941456,
-      "seconds": 5.095560485694145
-    },
-    {
-      "from": "kinect",
-      "to": "xidian",
-      "distance": 47.907152504160976,
-      "seconds": 4.790715250416097
     },
     {
       "from": "ishowfx",
@@ -1205,8 +1043,8 @@
     {
       "from": "ishowfx",
       "to": "cloudgame",
-      "distance": 50.9640368136553,
-      "seconds": 5.09640368136553
+      "distance": 61.12847757113633,
+      "seconds": 6.112847757113633
     },
     {
       "from": "ishowfx",
@@ -1217,8 +1055,8 @@
     {
       "from": "ishowfx",
       "to": "accelerator",
-      "distance": 56.071822969288135,
-      "seconds": 5.607182296928814
+      "distance": 52.72847757113633,
+      "seconds": 5.272847757113633
     },
     {
       "from": "ishowfx",
@@ -1249,12 +1087,6 @@
       "to": "reader",
       "distance": 31.060431375990238,
       "seconds": 3.106043137599024
-    },
-    {
-      "from": "ishowfx",
-      "to": "kinect",
-      "distance": 50.95560485694146,
-      "seconds": 5.095560485694146
     },
     {
       "from": "ishowfx",
@@ -1295,8 +1127,8 @@
     {
       "from": "xidian",
       "to": "cloudgame",
-      "distance": 47.91558446087482,
-      "seconds": 4.791558446087482
+      "distance": 58.08002521835586,
+      "seconds": 5.8080025218355855
     },
     {
       "from": "xidian",
@@ -1307,8 +1139,8 @@
     {
       "from": "xidian",
       "to": "accelerator",
-      "distance": 53.02337061650766,
-      "seconds": 5.302337061650766
+      "distance": 49.68002521835585,
+      "seconds": 4.968002521835585
     },
     {
       "from": "xidian",
@@ -1339,12 +1171,6 @@
       "to": "reader",
       "distance": 28.011979023209758,
       "seconds": 2.801197902320976
-    },
-    {
-      "from": "xidian",
-      "to": "kinect",
-      "distance": 47.90715250416098,
-      "seconds": 4.790715250416098
     },
     {
       "from": "xidian",
