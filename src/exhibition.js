@@ -9,6 +9,7 @@ const clamp=T.MathUtils.clamp;
 const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
 const direction=new T.Vector3(1,1,1).normalize();
 const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航'};
+const featuredLabels=new Set(['nex','pgos','bot','brushline','museum']);
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview}){
   Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview});
@@ -104,7 +105,7 @@ export class Exhibition {
    const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='theme-label';b.dataset.theme=theme.id;b.textContent=theme.title;b.setAttribute('aria-label',`浏览${theme.title}`);b.setAttribute('aria-pressed',String(this.theme===theme.id));b.onclick=()=>this.onTheme(theme.id);layer.append(b);
   }
   this.world.stations.forEach((s,i)=>{
-   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
+   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
   });
  }
@@ -181,9 +182,10 @@ export class Exhibition {
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=!!this.browsingTransition;
    const i=+b.dataset.card,s=this.world.stations[i];const shown=project(b,new T.Vector3(s.x-s.size/2,s.y+.3,s.z+s.size/2));
    const detailed=this.mode==='theme'&&s.theme===this.theme;const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*.75+6,this.width-labelWidth*.25-6)}px`;
-   // All projects stay keyboard reachable in overview; names reveal on focus/hover.
+   // Desktop overview names stay visible; narrow screens reveal secondary names on demand.
    b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed);
-   b.classList.toggle('quiet',!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
+   b.classList.toggle('quiet',this.mobile&&!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
+   b.classList.toggle('is-hovered',this.hover===i);
   });
   const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
   const labels=signs.map(b=>{const ax=b.classList.contains('theme-label')?.5:.75,ay=b.classList.contains('theme-label')?1:.9;return {element:b,ax,ay,width:b.offsetWidth,height:b.offsetHeight,x:parseFloat(b.style.left)-b.offsetWidth*ax,y:parseFloat(b.style.top)-b.offsetHeight*ay};});

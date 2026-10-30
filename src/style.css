@@ -1247,3 +1247,9 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
  .gallery-skills{font-size:16px;gap:5px 15px;margin:13px 0 18px}
  .gallery-filmstrip{--photo-height:205px;gap:12px}
 }
+
+/* Title emphasis follows project priority, independently of browsing selection. */
+.island-label,.island-label[aria-pressed=true]{color:#cbd1c4;border:1px solid transparent}
+.island-label.is-featured,.island-label.is-featured[aria-pressed=true]{color:#e4b35c}
+.island-label .pixel-icon{color:inherit}
+.island-label:hover,.island-label.is-hovered,.island-label:focus-visible{border-color:currentColor;background:#222e32df;outline:none}

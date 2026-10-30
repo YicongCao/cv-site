@@ -100,3 +100,7 @@ npm test
 ### 主要项目画廊
 
 页眉“项目画廊”打开全屏 `#gallery`，只展示 7 个主要项目，以纵向时间轴和独立横向图片带呈现时间范围、项目标题、职业技能和最多 10 张插图。选图及展示日期保存在 `public/data/gallery.json`；图片可放大，标题可进入原有详情并返回阅读位置。原件仍使用既有素材地址。45 张清晰的画廊派生图片位于 `public/media/gallery/`，来源记录在 `design/gallery-stills.json`。验证见 `evidence/major-gallery/`。
+
+### 全景项目标题
+
+桌面全景显示全部 14 个标题，Nex／PGOS／Bot／Brushline Rally／PhotoMuseum 标黄，其余灰白；悬停岛台、标题或键盘聚焦时显示矩形边框。手机继续采用主岛常显、子岛按需显示的方式。验证记录位于 `evidence/overview-titles/`。
