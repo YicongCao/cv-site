@@ -1,5 +1,6 @@
 import {Exhibition} from './exhibition.js';
 import {themes} from './world.js';
+import {icon} from './icons.js';
 import {pixelSVG} from './pixel.js';
 (async () => {
   'use strict';
@@ -69,7 +70,9 @@ import {pixelSVG} from './pixel.js';
     if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#explore');
     selected=projects.indexOf(p);activeTheme=projectTheme(p.id).id;renderTimeline(true);if(fromHistory&&exhibition)exhibition.locate(selected);
     $('#detail-period').textContent=p.period;$('#detail-title').textContent=p.title;$('#detail-summary').textContent=p.summary;
-    $('.detail-copy h3').hidden=$('#contributions').hidden=['brushline','museum','cloudgame','xidian'].includes(p.id);
+    $('.detail-copy > h3').hidden=$('#contributions').hidden=!!p.workflow||['cloudgame','xidian'].includes(p.id);
+    $('#ownership').hidden=!p.ownership;$('#ownership').textContent=p.ownership||'';$('#workflow').hidden=!p.workflow;
+    $('#workflow').innerHTML=(p.workflow||[]).map((item,i)=>`<section>${icon(['compass','agent','screen','route'][i])}<div><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></div></section>`).join('');
     $('#contributions').innerHTML=p.contributions.map(c=>`<li>${esc(c)}</li>`).join('');
     mediaList=p.assets.map(id=>assets.get(id)).filter(usable).sort((a,b)=>Number(b.id===p.cover)-Number(a.id===p.cover));renderMedia();
     detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';
@@ -94,19 +97,32 @@ import {pixelSVG} from './pixel.js';
   function showLarge(){const a=mediaList[mediaIndex];stopMedia($('#large-media'));$('#large-media').innerHTML=mediaHtml(a);watchVideo($('#large-media'),a);$('#original-link').href=a.original;$('#original-link').textContent=isImage(a)?'打开原图 ↗':'打开原件 ↗';$('#large-prev').hidden=$('#large-next').hidden=mediaList.length<=1;$('#large-prev').disabled=mediaIndex===0;$('#large-next').disabled=mediaIndex===mediaList.length-1;const v=$('#large-media video');if(v)playVideo(v);}
   function openLarge(index=0){if(!mediaList[index])return;mediaIndex=index;videoObserver?.disconnect();stopMedia($('#media'));showLarge();$('#lightbox').showModal();}
   function closeLarge(resume=true){stopMedia($('#large-media'));$('#lightbox').close();$('#large-media').innerHTML='';const origin=$(`[data-expand="${mediaIndex}"]`)||$('#expand');origin.focus({preventScroll:true});if(resume)startVideos();}
-  async function syncHistory(){if(motionBusy){pendingHistory=true;return;}exhibition?.cancel();const id=new URLSearchParams(location.hash.slice(1)).get('project'),p=projects.find(q=>q.id===id);if($('#detail').open&&(!p||p!==projects[selected]))await closeDetail({fromHistory:true});if(p&&!$('#detail').open)await openProject(p,{fromHistory:true});}
+  async function syncHistory({initial=false}={}){if(motionBusy){pendingHistory=true;return;}if(!initial)exhibition?.cancel();if($('#about').open)closeAbout();const id=new URLSearchParams(location.hash.slice(1)).get('project'),p=projects.find(q=>q.id===id);if($('#detail').open&&(!p||p!==projects[selected]))await closeDetail({fromHistory:true});if(p&&!$('#detail').open)await openProject(p,{fromHistory:true});}
   function flushHistory(){if(pendingHistory){pendingHistory=false;syncHistory();}}
   addEventListener('popstate',syncHistory);addEventListener('hashchange',syncHistory);
   $('#overview').onclick=overview;$('#previous').onclick=()=>browse(-1);$('#next').onclick=()=>browse(1);$('#explore').onclick=()=>visitProject(selected);$('#title').onclick=()=>visitProject(selected);$('#title').onkeydown=e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();visitProject(selected);}};
   $('#close-detail').onclick=()=>closeDetail();$('#detail').addEventListener('cancel',e=>{e.preventDefault();closeDetail();});
   $('#expand').onclick=()=>openLarge(0);$('#close-lightbox').onclick=()=>closeLarge();$('#lightbox').addEventListener('cancel',e=>{e.preventDefault();closeLarge();});
   $('#large-prev').onclick=()=>{mediaIndex--;showLarge();};$('#large-next').onclick=()=>{mediaIndex++;showLarge();};
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#detail').open){if(['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
+  document.addEventListener('keydown',e=>{if($('#about').open)return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
   try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');
+  $('#about-content').innerHTML=`<div class="about-heading"><div class="portrait" aria-hidden="true"><svg viewBox="0 0 32 40" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2zM15 28h2v8h-2z"/></svg></div><div><h2 id="about-title">曹一聪 <span>pixelcao</span></h2><p>T10 工程师 · 2016 年加入腾讯</p></div></div>
+  <p class="about-lead">让想法成为可运行、可验证的产品。</p>
+  <div class="about-skills">${[
+    ['agent','Agent 系统','编排、上下文与工具调用，让智能体稳定完成任务。'],
+    ['game','游戏联机','匹配、专用服务器托管与实时网络，从方案走到上线。'],
+    ['screen','客户端体验','从 Windows 工具到交互展厅，连接系统能力与用户体验。'],
+    ['compass','AI 协作','定义目标、做技术与设计取舍，用 Codex 实现并持续验证。']
+  ].map(([key,title,text])=>`<section>${icon(key)}<h3>${title}</h3><p>${text}</p></section>`).join('')}</div>
+  <div class="about-school">${icon('school')}<div>西安电子科技大学<span>智能科学与技术</span></div></div>
+  <div class="about-links"><a href="https://github.com/yicongcao" target="_blank" rel="noopener">${icon('github')}GitHub ↗</a><a href="tel:18126045570">${icon('phone')}181 2604 5570</a><a href="/resume/" target="_blank" rel="noopener">完整简历 ↗</a></div>`;
+  function closeAbout(){$('#about').close();$('.brand').focus({preventScroll:true});exhibition?.wake();}
+  $('.brand').onclick=()=>{if(motionBusy||$('#detail').open)return;exhibition?.cancel();$('#about').showModal();$('#close-about').focus({preventScroll:true});};
+  $('#close-about').onclick=closeAbout;$('#about').addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
   if(reduced())document.body.dataset.reduced='true';
-  renderTimeline(true);syncHistory();
+  renderTimeline(true);syncHistory({initial:true});
   // Reflow projected label bounds after the local webfont replaces the fallback.
   document.fonts?.ready.then(()=>exhibition?.wake());
 })().catch(error=>{document.querySelector('#title').textContent='作品暂时无法加载';document.querySelector('#summary').textContent='请刷新页面重试，或查看简历。';console.error(error);});

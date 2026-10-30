@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {makeFlag,makeGlobe} from './ambience.js';
 function shadedGeometry(w,h,d){const g=new T.BoxGeometry(w,h,d),tones=[.77,.64,1,.5,.86,.66],colors=[];for(const tone of tones)for(let i=0;i<4;i++)colors.push(tone,tone,tone);g.setAttribute('color',new T.Float32BufferAttribute(colors,3));return g;}
 const cube=shadedGeometry(1,1,1), palettes=new Map();
 export const color={stone:0xa5ae96,dark:0x36494b,ink:0x202f35,cream:0xeee6cb,gold:0xe4b35c,green:0x708858,red:0xb96d54};
@@ -56,12 +57,12 @@ export function makeTraveler(){const root=new T.Group(),body=new T.Group();root.
  const feet=[box(root,-.12,.08,0,.17,.16,.28,color.ink),box(root,.12,.08,0,.17,.16,.28,color.ink)];
  // Stacked tapered cloth and hat create a deliberate pixel silhouette.
  for(let i=0;i<4;i++)box(body,0,.27+i*.12,0,.65-i*.07,.13,.46-i*.035,color.cream);
- box(body,0,.83,.015,.38,.27,.34,color.ink);box(body,-.09,.84,.19,.04,.06,.015,color.gold);box(body,.09,.84,.19,.04,.06,.015,color.gold);
- const hat=new T.Group();body.add(hat);box(hat,0,1.00,0,.79,.075,.62,color.cream);for(let i=0;i<6;i++)box(hat,0,1.08+i*.10,-i*.012,.46-i*.055,.105,.42-i*.045,color.cream);
+ const head=new T.Group();head.position.y=.83;body.add(head);box(head,0,0,.015,.38,.27,.34,color.ink);box(head,-.09,.01,.19,.04,.06,.015,color.gold);box(head,.09,.01,.19,.04,.06,.015,color.gold);
+ const hat=new T.Group();head.add(hat);hat.position.y=-.83;box(hat,0,1.00,0,.79,.075,.62,color.cream);for(let i=0;i<6;i++)box(hat,0,1.08+i*.10,-i*.012,.46-i*.055,.105,.42-i*.045,color.cream);
  box(body,0,.42,.24,.055,.40,.02,color.gold);
  const arms=[new T.Group(),new T.Group()];arms.forEach((a,i)=>{a.position.set(i?.32:-.32,.65,0);body.add(a);box(a,0,-.15,0,.15,.3,.19,color.cream);box(a,0,-.33,0,.10,.10,.12,color.ink);});
  const shadow=box(root,0,.015,0,.65,.018,.5,0x334245);
- return {root,body,feet,arms,hat,shadow};
+ return {root,body,head,feet,arms,hat,shadow};
 }
 export function makeIsland(station){
  const g=new T.Group();g.position.set(station.x,station.y,station.z);
@@ -85,22 +86,14 @@ export function makeIsland(station){
    box(g,x,.5,z,.35,1,.35,0x748976);box(g,x,1.05,z,.46,.12,.46,color.stone);box(g,x,1.20,z,.17,.22,.17,color.gold);
   }
   for(let step=0;step<3;step++)box(g,0,.06+step*.07,2.65-step*.25,.85,.12+step*.14,.3,color.stone);
-  // Physical, extruded pixel signage remains legible from the overview camera.
+  // The cloth is animated separately; its pole joins the static island batch.
   const sign=new T.Group();sign.rotation.y=Math.PI/4;sign.position.set(0,0,-.2);g.add(sign);
-  if(station.id==='win10'){
-   // Four blue panes, separated by real gaps and visibly thick side faces.
-   const blue=0x0078d7;sign.position.z=.9;sign.rotation.y=Math.PI/5;
-   for(const x of [-.77,.77])for(const y of [-.77,.77])box(sign,x,4.05+y,0,1.08,1.08,.26,blue);
-   for(const x of [-.60,.60])box(sign,x,2.05,-.08,.13,2.05,.17,color.dark);
-  }else{
-   const letters={N:['10001','11001','10101','10011','10001','10001','10001'],E:['11111','10000','10000','11110','10000','10000','11111'],X:['10001','10001','01010','00100','01010','10001','10001'],P:['11110','10001','10001','11110','10000','10000','10000'],G:['01111','10000','10000','10111','10001','10001','01111'],O:['01110','10001','10001','10001','10001','10001','01110'],S:['01111','10000','10000','01110','00001','00001','11110']};
-   const text=station.id==='nex'?'NEX':'PGOS',unit=.18,width=(text.length*6-1)*unit;
-   box(sign,0,3.65,-.13,width+.42,1.64,.22,0x273d40);
-   for(const x of [-width*.35,width*.35]){box(sign,x,1.95,-.12,.13,2,.18,color.dark);box(sign,x,.96,-.12,.46,.10,.5,color.stone);}
-   [...text].forEach((letter,i)=>letters[letter].forEach((row,r)=>[...row].forEach((v,c)=>{if(v==='1')box(sign,-width/2+(i*6+c+.5)*unit,3.65+(3-r)*unit,.04,unit,unit,.16,station.id==='pgos'?color.gold:color.cream);})))
-  }
+  const flag=makeFlag(station.id);sign.add(flag);g.userData.flag=flag;
+  box(sign,-2.2,2.25,0,.12,4.5,.12,color.dark);box(sign,-2.2,4.57,0,.22,.22,.22,color.gold);
+
 
  }
+ if(station.id==='accelerator'){const globe=makeGlobe();g.add(globe);g.userData.globe=globe;box(g,0,1.1,.35,.12,2.2,.12,color.dark);}
  batchBoxes(g);return g;
 }
 
