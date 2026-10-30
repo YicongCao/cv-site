@@ -3,6 +3,7 @@ import {Exhibition} from './exhibition.js';
 import {themes} from './world.js';
 import {icon} from './icons.js';
 import {pixelSVG} from './pixel.js';
+import {installBrandIdle} from './brand-idle.js';
 (async () => {
   'use strict';
   const sound=installSound();
@@ -110,6 +111,7 @@ import {pixelSVG} from './pixel.js';
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
   try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onOverview:()=>{void sound.tap();overview();},onIslandSound:event=>sound.island(event),onAbout:()=>{void sound.tap();openAbout(exhibition.profileButton);},onWalk:(distance,moving)=>sound.walk(distance,moving),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');
+  installBrandIdle($('.brand'),{motionQuery,reduced});
   $('#about-content').innerHTML=`<div class="about-heading"><div class="portrait" aria-hidden="true"><svg viewBox="0 0 32 40" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2zM15 28h2v8h-2z"/></svg></div><div><h2 id="about-title">曹一聪 <span>pixelcao</span></h2><p>T10 工程师 · 2016 年加入腾讯</p></div></div>
   <p class="about-lead">让想法成为可运行、可验证的产品。</p>
   <div class="about-skills">${[

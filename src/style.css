@@ -1141,6 +1141,19 @@ dialog .sound-toggle[data-sound=playing]{color:#9c712c}
 .brand::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:#e4b35c;opacity:0;transform:scaleX(.7);transition:opacity .16s,transform .16s}
 .brand:hover,.brand:focus-visible{color:#e4b35c;filter:drop-shadow(0 0 7px #e4b35c30)}
 .brand:hover::after,.brand:focus-visible::after{opacity:1;transform:scaleX(1)}
+.brand svg{overflow:visible}
+.brand .pixel-letter{transform:translateY(0)}
+.brand.brand-idle .pixel-letter{animation:pixelLetterHop .88s steps(1,end) both;animation-delay:calc(var(--letter)*80ms)}
+@keyframes pixelLetterHop{
+  0%,100%{transform:translateY(0)}
+  12%{transform:translateY(-1px)}
+  25%,38%{transform:translateY(-2px)}
+  50%{transform:translateY(-1px)}
+  62%{transform:translateY(0)}
+  75%{transform:translateY(1px)}
+  87%{transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){.brand.brand-idle .pixel-letter{animation:none}}
 .traveler-profile-target{position:absolute;width:32px;height:44px;transform:translate(-50%,-50%);opacity:0;pointer-events:none;z-index:7;padding:0}
 .traveler-profile-target:focus-visible{opacity:1;pointer-events:auto;outline:2px solid #e4b35c;outline-offset:4px;background:#e4b35c18}
 @media(max-width:850px){header{gap:9px}.brand{width:108px}#overview{padding:7px 8px}}
