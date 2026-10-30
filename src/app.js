@@ -4,10 +4,11 @@ import {themes} from './world.js';
 import {icon,projectIcon} from './icons.js';
 import {pixelSVG} from './pixel.js';
 import {installBrandIdle} from './brand-idle.js';
+import {installGallery} from './gallery.js';
 (async () => {
   'use strict';
   const sound=installSound();
-  const response=await fetch('/data/portfolio.json');if(!response.ok)throw new Error('作品数据加载失败');const data=await response.json();
+  const [response,galleryResponse]=await Promise.all([fetch('/data/portfolio.json'),fetch('/data/gallery.json')]);if(!response.ok||!galleryResponse.ok)throw new Error('作品数据加载失败');const data=await response.json(),galleryConfig=await galleryResponse.json();
   const projects=data.projects, assets=new Map(data.assets.map(a=>[a.id,a]));
   const $=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -19,6 +20,7 @@ import {installBrandIdle} from './brand-idle.js';
   const delay=ms=>new Promise(resolve=>setTimeout(resolve,reduced()?0:ms));
   let selected=projects.findIndex(p=>p.id==='pgos'), activeTheme=null, exhibition=null, motionBusy=false, detailSpatial=false, returnFocus=null;
   let mediaList=[], mediaIndex=0, pendingHistory=false, videoObserver=null;
+  let gallery=null,galleryReturnFocus=null;
   const shortTitles={brushline:'Brushline<span class="title-break"> </span>Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',bot:'Bot',win10:'Win10 助手',ishowfx:'iShowFX'};
   function thumb(a){return a?.preview?`<img src="${esc(a.preview)}" alt="${esc(a.chapter)}" loading="lazy">`:`<span>${esc(a?.type==='pdf'?'技术分享':'作品')}</span>`;}
   const projectTheme=id=>themes.find(t=>t.members.includes(id));
@@ -70,7 +72,7 @@ import {installBrandIdle} from './brand-idle.js';
     $('.media-toolbar').hidden=mediaList.length!==1||!mediaList[0];
   }
   async function openProject(p,{fromHistory=false}={}){
-    if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#explore');
+    if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#major-gallery').open?(gallery.projectButton(p.id)||$('[data-gallery-close]')):$('#explore');
     selected=projects.indexOf(p);activeTheme=projectTheme(p.id).id;renderTimeline(true);if(fromHistory&&exhibition)exhibition.locate(selected);
     $('#detail-period').textContent=p.period;$('#detail-title').textContent=p.title;$('#detail-summary').textContent=p.summary;
     $('#detail-summary').hidden=p.workflow?.length===1;
@@ -85,7 +87,7 @@ import {installBrandIdle} from './brand-idle.js';
 
     dialog.classList.remove('measuring');dialog.classList.add('detail-reveal');document.body.classList.add('detail-open');document.body.classList.remove('is-extracting');
     await delay(250);dialog.dataset.ready='true';$('#close-detail').focus({preventScroll:true});motionBusy=false;startVideos();
-    if(!fromHistory)history.pushState({portfolioDetail:p.id},'','#project='+encodeURIComponent(p.id));
+    if(!fromHistory)history.pushState({portfolioDetail:p.id,portfolioGallery:$('#major-gallery').open},'','#project='+encodeURIComponent(p.id));
     flushHistory();
   }
   async function closeDetail({fromHistory=false}={}){
@@ -94,21 +96,21 @@ import {installBrandIdle} from './brand-idle.js';
     $('#detail').classList.remove('detail-reveal');$('#detail').classList.add('detail-leave');document.body.classList.add('is-returning');
     await delay(160);$('#detail').close();if(detailSpatial&&exhibition)await exhibition.close();
     $('#detail').classList.remove('detail-leave');document.body.classList.remove('detail-open','is-returning');$('#media').innerHTML='';
-    detailSpatial=false;motionBusy=false;sound.setDetail(false);sound.setAudibleVideo(false);renderTimeline(true);
+    detailSpatial=false;motionBusy=false;sound.setDetail($('#major-gallery').open);sound.setAudibleVideo(false);renderTimeline(true);
     if(!fromHistory){if(history.state?.portfolioDetail)history.back();else history.replaceState(null,'',location.pathname+location.search);}
     (returnFocus?.isConnected?returnFocus:$('#explore')).focus({preventScroll:true});flushHistory();
   }
   function showLarge(){const a=mediaList[mediaIndex];stopMedia($('#large-media'));$('#large-media').innerHTML=mediaHtml(a);watchVideo($('#large-media'),a);$('#original-link').href=a.original;$('#original-link').textContent=isImage(a)?'打开原图 ↗':'打开原件 ↗';$('#large-prev').hidden=$('#large-next').hidden=mediaList.length<=1;$('#large-prev').disabled=mediaIndex===0;$('#large-next').disabled=mediaIndex===mediaList.length-1;const v=$('#large-media video');if(v)playVideo(v);}
   function openLarge(index=0){if(!mediaList[index])return;mediaIndex=index;videoObserver?.disconnect();stopMedia($('#media'));showLarge();$('#lightbox').showModal();}
   function closeLarge(resume=true){stopMedia($('#large-media'));$('#lightbox').close();$('#large-media').innerHTML='';const origin=$(`[data-expand="${mediaIndex}"]`)||$('#expand');origin.focus({preventScroll:true});if(resume)startVideos();}
-  async function syncHistory({initial=false}={}){if(motionBusy){pendingHistory=true;return;}if(!initial)exhibition?.cancel();if($('#about').open)closeAbout();const id=new URLSearchParams(location.hash.slice(1)).get('project'),p=projects.find(q=>q.id===id);if($('#detail').open&&(!p||p!==projects[selected]))await closeDetail({fromHistory:true});if(id&&!p){history.replaceState(null,'',location.pathname+location.search);overview();return;}if(p&&!$('#detail').open)await openProject(p,{fromHistory:true});}
+  async function syncHistory({initial=false}={}){if(motionBusy){pendingHistory=true;return;}if(!initial)exhibition?.cancel();if($('#about').open)closeAbout();const id=new URLSearchParams(location.hash.slice(1)).get('project'),p=projects.find(q=>q.id===id);if($('#detail').open&&(!p||p!==projects[selected]))await closeDetail({fromHistory:true});if(location.hash==='#gallery'){openGallery({fromHistory:true});return;}if($('#major-gallery').open&&!p)closeGallery({fromHistory:true});if(id&&!p){history.replaceState(null,'',location.pathname+location.search);overview();return;}if(p&&!$('#detail').open)await openProject(p,{fromHistory:true});}
   function flushHistory(){if(pendingHistory){pendingHistory=false;syncHistory();}}
   addEventListener('popstate',syncHistory);addEventListener('hashchange',syncHistory);
   $('#overview').onclick=overview;$('#previous').onclick=()=>browse(-1);$('#next').onclick=()=>browse(1);$('#explore').onclick=()=>visitProject(selected);$('#title').onclick=()=>visitProject(selected);$('#title').onkeydown=e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();visitProject(selected);}};
   $('#close-detail').onclick=()=>closeDetail();$('#detail').addEventListener('cancel',e=>{e.preventDefault();closeDetail();});
   $('#expand').onclick=()=>openLarge(0);$('#close-lightbox').onclick=()=>closeLarge();$('#lightbox').addEventListener('cancel',e=>{e.preventDefault();closeLarge();});
   $('#large-prev').onclick=()=>{mediaIndex--;showLarge();};$('#large-next').onclick=()=>{mediaIndex++;showLarge();};
-  document.addEventListener('keydown',e=>{if($('#about').open)return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
+  document.addEventListener('keydown',e=>{if($('#about').open||($('#major-gallery').open&&!$('#detail').open))return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
   try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onOverview:()=>{void sound.tap();overview();},onIslandSound:event=>sound.island(event),onAbout:()=>{void sound.tap();openAbout(exhibition.profileButton);},onWalk:(distance,moving)=>sound.walk(distance,moving),onPortal:(phase,token)=>sound.portal(phase,token),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');
@@ -128,6 +130,10 @@ import {installBrandIdle} from './brand-idle.js';
   function openAbout(origin=$('.brand')){sound.island({id:null});if(motionBusy||$('#detail').open||$('#about').open)return;aboutReturnFocus=origin;exhibition?.cancel();$('#about').showModal();$('#close-about').focus({preventScroll:true});}
   $('.brand').onclick=()=>openAbout();
   $('#close-about').onclick=closeAbout;$('#about').addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
+  gallery=installGallery({dialog:$('#major-gallery'),config:galleryConfig,projects,assets,reduced,onClose:()=>closeGallery(),onProject:(p,origin)=>{returnFocus=origin;exhibition?.locate(projects.indexOf(p));void openProject(p);}});
+  function openGallery({fromHistory=false}={}){if(motionBusy||$('#detail').open||$('#major-gallery').open)return;galleryReturnFocus=document.activeElement===document.body?$('#open-gallery'):document.activeElement;exhibition?.cancel();sound.island({id:null});sound.setDetail(true);gallery.open();document.body.classList.add('gallery-open');if(!fromHistory)history.pushState({portfolioGallery:true},'','#gallery');}
+  function closeGallery({fromHistory=false}={}){gallery.close();document.body.classList.remove('gallery-open');sound.setDetail(false);exhibition?.wake();if(!fromHistory){if(history.state?.portfolioGallery&&location.hash==='#gallery')history.back();else history.replaceState(null,'',location.pathname+location.search);}(galleryReturnFocus?.isConnected?galleryReturnFocus:$('#open-gallery')).focus({preventScroll:true});}
+  $('#open-gallery').onclick=()=>openGallery();
   if(reduced())document.body.dataset.reduced='true';
   renderTimeline(true);syncHistory({initial:true});
   // Reflow projected label bounds after the local webfont replaces the fallback.

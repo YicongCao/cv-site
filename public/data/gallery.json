@@ -1,0 +1,149 @@
+[
+  {
+    "id": "museum",
+    "period": "2026/10 — 至今",
+    "skills": [
+      "产品与架构取舍",
+      "本地检索与 AI 策展",
+      "空间交互设计",
+      "隐私与可撤销验证"
+    ],
+    "images": [
+      {
+        "src": "/media/gallery/museum-1.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/museum-2.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/museum-3.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/museum-4.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/museum-5.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/museum-6.jpg",
+        "width": 1280,
+        "height": 720
+      }
+    ]
+  },
+  {
+    "id": "brushline",
+    "period": "2026/10 — 至今",
+    "skills": [
+      "Godot / GDScript / Jolt",
+      "驾驶物理与遥测",
+      "美术资产管线",
+      "AI 协作与验收"
+    ],
+    "images": [
+      {
+        "src": "/media/gallery/brushline-1.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/brushline-2.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/brushline-3.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/brushline-4.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/brushline-5.jpg",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "src": "/media/gallery/brushline-6.jpg",
+        "width": 1280,
+        "height": 720
+      }
+    ]
+  },
+  {
+    "id": "nex",
+    "images": [
+      "a162",
+      "a155",
+      "a156",
+      "a157",
+      "a158",
+      "a159",
+      "a163",
+      "a167",
+      "a168",
+      "a170"
+    ]
+  },
+  {
+    "id": "pgos",
+    "images": [
+      "a173",
+      "a145",
+      "a146",
+      "a147",
+      "a148",
+      "a149",
+      "a150",
+      "a151",
+      "a152"
+    ]
+  },
+  {
+    "id": "bot",
+    "images": [
+      "a082",
+      "a002",
+      "a020",
+      "a022",
+      "a029",
+      "a040",
+      "a084",
+      "a135",
+      "a189",
+      "a205"
+    ]
+  },
+  {
+    "id": "accelerator",
+    "images": [
+      "a249"
+    ]
+  },
+  {
+    "id": "win10",
+    "skills": [
+      "Windows 客户端开发",
+      "经典交互还原",
+      "系统设置工具"
+    ],
+    "images": [
+      "a246",
+      "a245",
+      "a247"
+    ]
+  }
+]

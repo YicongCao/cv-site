@@ -96,3 +96,7 @@ npm test
 ### 访问道具音效
 
 旅人到达并展开金色边框时播放一次原创 RPG 道具琶音（0.88 秒）。沿用总声音开关，取消／改选和后台停止，静音事件不补播；深链接和减少动态效果的即时打开不触发。试听文件位于 `design/sound/item-chime-preview.wav`，验证记录见 `evidence/item-chime/`。
+
+### 主要项目画廊
+
+页眉“项目画廊”打开全屏 `#gallery`，只展示 7 个主要项目，以纵向时间轴和独立横向图片带呈现时间范围、项目标题、职业技能和最多 10 张插图。选图及展示日期保存在 `public/data/gallery.json`；图片可放大，标题可进入原有详情并返回阅读位置。原件仍使用既有素材地址。45 张清晰的画廊派生图片位于 `public/media/gallery/`，来源记录在 `design/gallery-stills.json`。验证见 `evidence/major-gallery/`。
