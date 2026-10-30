@@ -2,7 +2,7 @@
 
 ![pixelcao 展馆全景：Bot 正在问“什么是喷气背包？”](docs/images/overview-bot.jpg)
 
-独立的静态作品站。Node.js 只负责本机文件服务；Three.js 实现正交像素世界、14 个微缩展台、三座主题岛群、分支桥梁与白帽旅人的最短路行走／施法。14 个项目，228 份去重素材。
+独立的静态作品站。Node.js 只负责本机文件服务；Three.js 实现正交像素世界、14 个微缩展台、三座主题岛群、分支桥梁与白帽旅人的最短路行走／施法。14 个项目，232 份去重素材。
 
 ## 运行
 
@@ -52,7 +52,7 @@ npm run build
 npm test
 ```
 
-`check` 验证项目／素材数量、站内引用和 228 个原件 SHA-256。`test` 验证路线连续性、14 个目的地、长途速度、取消／改选／重复目标／即时定位，以及 HTTP 类型、HEAD、视频 Range、无效范围、404、源码不可访问和路径边界。
+`check` 验证项目／素材数量、站内引用和 232 个原件 SHA-256。`test` 验证路线连续性、14 个目的地、长途速度、取消／改选／重复目标／即时定位，以及 HTTP 类型、HEAD、视频 Range、无效范围、404、源码不可访问和路径边界。
 
 `import-assets.py /absolute/source/repo` 是一次性导入工具，不参与日常构建。只有重新导入旧视频时需要 FFmpeg；`inspect-media.py` 是可选媒体解码审计，需要 Pillow 和 ffprobe。已准备的兼容视频使用 H.264/AAC；原本兼容的视频保留，HEVC 转码最大边 1920。全部原件留存在站内目录。
 
@@ -116,7 +116,7 @@ Bot ↔ 桌面玩机、Brushline Rally ↔ 云游戏、网游加速器 ↔ iShow
 
 ### 主要项目画廊
 
-页眉“项目画廊”打开全屏 `#gallery`，只展示 7 个主要项目，以纵向时间轴和独立横向图片带呈现时间范围、项目标题、职业技能和最多 10 张插图。选图及展示日期保存在 `public/data/gallery.json`；图片可放大，标题可进入原有详情并返回阅读位置。原件仍使用既有素材地址。45 张清晰的画廊派生图片位于 `public/media/gallery/`，来源记录在 `design/gallery-stills.json`。验证见 `evidence/major-gallery/`。
+页眉“项目画廊”打开全屏 `#gallery`，只展示 7 个主要项目，以纵向时间轴和独立横向图片带呈现时间范围、项目标题、职业技能和最多 10 张插图。选图及展示日期保存在 `public/data/gallery.json`；图片可放大，标题可进入原有详情并返回阅读位置。原件仍使用既有素材地址。画廊共 49 张插图，其中 45 张派生图片位于 `public/media/gallery/`，另 4 张直接复用项目原图。派生来源记录在 `design/gallery-stills.json`。验证见 `evidence/major-gallery/`。
 
 ### 全景项目标题
 

@@ -1,0 +1,61 @@
+{
+  "detailImages": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "loaded": true,
+      "src": "/media/originals/images/a249.png"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "loaded": true,
+      "src": "/media/originals/images/a255.png"
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "loaded": true,
+      "src": "/media/originals/images/a252.png"
+    },
+    {
+      "background": "rgb(255, 255, 255)",
+      "loaded": true,
+      "src": "/media/originals/images/a253.png"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "loaded": true,
+      "src": "/media/originals/images/a254.png"
+    }
+  ],
+  "galleryDiagram": {
+    "background": "rgb(255, 255, 255)",
+    "loaded": true,
+    "src": "/media/originals/images/a252.png"
+  },
+  "galleryScreenshot": {
+    "background": "rgba(0, 0, 0, 0)",
+    "loaded": true,
+    "src": "/media/originals/images/a254.png"
+  },
+  "galleryImages": [
+    {
+      "loaded": true,
+      "src": "/media/gallery/accelerator-a249.jpg"
+    },
+    {
+      "loaded": true,
+      "src": "/media/originals/images/a255.png"
+    },
+    {
+      "loaded": true,
+      "src": "/media/originals/images/a252.png"
+    },
+    {
+      "loaded": true,
+      "src": "/media/originals/images/a253.png"
+    },
+    {
+      "loaded": true,
+      "src": "/media/originals/images/a254.png"
+    }
+  ]
+}

@@ -130,7 +130,41 @@
   {
     "id": "accelerator",
     "images": [
-      "a249"
+      "a249",
+      {
+        "id": "a255",
+        "width": 768,
+        "height": 1168,
+        "chapter": "腾讯网游加速器游戏加速界面",
+        "src": "/media/originals/images/a255.png",
+        "original": "/media/originals/images/a255.png"
+      },
+      {
+        "id": "a252",
+        "width": 800,
+        "height": 360,
+        "chapter": "Full Cone NAT 示意图",
+        "src": "/media/originals/images/a252.png",
+        "original": "/media/originals/images/a252.png",
+        "surface": "light"
+      },
+      {
+        "id": "a253",
+        "width": 800,
+        "height": 360,
+        "chapter": "Restricted Cone NAT 示意图",
+        "src": "/media/originals/images/a253.png",
+        "original": "/media/originals/images/a253.png",
+        "surface": "light"
+      },
+      {
+        "id": "a254",
+        "width": 720,
+        "height": 418,
+        "chapter": "GTA V 联机网络状态",
+        "src": "/media/originals/images/a254.png",
+        "original": "/media/originals/images/a254.png"
+      }
     ]
   },
   {

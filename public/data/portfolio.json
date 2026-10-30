@@ -481,7 +481,11 @@
       ],
       "cover": "a249",
       "assets": [
-        "a249"
+        "a249",
+        "a255",
+        "a252",
+        "a253",
+        "a254"
       ],
       "coverSrc": "/media/originals/images/a249.png",
       "workflow": [
@@ -3293,6 +3297,52 @@
       "src": "/media/originals/images/a251.png",
       "original": "/media/originals/images/a251.png",
       "preview": "/media/originals/images/a251.png"
+    },
+    {
+      "id": "a252",
+      "type": "png",
+      "width": 800,
+      "height": 360,
+      "chapter": "Full Cone NAT 示意图",
+      "project": "accelerator",
+      "src": "/media/originals/images/a252.png",
+      "original": "/media/originals/images/a252.png",
+      "preview": "/media/originals/images/a252.png",
+      "surface": "light"
+    },
+    {
+      "id": "a253",
+      "type": "png",
+      "width": 800,
+      "height": 360,
+      "chapter": "Restricted Cone NAT 示意图",
+      "project": "accelerator",
+      "src": "/media/originals/images/a253.png",
+      "original": "/media/originals/images/a253.png",
+      "preview": "/media/originals/images/a253.png",
+      "surface": "light"
+    },
+    {
+      "id": "a254",
+      "type": "png",
+      "width": 720,
+      "height": 418,
+      "chapter": "GTA V 联机网络状态",
+      "project": "accelerator",
+      "src": "/media/originals/images/a254.png",
+      "original": "/media/originals/images/a254.png",
+      "preview": "/media/originals/images/a254.png"
+    },
+    {
+      "id": "a255",
+      "type": "png",
+      "width": 768,
+      "height": 1168,
+      "chapter": "腾讯网游加速器游戏加速界面",
+      "project": "accelerator",
+      "src": "/media/originals/images/a255.png",
+      "original": "/media/originals/images/a255.png",
+      "preview": "/media/originals/images/a255.png"
     }
   ]
 }

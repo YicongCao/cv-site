@@ -47,7 +47,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function visitProject(index){if(motionBusy||$('#detail').open)return;void sound.tap();selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
   function mediaHtml(a){
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
-    if(isImage(a))return `<img src="${esc(href(a))}" alt="${esc(a.chapter)}">`;
+    if(isImage(a))return `<img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" alt="${esc(a.chapter)}">`;
     if(isVideo(a)){const src=href(a);return `<video controls playsinline preload="metadata" poster="${esc(a.preview||'')}" src="${esc(src)}"></video>`;}
     return `<div class="document"><a href="${esc(href(a))}" target="_blank" rel="noopener">${esc(a.title||'阅读技术分享')} ↗</a></div>`;
   }
@@ -67,7 +67,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function renderMedia(){
     stopMedia($('#media'));videoObserver?.disconnect();mediaIndex=0;
     $('#media').classList.toggle('masonry',mediaList.length>1);
-    $('#media').innerHTML=mediaList.length>1?'<div class="masonry-grid">'+mediaList.map((a,i)=>`<figure data-item="${i}">${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`).join('')+'</div>':mediaHtml(mediaList[0]);
+    $('#media').innerHTML=mediaList.length>1?'<div class="masonry-grid">'+mediaList.map((a,i)=>`<figure data-item="${i}">${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`).join('')+'</div>':mediaHtml(mediaList[0]);
     if(mediaList.length>1)all('[data-item]').forEach(el=>watchVideo(el,mediaList[Number(el.dataset.item)]));else watchVideo($('#media'),mediaList[0]);
     all('[data-expand]').forEach(b=>b.onclick=()=>openLarge(Number(b.dataset.expand)));
     $('#expand').hidden=!mediaList[0]||(!isImage(mediaList[0])&&!isVideo(mediaList[0]));

@@ -8,7 +8,7 @@ export function resolveGallery(config,projects,assets){
   return {project,period:row.period||project.period,skills:row.skills||project.keywords,images:row.images.slice(0,10).map((image,i)=>{
    const a=typeof image==='string'?assets.get(image):image;
    if(!a)throw new Error(`Unknown gallery image: ${image}`);
-   return {src:typeof image==='string'?`/media/gallery/${row.id}-${image}.jpg`:a.src,original:a.original||a.src,width:a.width,height:a.height,alt:`${project.title} · ${a.chapter||'演示画面'} ${i+1}`};
+   return {src:typeof image==='string'?`/media/gallery/${row.id}-${image}.jpg`:a.src,original:a.original||a.src,width:a.width,height:a.height,surface:a.surface,alt:`${project.title} · ${a.chapter||'演示画面'} ${i+1}`};
   })};
  });
 }
@@ -19,11 +19,11 @@ export function installGallery({dialog,config,projects,assets,onProject,onClose,
   <p class="gallery-period">${esc(period)}</p><div class="gallery-project-body">
   <h2><button data-gallery-detail="${p.id}">${projectIcon(p.id)}<span>${esc(p.title)}</span><span class="gallery-detail-arrow" aria-hidden="true">↗</span></button></h2>
   <ul class="gallery-skills" aria-label="主要职业技能">${skills.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>
-  <div class="gallery-filmstrip" role="region" aria-label="${esc(p.title)}插图" tabindex="0">${images.map((a,i)=>`<button class="gallery-photo" data-gallery-image="${i}" aria-label="放大：${esc(a.alt)}" style="--photo-ratio:${Math.max(.65,Math.min(2,a.width/a.height||1.6))}"><img src="${esc(a.src)}" width="${a.width}" height="${a.height}" alt="${esc(a.alt)}" loading="lazy" decoding="async" draggable="false"></button>`).join('')}</div>
+  <div class="gallery-filmstrip" role="region" aria-label="${esc(p.title)}插图" tabindex="0">${images.map((a,i)=>`<button class="gallery-photo" data-gallery-image="${i}" aria-label="放大：${esc(a.alt)}" style="--photo-ratio:${Math.max(.65,Math.min(2,a.width/a.height||1.6))}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(a.src)}" width="${a.width}" height="${a.height}" alt="${esc(a.alt)}" loading="lazy" decoding="async" draggable="false"></button>`).join('')}</div>
   <div class="gallery-strip-controls" ${images.length<2?'hidden':''}><button data-strip-prev aria-label="上一组${esc(p.title)}插图">←</button><button data-strip-next aria-label="下一组${esc(p.title)}插图">→</button></div>
   </div></article>`).join('');
  function showPreview(){
-  const a=previewRow.images[previewIndex],img=preview.querySelector('img');img.src=a.original;img.alt=a.alt;
+  const a=previewRow.images[previewIndex],img=preview.querySelector('img');img.src=a.original;img.alt=a.alt;img.classList.toggle('media-illustration',a.surface==='light');
   preview.querySelector('a').href=a.original;preview.querySelector('[data-preview-prev]').disabled=previewIndex===0;preview.querySelector('[data-preview-next]').disabled=previewIndex===previewRow.images.length-1;
  }
  function closePreview(){preview.close();preview.querySelector('img').removeAttribute('src');previewOrigin?.focus({preventScroll:true});}

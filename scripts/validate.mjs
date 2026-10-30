@@ -7,7 +7,7 @@ import {resolveGallery} from '../src/gallery.js';
 process.chdir(fileURLToPath(new URL('..',import.meta.url)));
 const data=JSON.parse(await readFile('public/data/portfolio.json'));
 const ledger=JSON.parse(await readFile('design/source-ledger.json'));
-assert(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.projects.length,14);assert.equal(data.assets.length,228);
+assert(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.projects.length,14);assert.equal(data.assets.length,232);
 assert.equal(data.projects.find(p=>p.id==='cloudgame').period,'2019');
 assert(!/\d{4}/.test(data.projects.find(p=>p.id==='xidian').period));
 for(const id of ['a060','a061','a062','a063']){assert(!data.assets.some(a=>a.id===id));assert(data.projects.every(p=>!p.assets.includes(id)));}
