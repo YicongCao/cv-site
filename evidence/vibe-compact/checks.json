@@ -1,0 +1,46 @@
+{
+  "before": {
+    "height": 677.40625,
+    "viewport": 1910,
+    "width": 1112
+  },
+  "after": {
+    "font": "13px",
+    "height": 454.03125,
+    "images": [
+      {
+        "height": 133.875,
+        "loaded": true,
+        "width": 238
+      },
+      {
+        "height": 133.875,
+        "loaded": true,
+        "width": 238
+      }
+    ],
+    "intro": false,
+    "overflow": false,
+    "title": "Vibe Coding 作品",
+    "width": 1112
+  },
+  "mobile": {
+    "cards": [
+      {
+        "layout": "block",
+        "width": 313
+      },
+      {
+        "layout": "block",
+        "width": 313
+      }
+    ],
+    "height": 1026.25,
+    "images": [
+      true,
+      true
+    ],
+    "overflow": false
+  },
+  "reductionPercent": 32.97504267195646
+}

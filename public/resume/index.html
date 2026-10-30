@@ -161,36 +161,36 @@
       white-space: nowrap;
     }
 
-    .vibe-section { padding: 24px; border: 1px solid #d9def0; border-left: 4px solid #7462bc; border-radius: 8px; background: linear-gradient(135deg, #f5f3fc, #f3f7ff); }
-    .vibe-section h2 { color: #6552a8; margin-bottom: 10px; }
+    .vibe-section { padding: 16px; border: 1px solid #d9def0; border-left: 4px solid #7462bc; border-radius: 8px; background: linear-gradient(135deg, #f5f3fc, #f3f7ff); }
+    .vibe-section h2 { color: #6552a8; margin-bottom: 12px; }
     .vibe-spark { width: 20px; height: 20px; flex: none; fill: currentColor; }
-    .vibe-intro { margin: 0 0 20px; color: #59627a; font-size: 13px; }
-    .vibe-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .vibe-card { min-width: 0; padding: 18px; border: 1px solid #dfe3ed; border-radius: 6px; background: white; break-inside: avoid; }
-    .vibe-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+    .vibe-grid { display: grid; gap: 12px; }
+    .vibe-card { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 4px 20px; min-width: 0; padding: 12px 14px; border: 1px solid #dfe3ed; border-radius: 6px; background: white; break-inside: avoid; }
+    .vibe-header { grid-column: 1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
     .vibe-card h3 { margin: 0; font-size: 18px; line-height: 1.4; }
     .vibe-card .period { font-size: 12px; color: #7462bc; }
-    .vibe-summary { margin: 8px 0 14px; font-size: 13px; color: var(--muted); }
-    .vibe-card .work-shot { margin: 0 0 16px; }
+    .vibe-summary { grid-column: 1; margin: 0 0 4px; font-size: 13px; color: var(--muted); }
+    .vibe-card .work-shot { grid-column: 2; grid-row: 1 / 4; align-self: center; margin: 0; }
     .vibe-card .shot-link { background: #111; border-radius: 4px; }
     .vibe-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }
-    .vibe-points { margin: 0; padding: 0; list-style: none; font-size: 13px; }
-    .vibe-points li { margin: 0 0 10px; }
+    .vibe-points { grid-column: 1; margin: 0; padding: 0; list-style: none; font-size: 13px; }
+    .vibe-points li { margin: 0 0 5px; }
     .vibe-points li:last-child { margin-bottom: 0; }
     .vibe-points strong { color: #4f4388; }
     @media screen and (max-width: 800px) {
-      .vibe-section { padding: 18px; }
-      .vibe-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-      .vibe-card { padding: 16px; }
+      .vibe-section { padding: 14px; }
+      .vibe-card { display: block; padding: 12px; }
+      .vibe-summary { margin: 6px 0 10px; }
+      .vibe-card .work-shot { margin-bottom: 10px; }
     }
     @media print {
       .vibe-section { padding: 10px; break-inside: avoid; background: #faf9fe; }
-      .vibe-grid { gap: 12px; }
-      .vibe-card { padding: 10px; }
+      .vibe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .vibe-card { display: block; padding: 10px; }
       .vibe-card h3 { font-size: 11pt; }
-      .vibe-intro, .vibe-summary, .vibe-points, .vibe-card .period { font-size: 8pt; }
-      .vibe-intro { margin-bottom: 10px; }
-      .vibe-points li { margin-bottom: 6px; }
+      .vibe-summary, .vibe-points, .vibe-card .period { font-size: 8pt; }
+      .vibe-card .work-shot { margin: 6px 0 8px; }
+      .vibe-points li { margin-bottom: 5px; }
     }
 
     .experience-heading {
@@ -482,8 +482,7 @@
     </section>
 
     <section class="vibe-section" aria-labelledby="vibe-title">
-      <h2 id="vibe-title"><svg class="vibe-spark" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 0h4v5h3v3h5v4h-5v3h-3v5H8v-5H5v-3H0V8h5V5h3z"/></svg>Vibe Coding · 独立作品</h2>
-      <p class="vibe-intro">以 Codex 协作开发，独立负责产品目标、技术选型、视觉与交互设计、迭代取舍和验收，把自己的想法逐步做成可运行的产品。</p>
+      <h2 id="vibe-title"><svg class="vibe-spark" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 0h4v5h3v3h5v4h-5v3h-3v5H8v-5H5v-3H0V8h5V5h3z"/></svg>Vibe Coding 作品</h2>
       <div class="vibe-grid">
         <article class="vibe-card" id="project-photomuseum">
           <div class="vibe-header"><h3>PhotoMuseum</h3><span class="period">2026/10 — 至今</span></div>

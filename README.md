@@ -29,7 +29,7 @@ npm start
 - 视频进入详情／滚动进入可见区域后自动静音播放，原生控件可开启声音、拖动进度。移出可见区域、切换、放大其他素材或关闭详情会停止原视频。
 - 详情内 Escape 优先关闭大图，再关闭详情。关闭后恢复焦点；浏览器前进／后退和 `/#project=cloudgame` 等深链接可用。
 - 尊重系统减少动态效果设置；`?motion=reduce` 可验证即时切换。`?renderer=flat` 可验证无 WebGL 的平面项目导航降级。
-- `/resume/` 是独立 HTML 简历，PhotoMuseum 与 Brushline Rally 作为「Vibe Coding · 独立作品」在工作项目经历前展示，包含图片和大图依赖。本轮没有重新导出 PDF。
+- `/resume/` 是独立 HTML 简历，PhotoMuseum 与 Brushline Rally 作为「Vibe Coding 作品」在工作项目经历前展示，包含图片和大图依赖。本轮没有重新导出 PDF。
 
 ## 目录
 
