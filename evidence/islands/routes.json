@@ -1,0 +1,1362 @@
+{
+  "nodes": 60,
+  "bridges": 15,
+  "longest": {
+    "from": "accelerator",
+    "to": "reader",
+    "distance": 61.16367728771148,
+    "seconds": 6.116367728771148
+  },
+  "routes": [
+    {
+      "from": "brushline",
+      "to": "brushline",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "brushline",
+      "to": "museum",
+      "distance": 20.854583082098078,
+      "seconds": 2.085458308209808
+    },
+    {
+      "from": "brushline",
+      "to": "nex",
+      "distance": 11.132855972549613,
+      "seconds": 1.1132855972549613
+    },
+    {
+      "from": "brushline",
+      "to": "pgos",
+      "distance": 36.271730858775165,
+      "seconds": 3.6271730858775166
+    },
+    {
+      "from": "brushline",
+      "to": "cloudgame",
+      "distance": 48.16099577644772,
+      "seconds": 4.816099577644772
+    },
+    {
+      "from": "brushline",
+      "to": "bot",
+      "distance": 27.89133762833913,
+      "seconds": 2.789133762833913
+    },
+    {
+      "from": "brushline",
+      "to": "accelerator",
+      "distance": 53.26878193208056,
+      "seconds": 5.326878193208056
+    },
+    {
+      "from": "brushline",
+      "to": "desktop",
+      "distance": 54.568911467473015,
+      "seconds": 5.456891146747301
+    },
+    {
+      "from": "brushline",
+      "to": "cleaner",
+      "distance": 53.95655598069196,
+      "seconds": 5.395655598069196
+    },
+    {
+      "from": "brushline",
+      "to": "win10",
+      "distance": 36.684520797710505,
+      "seconds": 3.6684520797710505
+    },
+    {
+      "from": "brushline",
+      "to": "uwp",
+      "distance": 54.96742126658145,
+      "seconds": 5.496742126658145
+    },
+    {
+      "from": "brushline",
+      "to": "reader",
+      "distance": 60.7606636449173,
+      "seconds": 6.07606636449173
+    },
+    {
+      "from": "brushline",
+      "to": "kinect",
+      "distance": 48.152563819733885,
+      "seconds": 4.815256381973389
+    },
+    {
+      "from": "brushline",
+      "to": "ishowfx",
+      "distance": 55.66880932649395,
+      "seconds": 5.566880932649395
+    },
+    {
+      "from": "brushline",
+      "to": "xidian",
+      "distance": 52.62035697371347,
+      "seconds": 5.262035697371347
+    },
+    {
+      "from": "museum",
+      "to": "brushline",
+      "distance": 20.854583082098078,
+      "seconds": 2.085458308209808
+    },
+    {
+      "from": "museum",
+      "to": "museum",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "museum",
+      "to": "nex",
+      "distance": 9.721727109548464,
+      "seconds": 0.9721727109548464
+    },
+    {
+      "from": "museum",
+      "to": "pgos",
+      "distance": 34.86060199577402,
+      "seconds": 3.486060199577402
+    },
+    {
+      "from": "museum",
+      "to": "cloudgame",
+      "distance": 46.749866913446574,
+      "seconds": 4.674986691344658
+    },
+    {
+      "from": "museum",
+      "to": "bot",
+      "distance": 26.48020876533798,
+      "seconds": 2.6480208765337983
+    },
+    {
+      "from": "museum",
+      "to": "accelerator",
+      "distance": 51.85765306907942,
+      "seconds": 5.185765306907942
+    },
+    {
+      "from": "museum",
+      "to": "desktop",
+      "distance": 53.15778260447186,
+      "seconds": 5.315778260447186
+    },
+    {
+      "from": "museum",
+      "to": "cleaner",
+      "distance": 52.54542711769081,
+      "seconds": 5.254542711769081
+    },
+    {
+      "from": "museum",
+      "to": "win10",
+      "distance": 35.27339193470935,
+      "seconds": 3.5273391934709353
+    },
+    {
+      "from": "museum",
+      "to": "uwp",
+      "distance": 53.556292403580294,
+      "seconds": 5.355629240358029
+    },
+    {
+      "from": "museum",
+      "to": "reader",
+      "distance": 59.34953478191615,
+      "seconds": 5.9349534781916145
+    },
+    {
+      "from": "museum",
+      "to": "kinect",
+      "distance": 46.74143495673274,
+      "seconds": 4.674143495673274
+    },
+    {
+      "from": "museum",
+      "to": "ishowfx",
+      "distance": 54.2576804634928,
+      "seconds": 5.42576804634928
+    },
+    {
+      "from": "museum",
+      "to": "xidian",
+      "distance": 51.20922811071232,
+      "seconds": 5.120922811071232
+    },
+    {
+      "from": "nex",
+      "to": "brushline",
+      "distance": 11.132855972549613,
+      "seconds": 1.1132855972549613
+    },
+    {
+      "from": "nex",
+      "to": "museum",
+      "distance": 9.721727109548464,
+      "seconds": 0.9721727109548464
+    },
+    {
+      "from": "nex",
+      "to": "nex",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "nex",
+      "to": "pgos",
+      "distance": 25.13887488622555,
+      "seconds": 2.5138874886225553
+    },
+    {
+      "from": "nex",
+      "to": "cloudgame",
+      "distance": 37.02813980389811,
+      "seconds": 3.7028139803898106
+    },
+    {
+      "from": "nex",
+      "to": "bot",
+      "distance": 16.758481655789517,
+      "seconds": 1.6758481655789517
+    },
+    {
+      "from": "nex",
+      "to": "accelerator",
+      "distance": 42.13592595953095,
+      "seconds": 4.213592595953095
+    },
+    {
+      "from": "nex",
+      "to": "desktop",
+      "distance": 43.436055494923394,
+      "seconds": 4.34360554949234
+    },
+    {
+      "from": "nex",
+      "to": "cleaner",
+      "distance": 42.823700008142346,
+      "seconds": 4.282370000814234
+    },
+    {
+      "from": "nex",
+      "to": "win10",
+      "distance": 25.551664825160888,
+      "seconds": 2.5551664825160887
+    },
+    {
+      "from": "nex",
+      "to": "uwp",
+      "distance": 43.834565294031826,
+      "seconds": 4.383456529403182
+    },
+    {
+      "from": "nex",
+      "to": "reader",
+      "distance": 49.62780767236768,
+      "seconds": 4.962780767236768
+    },
+    {
+      "from": "nex",
+      "to": "kinect",
+      "distance": 37.01970784718427,
+      "seconds": 3.7019707847184273
+    },
+    {
+      "from": "nex",
+      "to": "ishowfx",
+      "distance": 44.535953353944336,
+      "seconds": 4.453595335394434
+    },
+    {
+      "from": "nex",
+      "to": "xidian",
+      "distance": 41.48750100116386,
+      "seconds": 4.148750100116386
+    },
+    {
+      "from": "pgos",
+      "to": "brushline",
+      "distance": 36.27173085877517,
+      "seconds": 3.627173085877517
+    },
+    {
+      "from": "pgos",
+      "to": "museum",
+      "distance": 34.86060199577402,
+      "seconds": 3.486060199577402
+    },
+    {
+      "from": "pgos",
+      "to": "nex",
+      "distance": 25.138874886225555,
+      "seconds": 2.5138874886225553
+    },
+    {
+      "from": "pgos",
+      "to": "pgos",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "pgos",
+      "to": "cloudgame",
+      "distance": 11.889264917672554,
+      "seconds": 1.1889264917672553
+    },
+    {
+      "from": "pgos",
+      "to": "bot",
+      "distance": 41.897356542015075,
+      "seconds": 4.189735654201508
+    },
+    {
+      "from": "pgos",
+      "to": "accelerator",
+      "distance": 16.997051073305393,
+      "seconds": 1.6997051073305394
+    },
+    {
+      "from": "pgos",
+      "to": "desktop",
+      "distance": 37.97487403696181,
+      "seconds": 3.7974874036961808
+    },
+    {
+      "from": "pgos",
+      "to": "cleaner",
+      "distance": 37.36251855018075,
+      "seconds": 3.736251855018075
+    },
+    {
+      "from": "pgos",
+      "to": "win10",
+      "distance": 20.090483367199298,
+      "seconds": 2.0090483367199297
+    },
+    {
+      "from": "pgos",
+      "to": "uwp",
+      "distance": 38.37338383607024,
+      "seconds": 3.837338383607024
+    },
+    {
+      "from": "pgos",
+      "to": "reader",
+      "distance": 44.166626214406094,
+      "seconds": 4.41666262144061
+    },
+    {
+      "from": "pgos",
+      "to": "kinect",
+      "distance": 23.88083296095872,
+      "seconds": 2.388083296095872
+    },
+    {
+      "from": "pgos",
+      "to": "ishowfx",
+      "distance": 39.07477189598274,
+      "seconds": 3.907477189598274
+    },
+    {
+      "from": "pgos",
+      "to": "xidian",
+      "distance": 36.02631954320226,
+      "seconds": 3.602631954320226
+    },
+    {
+      "from": "cloudgame",
+      "to": "brushline",
+      "distance": 48.16099577644772,
+      "seconds": 4.816099577644772
+    },
+    {
+      "from": "cloudgame",
+      "to": "museum",
+      "distance": 46.74986691344657,
+      "seconds": 4.674986691344657
+    },
+    {
+      "from": "cloudgame",
+      "to": "nex",
+      "distance": 37.02813980389811,
+      "seconds": 3.7028139803898106
+    },
+    {
+      "from": "cloudgame",
+      "to": "pgos",
+      "distance": 11.889264917672554,
+      "seconds": 1.1889264917672553
+    },
+    {
+      "from": "cloudgame",
+      "to": "cloudgame",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "cloudgame",
+      "to": "bot",
+      "distance": 53.78662145968762,
+      "seconds": 5.378662145968763
+    },
+    {
+      "from": "cloudgame",
+      "to": "accelerator",
+      "distance": 28.88631599097795,
+      "seconds": 2.8886315990977947
+    },
+    {
+      "from": "cloudgame",
+      "to": "desktop",
+      "distance": 49.86413895463437,
+      "seconds": 4.986413895463437
+    },
+    {
+      "from": "cloudgame",
+      "to": "cleaner",
+      "distance": 49.25178346785331,
+      "seconds": 4.925178346785331
+    },
+    {
+      "from": "cloudgame",
+      "to": "win10",
+      "distance": 31.979748284871853,
+      "seconds": 3.1979748284871854
+    },
+    {
+      "from": "cloudgame",
+      "to": "uwp",
+      "distance": 50.262648753742795,
+      "seconds": 5.026264875374279
+    },
+    {
+      "from": "cloudgame",
+      "to": "reader",
+      "distance": 56.05589113207864,
+      "seconds": 5.605589113207865
+    },
+    {
+      "from": "cloudgame",
+      "to": "kinect",
+      "distance": 35.770097878631276,
+      "seconds": 3.5770097878631275
+    },
+    {
+      "from": "cloudgame",
+      "to": "ishowfx",
+      "distance": 50.9640368136553,
+      "seconds": 5.09640368136553
+    },
+    {
+      "from": "cloudgame",
+      "to": "xidian",
+      "distance": 47.91558446087482,
+      "seconds": 4.791558446087482
+    },
+    {
+      "from": "bot",
+      "to": "brushline",
+      "distance": 27.89133762833913,
+      "seconds": 2.789133762833913
+    },
+    {
+      "from": "bot",
+      "to": "museum",
+      "distance": 26.48020876533798,
+      "seconds": 2.6480208765337983
+    },
+    {
+      "from": "bot",
+      "to": "nex",
+      "distance": 16.758481655789517,
+      "seconds": 1.6758481655789517
+    },
+    {
+      "from": "bot",
+      "to": "pgos",
+      "distance": 41.89735654201507,
+      "seconds": 4.189735654201507
+    },
+    {
+      "from": "bot",
+      "to": "cloudgame",
+      "distance": 53.78662145968762,
+      "seconds": 5.378662145968763
+    },
+    {
+      "from": "bot",
+      "to": "bot",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "bot",
+      "to": "accelerator",
+      "distance": 58.89440761532046,
+      "seconds": 5.889440761532046
+    },
+    {
+      "from": "bot",
+      "to": "desktop",
+      "distance": 48.19453715071292,
+      "seconds": 4.819453715071292
+    },
+    {
+      "from": "bot",
+      "to": "cleaner",
+      "distance": 47.58218166393186,
+      "seconds": 4.758218166393187
+    },
+    {
+      "from": "bot",
+      "to": "win10",
+      "distance": 30.310146480950404,
+      "seconds": 3.0310146480950406
+    },
+    {
+      "from": "bot",
+      "to": "uwp",
+      "distance": 48.59304694982135,
+      "seconds": 4.859304694982135
+    },
+    {
+      "from": "bot",
+      "to": "reader",
+      "distance": 54.386289328157204,
+      "seconds": 5.43862893281572
+    },
+    {
+      "from": "bot",
+      "to": "kinect",
+      "distance": 53.77818950297379,
+      "seconds": 5.377818950297379
+    },
+    {
+      "from": "bot",
+      "to": "ishowfx",
+      "distance": 49.29443500973385,
+      "seconds": 4.9294435009733855
+    },
+    {
+      "from": "bot",
+      "to": "xidian",
+      "distance": 46.24598265695337,
+      "seconds": 4.6245982656953375
+    },
+    {
+      "from": "accelerator",
+      "to": "brushline",
+      "distance": 53.26878193208057,
+      "seconds": 5.326878193208057
+    },
+    {
+      "from": "accelerator",
+      "to": "museum",
+      "distance": 51.85765306907942,
+      "seconds": 5.185765306907942
+    },
+    {
+      "from": "accelerator",
+      "to": "nex",
+      "distance": 42.13592595953095,
+      "seconds": 4.213592595953095
+    },
+    {
+      "from": "accelerator",
+      "to": "pgos",
+      "distance": 16.997051073305396,
+      "seconds": 1.6997051073305396
+    },
+    {
+      "from": "accelerator",
+      "to": "cloudgame",
+      "distance": 28.88631599097795,
+      "seconds": 2.8886315990977947
+    },
+    {
+      "from": "accelerator",
+      "to": "bot",
+      "distance": 58.89440761532047,
+      "seconds": 5.889440761532047
+    },
+    {
+      "from": "accelerator",
+      "to": "accelerator",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "accelerator",
+      "to": "desktop",
+      "distance": 54.97192511026721,
+      "seconds": 5.497192511026721
+    },
+    {
+      "from": "accelerator",
+      "to": "cleaner",
+      "distance": 54.359569623486145,
+      "seconds": 5.435956962348614
+    },
+    {
+      "from": "accelerator",
+      "to": "win10",
+      "distance": 37.08753444050469,
+      "seconds": 3.708753444050469
+    },
+    {
+      "from": "accelerator",
+      "to": "uwp",
+      "distance": 55.37043490937563,
+      "seconds": 5.537043490937563
+    },
+    {
+      "from": "accelerator",
+      "to": "reader",
+      "distance": 61.16367728771148,
+      "seconds": 6.116367728771148
+    },
+    {
+      "from": "accelerator",
+      "to": "kinect",
+      "distance": 28.877884034264113,
+      "seconds": 2.8877884034264114
+    },
+    {
+      "from": "accelerator",
+      "to": "ishowfx",
+      "distance": 56.071822969288135,
+      "seconds": 5.607182296928814
+    },
+    {
+      "from": "accelerator",
+      "to": "xidian",
+      "distance": 53.023370616507655,
+      "seconds": 5.302337061650766
+    },
+    {
+      "from": "desktop",
+      "to": "brushline",
+      "distance": 54.568911467473015,
+      "seconds": 5.456891146747301
+    },
+    {
+      "from": "desktop",
+      "to": "museum",
+      "distance": 53.15778260447186,
+      "seconds": 5.315778260447186
+    },
+    {
+      "from": "desktop",
+      "to": "nex",
+      "distance": 43.436055494923394,
+      "seconds": 4.34360554949234
+    },
+    {
+      "from": "desktop",
+      "to": "pgos",
+      "distance": 37.97487403696181,
+      "seconds": 3.7974874036961808
+    },
+    {
+      "from": "desktop",
+      "to": "cloudgame",
+      "distance": 49.86413895463436,
+      "seconds": 4.9864138954634365
+    },
+    {
+      "from": "desktop",
+      "to": "bot",
+      "distance": 48.19453715071291,
+      "seconds": 4.819453715071291
+    },
+    {
+      "from": "desktop",
+      "to": "accelerator",
+      "distance": 54.97192511026721,
+      "seconds": 5.497192511026721
+    },
+    {
+      "from": "desktop",
+      "to": "desktop",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "desktop",
+      "to": "cleaner",
+      "distance": 23.156425852743965,
+      "seconds": 2.3156425852743965
+    },
+    {
+      "from": "desktop",
+      "to": "win10",
+      "distance": 17.88439066976251,
+      "seconds": 1.788439066976251
+    },
+    {
+      "from": "desktop",
+      "to": "uwp",
+      "distance": 24.167291138633452,
+      "seconds": 2.416729113863345
+    },
+    {
+      "from": "desktop",
+      "to": "reader",
+      "distance": 29.960533516969303,
+      "seconds": 2.99605335169693
+    },
+    {
+      "from": "desktop",
+      "to": "kinect",
+      "distance": 49.85570699792053,
+      "seconds": 4.985570699792053
+    },
+    {
+      "from": "desktop",
+      "to": "ishowfx",
+      "distance": 36.868679198545955,
+      "seconds": 3.6868679198545955
+    },
+    {
+      "from": "desktop",
+      "to": "xidian",
+      "distance": 33.820226845765475,
+      "seconds": 3.3820226845765475
+    },
+    {
+      "from": "cleaner",
+      "to": "brushline",
+      "distance": 53.95655598069196,
+      "seconds": 5.395655598069196
+    },
+    {
+      "from": "cleaner",
+      "to": "museum",
+      "distance": 52.54542711769081,
+      "seconds": 5.254542711769081
+    },
+    {
+      "from": "cleaner",
+      "to": "nex",
+      "distance": 42.82370000814234,
+      "seconds": 4.282370000814234
+    },
+    {
+      "from": "cleaner",
+      "to": "pgos",
+      "distance": 37.36251855018075,
+      "seconds": 3.736251855018075
+    },
+    {
+      "from": "cleaner",
+      "to": "cloudgame",
+      "distance": 49.25178346785331,
+      "seconds": 4.925178346785331
+    },
+    {
+      "from": "cleaner",
+      "to": "bot",
+      "distance": 47.582181663931856,
+      "seconds": 4.758218166393186
+    },
+    {
+      "from": "cleaner",
+      "to": "accelerator",
+      "distance": 54.35956962348615,
+      "seconds": 5.435956962348615
+    },
+    {
+      "from": "cleaner",
+      "to": "desktop",
+      "distance": 23.15642585274397,
+      "seconds": 2.315642585274397
+    },
+    {
+      "from": "cleaner",
+      "to": "cleaner",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "cleaner",
+      "to": "win10",
+      "distance": 17.272035182981455,
+      "seconds": 1.7272035182981456
+    },
+    {
+      "from": "cleaner",
+      "to": "uwp",
+      "distance": 23.554935651852396,
+      "seconds": 2.3554935651852396
+    },
+    {
+      "from": "cleaner",
+      "to": "reader",
+      "distance": 29.348178030188247,
+      "seconds": 2.9348178030188246
+    },
+    {
+      "from": "cleaner",
+      "to": "kinect",
+      "distance": 49.24335151113947,
+      "seconds": 4.924335151113947
+    },
+    {
+      "from": "cleaner",
+      "to": "ishowfx",
+      "distance": 36.2563237117649,
+      "seconds": 3.62563237117649
+    },
+    {
+      "from": "cleaner",
+      "to": "xidian",
+      "distance": 33.20787135898442,
+      "seconds": 3.320787135898442
+    },
+    {
+      "from": "win10",
+      "to": "brushline",
+      "distance": 36.684520797710505,
+      "seconds": 3.6684520797710505
+    },
+    {
+      "from": "win10",
+      "to": "museum",
+      "distance": 35.27339193470935,
+      "seconds": 3.5273391934709353
+    },
+    {
+      "from": "win10",
+      "to": "nex",
+      "distance": 25.551664825160888,
+      "seconds": 2.5551664825160887
+    },
+    {
+      "from": "win10",
+      "to": "pgos",
+      "distance": 20.090483367199298,
+      "seconds": 2.0090483367199297
+    },
+    {
+      "from": "win10",
+      "to": "cloudgame",
+      "distance": 31.979748284871853,
+      "seconds": 3.1979748284871854
+    },
+    {
+      "from": "win10",
+      "to": "bot",
+      "distance": 30.310146480950404,
+      "seconds": 3.0310146480950406
+    },
+    {
+      "from": "win10",
+      "to": "accelerator",
+      "distance": 37.0875344405047,
+      "seconds": 3.70875344405047
+    },
+    {
+      "from": "win10",
+      "to": "desktop",
+      "distance": 17.88439066976251,
+      "seconds": 1.788439066976251
+    },
+    {
+      "from": "win10",
+      "to": "cleaner",
+      "distance": 17.272035182981455,
+      "seconds": 1.7272035182981456
+    },
+    {
+      "from": "win10",
+      "to": "win10",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "win10",
+      "to": "uwp",
+      "distance": 18.282900468870942,
+      "seconds": 1.8282900468870942
+    },
+    {
+      "from": "win10",
+      "to": "reader",
+      "distance": 24.076142847206793,
+      "seconds": 2.407614284720679
+    },
+    {
+      "from": "win10",
+      "to": "kinect",
+      "distance": 31.971316328158018,
+      "seconds": 3.1971316328158017
+    },
+    {
+      "from": "win10",
+      "to": "ishowfx",
+      "distance": 18.984288528783445,
+      "seconds": 1.8984288528783444
+    },
+    {
+      "from": "win10",
+      "to": "xidian",
+      "distance": 15.935836176002965,
+      "seconds": 1.5935836176002964
+    },
+    {
+      "from": "uwp",
+      "to": "brushline",
+      "distance": 54.967421266581454,
+      "seconds": 5.4967421266581455
+    },
+    {
+      "from": "uwp",
+      "to": "museum",
+      "distance": 53.5562924035803,
+      "seconds": 5.35562924035803
+    },
+    {
+      "from": "uwp",
+      "to": "nex",
+      "distance": 43.83456529403183,
+      "seconds": 4.383456529403183
+    },
+    {
+      "from": "uwp",
+      "to": "pgos",
+      "distance": 38.37338383607024,
+      "seconds": 3.837338383607024
+    },
+    {
+      "from": "uwp",
+      "to": "cloudgame",
+      "distance": 50.262648753742795,
+      "seconds": 5.026264875374279
+    },
+    {
+      "from": "uwp",
+      "to": "bot",
+      "distance": 48.59304694982135,
+      "seconds": 4.859304694982135
+    },
+    {
+      "from": "uwp",
+      "to": "accelerator",
+      "distance": 55.37043490937563,
+      "seconds": 5.537043490937563
+    },
+    {
+      "from": "uwp",
+      "to": "desktop",
+      "distance": 24.167291138633455,
+      "seconds": 2.4167291138633455
+    },
+    {
+      "from": "uwp",
+      "to": "cleaner",
+      "distance": 23.554935651852396,
+      "seconds": 2.3554935651852396
+    },
+    {
+      "from": "uwp",
+      "to": "win10",
+      "distance": 18.282900468870942,
+      "seconds": 1.8282900468870942
+    },
+    {
+      "from": "uwp",
+      "to": "uwp",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "uwp",
+      "to": "reader",
+      "distance": 18.359043316077734,
+      "seconds": 1.8359043316077734
+    },
+    {
+      "from": "uwp",
+      "to": "kinect",
+      "distance": 50.25421679702896,
+      "seconds": 5.025421679702896
+    },
+    {
+      "from": "uwp",
+      "to": "ishowfx",
+      "distance": 25.267188997654387,
+      "seconds": 2.526718899765439
+    },
+    {
+      "from": "uwp",
+      "to": "xidian",
+      "distance": 22.218736644873903,
+      "seconds": 2.2218736644873904
+    },
+    {
+      "from": "reader",
+      "to": "brushline",
+      "distance": 60.7606636449173,
+      "seconds": 6.07606636449173
+    },
+    {
+      "from": "reader",
+      "to": "museum",
+      "distance": 59.34953478191615,
+      "seconds": 5.9349534781916145
+    },
+    {
+      "from": "reader",
+      "to": "nex",
+      "distance": 49.62780767236768,
+      "seconds": 4.962780767236768
+    },
+    {
+      "from": "reader",
+      "to": "pgos",
+      "distance": 44.16662621440609,
+      "seconds": 4.416662621440609
+    },
+    {
+      "from": "reader",
+      "to": "cloudgame",
+      "distance": 56.05589113207864,
+      "seconds": 5.605589113207865
+    },
+    {
+      "from": "reader",
+      "to": "bot",
+      "distance": 54.3862893281572,
+      "seconds": 5.438628932815719
+    },
+    {
+      "from": "reader",
+      "to": "accelerator",
+      "distance": 61.16367728771148,
+      "seconds": 6.116367728771148
+    },
+    {
+      "from": "reader",
+      "to": "desktop",
+      "distance": 29.960533516969303,
+      "seconds": 2.99605335169693
+    },
+    {
+      "from": "reader",
+      "to": "cleaner",
+      "distance": 29.348178030188247,
+      "seconds": 2.9348178030188246
+    },
+    {
+      "from": "reader",
+      "to": "win10",
+      "distance": 24.076142847206793,
+      "seconds": 2.407614284720679
+    },
+    {
+      "from": "reader",
+      "to": "uwp",
+      "distance": 18.359043316077734,
+      "seconds": 1.8359043316077734
+    },
+    {
+      "from": "reader",
+      "to": "reader",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "reader",
+      "to": "kinect",
+      "distance": 56.04745917536481,
+      "seconds": 5.604745917536481
+    },
+    {
+      "from": "reader",
+      "to": "ishowfx",
+      "distance": 31.06043137599024,
+      "seconds": 3.1060431375990243
+    },
+    {
+      "from": "reader",
+      "to": "xidian",
+      "distance": 28.011979023209758,
+      "seconds": 2.801197902320976
+    },
+    {
+      "from": "kinect",
+      "to": "brushline",
+      "distance": 48.152563819733885,
+      "seconds": 4.815256381973389
+    },
+    {
+      "from": "kinect",
+      "to": "museum",
+      "distance": 46.74143495673273,
+      "seconds": 4.674143495673273
+    },
+    {
+      "from": "kinect",
+      "to": "nex",
+      "distance": 37.01970784718427,
+      "seconds": 3.7019707847184273
+    },
+    {
+      "from": "kinect",
+      "to": "pgos",
+      "distance": 23.880832960958717,
+      "seconds": 2.3880832960958718
+    },
+    {
+      "from": "kinect",
+      "to": "cloudgame",
+      "distance": 35.77009787863127,
+      "seconds": 3.577009787863127
+    },
+    {
+      "from": "kinect",
+      "to": "bot",
+      "distance": 53.77818950297379,
+      "seconds": 5.377818950297379
+    },
+    {
+      "from": "kinect",
+      "to": "accelerator",
+      "distance": 28.877884034264113,
+      "seconds": 2.8877884034264114
+    },
+    {
+      "from": "kinect",
+      "to": "desktop",
+      "distance": 49.85570699792052,
+      "seconds": 4.985570699792052
+    },
+    {
+      "from": "kinect",
+      "to": "cleaner",
+      "distance": 49.243351511139466,
+      "seconds": 4.924335151113946
+    },
+    {
+      "from": "kinect",
+      "to": "win10",
+      "distance": 31.97131632815801,
+      "seconds": 3.1971316328158013
+    },
+    {
+      "from": "kinect",
+      "to": "uwp",
+      "distance": 50.25421679702895,
+      "seconds": 5.025421679702895
+    },
+    {
+      "from": "kinect",
+      "to": "reader",
+      "distance": 56.04745917536481,
+      "seconds": 5.604745917536481
+    },
+    {
+      "from": "kinect",
+      "to": "kinect",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "kinect",
+      "to": "ishowfx",
+      "distance": 50.955604856941456,
+      "seconds": 5.095560485694145
+    },
+    {
+      "from": "kinect",
+      "to": "xidian",
+      "distance": 47.907152504160976,
+      "seconds": 4.790715250416097
+    },
+    {
+      "from": "ishowfx",
+      "to": "brushline",
+      "distance": 55.66880932649396,
+      "seconds": 5.566880932649395
+    },
+    {
+      "from": "ishowfx",
+      "to": "museum",
+      "distance": 54.257680463492804,
+      "seconds": 5.425768046349281
+    },
+    {
+      "from": "ishowfx",
+      "to": "nex",
+      "distance": 44.535953353944336,
+      "seconds": 4.453595335394434
+    },
+    {
+      "from": "ishowfx",
+      "to": "pgos",
+      "distance": 39.07477189598274,
+      "seconds": 3.907477189598274
+    },
+    {
+      "from": "ishowfx",
+      "to": "cloudgame",
+      "distance": 50.9640368136553,
+      "seconds": 5.09640368136553
+    },
+    {
+      "from": "ishowfx",
+      "to": "bot",
+      "distance": 49.29443500973385,
+      "seconds": 4.9294435009733855
+    },
+    {
+      "from": "ishowfx",
+      "to": "accelerator",
+      "distance": 56.071822969288135,
+      "seconds": 5.607182296928814
+    },
+    {
+      "from": "ishowfx",
+      "to": "desktop",
+      "distance": 36.86867919854596,
+      "seconds": 3.6868679198545964
+    },
+    {
+      "from": "ishowfx",
+      "to": "cleaner",
+      "distance": 36.2563237117649,
+      "seconds": 3.62563237117649
+    },
+    {
+      "from": "ishowfx",
+      "to": "win10",
+      "distance": 18.984288528783445,
+      "seconds": 1.8984288528783444
+    },
+    {
+      "from": "ishowfx",
+      "to": "uwp",
+      "distance": 25.267188997654387,
+      "seconds": 2.526718899765439
+    },
+    {
+      "from": "ishowfx",
+      "to": "reader",
+      "distance": 31.060431375990238,
+      "seconds": 3.106043137599024
+    },
+    {
+      "from": "ishowfx",
+      "to": "kinect",
+      "distance": 50.95560485694146,
+      "seconds": 5.095560485694146
+    },
+    {
+      "from": "ishowfx",
+      "to": "ishowfx",
+      "distance": 0,
+      "seconds": 0
+    },
+    {
+      "from": "ishowfx",
+      "to": "xidian",
+      "distance": 22.920124704786407,
+      "seconds": 2.2920124704786407
+    },
+    {
+      "from": "xidian",
+      "to": "brushline",
+      "distance": 52.62035697371347,
+      "seconds": 5.262035697371347
+    },
+    {
+      "from": "xidian",
+      "to": "museum",
+      "distance": 51.20922811071232,
+      "seconds": 5.120922811071232
+    },
+    {
+      "from": "xidian",
+      "to": "nex",
+      "distance": 41.48750100116385,
+      "seconds": 4.148750100116385
+    },
+    {
+      "from": "xidian",
+      "to": "pgos",
+      "distance": 36.02631954320226,
+      "seconds": 3.602631954320226
+    },
+    {
+      "from": "xidian",
+      "to": "cloudgame",
+      "distance": 47.91558446087482,
+      "seconds": 4.791558446087482
+    },
+    {
+      "from": "xidian",
+      "to": "bot",
+      "distance": 46.245982656953366,
+      "seconds": 4.624598265695337
+    },
+    {
+      "from": "xidian",
+      "to": "accelerator",
+      "distance": 53.02337061650766,
+      "seconds": 5.302337061650766
+    },
+    {
+      "from": "xidian",
+      "to": "desktop",
+      "distance": 33.820226845765475,
+      "seconds": 3.3820226845765475
+    },
+    {
+      "from": "xidian",
+      "to": "cleaner",
+      "distance": 33.20787135898442,
+      "seconds": 3.320787135898442
+    },
+    {
+      "from": "xidian",
+      "to": "win10",
+      "distance": 15.935836176002965,
+      "seconds": 1.5935836176002964
+    },
+    {
+      "from": "xidian",
+      "to": "uwp",
+      "distance": 22.218736644873907,
+      "seconds": 2.221873664487391
+    },
+    {
+      "from": "xidian",
+      "to": "reader",
+      "distance": 28.011979023209758,
+      "seconds": 2.801197902320976
+    },
+    {
+      "from": "xidian",
+      "to": "kinect",
+      "distance": 47.90715250416098,
+      "seconds": 4.790715250416098
+    },
+    {
+      "from": "xidian",
+      "to": "ishowfx",
+      "distance": 22.92012470478641,
+      "seconds": 2.292012470478641
+    },
+    {
+      "from": "xidian",
+      "to": "xidian",
+      "distance": 0,
+      "seconds": 0
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "case": "cross-theme-walking",
+    "animation": "walking",
+    "drawCalls": "105",
+    "follow": "true",
+    "position": "4.071,0.360,7.904",
+    "project": "bot",
+    "remaining": "39.73",
+    "renderer": "webgl",
+    "theme": "ai",
+    "travelerProject": "bot",
+    "view": "theme",
+    "walked": "2.17"
+  },
+  {
+    "case": "overview-cancels-trip",
+    "animation": "idle",
+    "drawCalls": "132",
+    "follow": "false",
+    "position": "4.071,0.360,7.071",
+    "project": "bot",
+    "remaining": "0.00",
+    "renderer": "webgl",
+    "theme": "",
+    "travelerProject": "bot",
+    "view": "overview",
+    "walked": "3.00"
+  },
+  {
+    "case": "new-target-repeat",
+    "animation": "walking",
+    "drawCalls": "95",
+    "follow": "true",
+    "position": "4.461,0.204,13.376",
+    "project": "cloudgame",
+    "remaining": "8.56",
+    "renderer": "webgl",
+    "theme": "games",
+    "travelerProject": "cloudgame",
+    "view": "theme",
+    "walked": "9.33"
+  },
+  {
+    "case": "latest-result",
+    "title": "云原生游戏天梯"
+  },
+  {
+    "case": "back",
+    "animation": "idle",
+    "drawCalls": "95",
+    "follow": "true",
+    "position": "4.971,0.000,21.899",
+    "project": "cloudgame",
+    "remaining": "0.00",
+    "renderer": "webgl",
+    "theme": "games",
+    "travelerProject": "cloudgame",
+    "view": "theme",
+    "walked": "17.89"
+  },
+  {
+    "case": "forward",
+    "animation": "detail",
+    "drawCalls": "95",
+    "follow": "false",
+    "position": "4.971,0.000,21.899",
+    "project": "cloudgame",
+    "remaining": "0.00",
+    "renderer": "webgl",
+    "theme": "games",
+    "travelerProject": "cloudgame",
+    "view": "theme",
+    "walked": "17.89"
+  },
+  {
+    "case": "manual-pan",
+    "animation": "walking",
+    "drawCalls": "133",
+    "follow": "false",
+    "position": "4.971,0.000,18.075",
+    "project": "reader",
+    "remaining": "52.23",
+    "renderer": "webgl",
+    "theme": "clients",
+    "travelerProject": "reader",
+    "view": "theme",
+    "walked": "21.71"
+  },
+  {
+    "case": "escape-walk",
+    "animation": "idle",
+    "drawCalls": "133",
+    "follow": "false",
+    "position": "4.971,0.000,17.899",
+    "project": "reader",
+    "remaining": "0.00",
+    "renderer": "webgl",
+    "theme": "clients",
+    "travelerProject": "reader",
+    "view": "theme",
+    "walked": "21.89"
+  },
+  {
+    "case": "bot-last",
+    "decoded": true,
+    "src": "/media/originals/images/a205.png"
+  },
+  {
+    "case": "escape-lightbox",
+    "detail": true,
+    "lightbox": false
+  },
+  {
+    "case": "focus-return",
+    "focus": "explore"
+  },
+  {
+    "test": "flat",
+    "projects": 15,
+    "groups": 3
+  },
+  {
+    "test": "flat-open",
+    "title": "西电导航"
+  },
+  {
+    "test": "reduced-keyboard",
+    "title": "云原生游戏天梯",
+    "period": "2019",
+    "stage": {
+      "animation": "detail",
+      "cameraReady": "true",
+      "drawCalls": "95",
+      "follow": "true",
+      "position": "4.971,0.000,21.899",
+      "project": "cloudgame",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "theme": "games",
+      "travelerProject": "cloudgame",
+      "view": "theme",
+      "walked": "0.00"
+    }
+  },
+  {
+    "test": "keyboard-focus-return",
+    "focus": "explore"
+  },
+  {
+    "test": "independent-copy",
+    "url": "http://127.0.0.1:3001/#project=museum",
+    "media": {
+      "muted": true,
+      "paused": false,
+      "src": "http://127.0.0.1:3001/media/originals/videos/a175.mp4"
+    },
+    "origins": [
+      "http://127.0.0.1:3001"
+    ]
+  }
+]

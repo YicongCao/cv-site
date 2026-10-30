@@ -1,60 +1,140 @@
 import * as T from 'three';
-import {makeWorld,sampleRoute,Journey} from './world.js';
+import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
+const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
+const direction=new T.Vector3(1,1,1).normalize();
+const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
- constructor({element,projects,onSelect,onOpen,onFailure}){
-  Object.assign(this,{element,projects,onSelect,onOpen,onFailure});this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=0;this.follow=true;this.active=true;this.last=0;this.time=0;this.heading=0;this.cameraDistance=0;
+ constructor({element,projects,onSelect,onOpen,onTheme,onFailure}){
+  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure});
+  this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
+  this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
-  this.scene=new T.Scene();this.scene.background=new T.Color(0x222e32);this.camera=new T.OrthographicCamera(-10,10,8,-8,.1,250);
-  this.renderer=new T.WebGLRenderer({antialias:false,alpha:false,preserveDrawingBuffer:true});this.renderer.setPixelRatio(1);this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.domElement.setAttribute('aria-label','白帽旅人的像素微缩展馆');element.prepend(this.renderer.domElement);element.dataset.renderer='webgl';
-  this.islands=this.world.stations.map(s=>{const g=makeIsland(s);this.scene.add(g);const edge=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(3.98,.05,3.98)),new T.LineBasicMaterial({color:color.gold}));edge.position.y=.02;g.add(edge);return {group:g,edge};});
-  this.walkway=new T.Group();this.scene.add(this.walkway);this.bridges=[];
-  // Continuous tiles follow the exact route used by the traveler, including height changes.
-  for(let i=1;i<this.world.points.length;i++){const a=this.world.points[i-1],b=this.world.points[i],len=Math.hypot(b.x-a.x,b.z-a.z),steps=Math.max(1,Math.ceil(len/.34));const section=new T.Group();this.walkway.add(section);for(let j=0;j<steps;j++){const t=(j+.5)/steps,m=box(section,a.x+(b.x-a.x)*t,a.y+(b.y-a.y)*t-.065,a.z+(b.z-a.z)*t,.64,.13,len/steps+.015,0x929d87);m.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);}batchBoxes(section);this.bridges.push({group:section,d:(a.d+b.d)/2});}
+  this.scene=new T.Scene();this.scene.background=new T.Color(0x222e32);
+  this.camera=new T.OrthographicCamera(-10,10,8,-8,.1,300);
+  this.renderer=new T.WebGLRenderer({antialias:false,alpha:false,preserveDrawingBuffer:true});this.renderer.setPixelRatio(1);this.renderer.outputColorSpace=T.SRGBColorSpace;
+  this.renderer.domElement.setAttribute('aria-label','三座主题岛群与白帽旅人');element.prepend(this.renderer.domElement);element.dataset.renderer='webgl';
+  this.islands=this.world.stations.map(s=>{
+   const group=makeIsland(s);this.scene.add(group);group.traverse(o=>{if(o.material)o.material=o.material.clone();});
+   const edge=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(s.size,.06,s.size)),new T.LineBasicMaterial({color:color.gold}));edge.position.y=.03;group.add(edge);return {group,edge};
+  });
+  this.walkway=new T.Group();this.scene.add(this.walkway);this.sections=[];
+  for(const e of this.world.edges){
+   const a=this.world.nodes[e.a],b=this.world.nodes[e.b],len=Math.hypot(b.x-a.x,b.z-a.z),steps=Math.max(1,Math.ceil(len/.42));
+   const section=new T.Group();this.walkway.add(section);const angle=Math.atan2(b.x-a.x,b.z-a.z);
+   for(let j=0;j<steps;j++){
+    const t=(j+.5)/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t,z=a.z+(b.z-a.z)*t;
+    const tile=box(section,x,y-(e.bridge?.09:.075),z,e.bridge?1:.64,.18,len/steps+.015,e.bridge?0x9da68b:0x8b9b80);tile.rotation.y=angle;
+    if(e.bridge&&j%2===0)for(const side of [-1,1]){
+     const curb=box(section,x+Math.cos(angle)*.55*side,y+.04,z-Math.sin(angle)*.55*side,.12,.15,len/steps*.8,0x7d8f7a);curb.rotation.y=angle;
+    }
+   }
+   if(e.bridge&&len>5)box(section,(a.x+b.x)/2,(a.y+b.y)/2-.65,(a.z+b.z)/2,.5,1,.5,0x556b60);
+   batchBoxes(section);section.traverse(o=>{if(o.material)o.material=o.material.clone();});this.sections.push({group:section,a:this.world.stations[a.station].theme,b:this.world.stations[b.station].theme});
+  }
   this.traveler=makeTraveler();this.scene.add(this.traveler.root);
   this.magic=new T.Group();this.scene.add(this.magic);this.sparks=[];for(let i=0;i<10;i++)this.sparks.push(box(this.magic,0,0,0,.07,.07,.07,color.gold));
   this.portal=new T.Group();this.scene.add(this.portal);for(const side of [-1,1]){box(this.portal,side,0,0,.035,2,.035,color.gold);box(this.portal,0,side,0,2,.035,.035,color.gold);}
-  this.pointer=new T.Vector2();this.ray=new T.Raycaster();this.center=new T.Vector3();this.goalCenter=new T.Vector3();this.bindInput();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.syncLabels();this.wake();
+  this.pointer=new T.Vector2();this.ray=new T.Raycaster();this.center=new T.Vector3();this.goalCenter=new T.Vector3();this.viewHeight=40;
+  this.bindInput();this.syncLabels();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.wake();
   document.addEventListener('visibilitychange',()=>{this.last=0;if(!document.hidden)this.wake();});
   this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
- select(index,{manual=false}={}){this.selected=clamp(index,0,this.projects.length-1);this.cameraDistance=this.world.stations[this.selected].distance;if(manual)this.follow=false;this.syncLabels();this.wake();}
+ select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
+ focusTheme(id){this.cancel();this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
+ overview(){this.cancel();this.mode='overview';this.theme=null;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
+ locate(index){this.journey.cancel();this.journey.visit(index,true);this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.cameraAt(true);this.wake();}
  visit(index,{immediate=false}={}){
-  if(this.journey.phase==='detail'||this.journey.phase==='closing')return;
-  const wasFollowing=this.follow;this.travelDirection=Math.sign(this.world.stations[index].distance-this.journey.distance)||this.travelDirection||1;this.selected=index;this.follow=true;this.cameraDistance=this.world.stations[index].distance;
+  if(['detail','closing'].includes(this.journey.phase))return;
   const instant=immediate||this.reduced();if(!this.journey.visit(index,instant))return;
-  if(!wasFollowing)this.cameraAt(this.journey.distance,true);this.syncLabels();if(instant){this.cameraAt(this.journey.distance,true);this.updateCharacter(0);this.onOpen(index);}this.wake();
+  this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=true;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();
+  if(instant){this.cameraAt(true);this.updateCharacter(0);this.onOpen(index);}this.wake();
  }
- cancel(){if(['walking','casting','opening'].includes(this.journey.phase)){this.cameraDistance=this.journey.distance;this.journey.cancel();this.settling=.2;this.magic.visible=false;this.portal.visible=false;this.wake();}}
+ cancel(){if(['walking','casting','opening'].includes(this.journey.phase)){this.journey.cancel();this.follow=false;this.settling=.2;this.magic.visible=false;this.portal.visible=false;this.wake();}}
  close(){this.journey.phase=this.reduced()?'idle':'closing';this.journey.elapsed=0;this.wake();return new Promise(resolve=>{this.closeResolve=resolve;if(this.reduced()){resolve();this.closeResolve=null;}});}
- syncLabels(){const layer=this.element.querySelector('#cards');if(!layer)return;layer.replaceChildren();this.world.stations.forEach((s,i)=>{const b=document.createElement('button');b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));const year=document.createElement('span');year.className='island-year';year.textContent=this.projects[i].period.match(/\d{4}/)?.[0]||(this.projects[i].period.startsWith('近期')?'近期':'毕业设计');const title=document.createElement('span');title.textContent=({brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'})[s.id];b.append(year,title);b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);});}
- resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.mobile=r.width<=850;this.viewHeight=this.mobile?(r.width<500?28:24):21;const w=this.viewHeight*r.width/r.height;Object.assign(this.camera,{left:-w/2,right:w/2,top:this.viewHeight/2,bottom:-this.viewHeight/2});this.camera.updateProjectionMatrix();this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(this.follow&&['walking','casting','opening'].includes(this.journey.phase)?this.journey.distance:this.cameraDistance,true);this.wake();}
- cameraAt(distance,instant=false,dt=.016){
-  const reverse=this.follow&&this.travelDirection<0;const ahead=this.mobile?(reverse?-4:6.5):(reverse?-8:13),p=sampleRoute(this.world,Math.min(this.world.length,distance+ahead));
-  const direction=new T.Vector3(1,.8165,1).normalize();this.camera.position.copy(direction.clone().multiplyScalar(70));this.camera.lookAt(0,0,0);const right=new T.Vector3(1,0,0).applyQuaternion(this.camera.quaternion),up=new T.Vector3(0,1,0).applyQuaternion(this.camera.quaternion);
-  this.goalCenter.set(p.x,p.y,p.z);this.goalCenter.addScaledVector(right,this.mobile?0:-(this.camera.right-this.camera.left)*.08).addScaledVector(up,this.mobile?3.5:1.8);
-  if(instant||this.reduced())this.center.copy(this.goalCenter);else this.center.lerp(this.goalCenter,1-Math.exp(-dt*5));this.camera.position.copy(this.center).addScaledVector(direction,70);this.camera.lookAt(this.center);this.camera.updateMatrixWorld();
+ syncLabels(){
+  const layer=this.element.querySelector('#cards');if(!layer)return;layer.replaceChildren();
+  for(const theme of themes){
+   const b=document.createElement('button');b.className='theme-label';b.dataset.theme=theme.id;b.textContent=theme.title;b.setAttribute('aria-label',`浏览${theme.title}`);b.setAttribute('aria-pressed',String(this.theme===theme.id));b.onclick=()=>this.onTheme(theme.id);layer.append(b);
+  }
+  this.world.stations.forEach((s,i)=>{
+   const b=document.createElement('button');b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.textContent=shortNames[s.id];
+   b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
+  });
  }
- pick(e){const r=this.element.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,1-(e.clientY-r.top)/r.height*2);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.islands.filter(x=>x.group.visible).map(x=>x.group),true)[0];if(!hit)return -1;let o=hit.object;while(o.parent&&o.parent!==this.scene)o=o.parent;return this.islands.findIndex(x=>x.group===o);}
- bindInput(){const el=this.renderer.domElement;el.addEventListener('pointerdown',e=>{if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,d:this.follow?this.journey.distance:this.cameraDistance,drag:false};el.setPointerCapture(e.pointerId);});el.addEventListener('pointermove',e=>{if(this.down){const delta=e.clientX-this.down.x;if(Math.abs(delta)>8)this.down.drag=true;if(this.down.drag){this.follow=false;this.cameraDistance=clamp(this.down.d-delta*.035,0,this.world.length);this.wake();}}else{const hit=this.pick(e);el.style.cursor=hit>=0?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}});el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit>=0)this.onSelect(hit,{visit:true});}});el.addEventListener('pointercancel',()=>this.down=null);
-  el.addEventListener('wheel',e=>{if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();if(this.follow)this.cameraDistance=this.journey.distance;this.follow=false;this.cameraDistance=clamp(this.cameraDistance+(e.deltaY+e.deltaX)*.018,0,this.world.length);this.wake();},{passive:false});
+ resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
+ framing(){
+  let stations=this.mode==='overview'?this.world.stations:this.world.stations.filter(s=>s.theme===this.theme);
+  const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?3.8:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
+  if(this.follow&&this.journey.phase==='walking'){
+   const p=this.journey.position;
+   if(this.journey.remaining>16){points.length=0;for(const x of [-9,9])for(const z of [-9,9])for(const y of [0,3])points.push(new T.Vector3(p.x+x,p.y+y,p.z+z));}
+   else points.push(new T.Vector3(p.x,p.y+2,p.z));
+  }
+  const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
+  const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  const overview=this.mode==='overview',left=overview?35:this.mobile?22:this.width*.32,rightPad=overview?35:28,top=overview?35:this.mobile?220:40,bottom=overview?75:75;
+  const availableW=Math.max(100,this.width-left-rightPad),availableH=Math.max(150,this.height-top-bottom);
+  const h=Math.max((maxY-minY)*this.height/availableH,(maxX-minX)*this.height/availableW)*1.12/this.zoom;
+  const screenX=(left+this.width-rightPad)/2,screenY=(top+this.height-bottom)/2;
+  const cx=(minX+maxX)/2-(screenX-this.width/2)*h/this.height,cy=(minY+maxY)/2+(screenY-this.height/2)*h/this.height;
+  return {center:right.clone().multiplyScalar(cx).addScaledVector(up,cy).add(this.pan),height:h};
  }
- updateCharacter(dt){const j=this.journey,p=sampleRoute(this.world,j.distance),walking=j.phase==='walking',target=this.world.stations[j.target];let angle=walking?p.angle+(target.distance<j.distance?Math.PI:0):Math.atan2(target.x+.35-p.x,target.z-.45-p.z);const delta=T.MathUtils.euclideanModulo(angle-this.heading+Math.PI,Math.PI*2)-Math.PI;this.heading+=delta*Math.min(1,dt*15||1);
-  const t=this.traveler;t.root.position.set(p.x,p.y+.025,p.z);t.root.rotation.y=this.heading;const desiredStep=walking?Math.sin(j.distance*1.25):0;this.step=walking?desiredStep:T.MathUtils.lerp(this.step||0,0,Math.min(1,dt*22));const step=this.step;t.feet.forEach((f,i)=>{f.position.z=(i?1:-1)*step*.15;f.position.y=.08+Math.max(0,(i?1:-1)*step)*.12;});t.body.position.y=walking?Math.abs(step)*.035:0;t.hat.rotation.z=walking?step*.035:0;
+ cameraAt(instant=false,dt=.016){
+  const frame=this.framing();this.goalCenter.copy(frame.center);this.goalHeight=frame.height;
+  const alpha=instant||this.reduced()?1:1-Math.exp(-dt*5);this.center.lerp(this.goalCenter,alpha);this.viewHeight=T.MathUtils.lerp(this.viewHeight,this.goalHeight,alpha);
+  const w=this.viewHeight*this.width/this.height;Object.assign(this.camera,{left:-w/2,right:w/2,top:this.viewHeight/2,bottom:-this.viewHeight/2});this.camera.updateProjectionMatrix();
+  this.camera.position.copy(this.center).addScaledVector(direction,100);this.camera.up.set(0,1,0);this.camera.lookAt(this.center);this.camera.updateMatrixWorld();
+ }
+ pick(e){const r=this.element.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,1-(e.clientY-r.top)/r.height*2);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.islands.filter((_,i)=>this.mode==='overview'||this.world.stations[i].theme===this.theme).map(x=>x.group),true)[0];if(!hit)return -1;let o=hit.object;while(o.parent&&o.parent!==this.scene)o=o.parent;return this.islands.findIndex(x=>x.group===o);}
+ bindInput(){
+  const el=this.renderer.domElement;
+  el.addEventListener('pointerdown',e=>{if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,pan:this.pan.clone(),drag:false};el.setPointerCapture(e.pointerId);});
+  el.addEventListener('pointermove',e=>{
+   if(this.down){const dx=e.clientX-this.down.x,dy=e.clientY-this.down.y;if(Math.hypot(dx,dy)>8)this.down.drag=true;
+    if(this.down.drag){this.follow=false;this.pan.copy(this.down.pan).addScaledVector(right,-dx*this.viewHeight/this.height).addScaledVector(up,dy*this.viewHeight/this.height);this.pan.clampLength(0,20);this.wake();}
+   }else{const hit=this.pick(e);el.style.cursor=hit>=0?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
+  });
+  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit>=0){this.onSelect(hit,{visit:true});}}});
+  el.addEventListener('pointercancel',()=>this.down=null);
+  el.addEventListener('wheel',e=>{if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
+ }
+ updateCharacter(dt){const j=this.journey,p=j.position,walking=j.phase==='walking',target=this.world.stations[j.target];let angle=walking?(j.direction??this.heading):Math.atan2(target.x+.35-p.x,target.z-.45-p.z);const delta=T.MathUtils.euclideanModulo(angle-this.heading+Math.PI,Math.PI*2)-Math.PI;this.heading+=delta*Math.min(1,dt*15||1);
+  const t=this.traveler;t.root.position.set(p.x,p.y+.025,p.z);t.root.rotation.y=this.heading;const desiredStep=walking?Math.sin(j.walked*1.25):0;this.step=walking?desiredStep:T.MathUtils.lerp(this.step||0,0,Math.min(1,dt*22));const step=this.step;t.feet.forEach((f,i)=>{f.position.z=(i?1:-1)*step*.15;f.position.y=.08+Math.max(0,(i?1:-1)*step)*.12;});t.body.position.y=walking?Math.abs(step)*.035:0;t.hat.rotation.z=walking?step*.035:0;
   const casting=['casting','opening','detail','closing'].includes(j.phase);const armTarget=casting?-clamp(j.phase==='casting'?j.elapsed/.3:j.phase==='closing'?1-j.elapsed/.32:1,0,1)*2.3:step*.28;t.arms[1].rotation.x=T.MathUtils.lerp(t.arms[1].rotation.x,armTarget,Math.min(1,dt*25||1));t.arms[0].rotation.x=-step*.28;
   this.magic.visible=['casting','opening'].includes(j.phase);this.magic.position.copy(t.root.position);this.sparks.forEach((s,i)=>{const a=this.time*2+i*2.4;s.position.set(Math.cos(a)*(.25+i*.04),.8+((this.time+i*.08)%.8)*1.4,Math.sin(a)*(.25+i*.04));});
   this.portal.visible=['opening','closing'].includes(j.phase);if(this.portal.visible){const raw=clamp(j.phase==='opening'?j.elapsed/.42:1-j.elapsed/.32,0,1),progress=raw*raw*(3-2*raw);const destination=this.center.clone().addScaledVector(new T.Vector3(0,1,0).applyQuaternion(this.camera.quaternion),43/this.height*this.viewHeight);this.portal.position.set(p.x,p.y+1.3,p.z).lerp(destination,progress);this.portal.quaternion.copy(this.camera.quaternion);this.portal.scale.set(T.MathUtils.lerp(.4,(this.camera.right-this.camera.left)*.46,progress),T.MathUtils.lerp(.4,this.viewHeight*.38,progress),1);}
-  this.element.dataset.animation=j.phase;this.element.dataset.position=j.distance.toFixed(3);this.element.dataset.travelerProject=this.projects[j.target].id;this.element.dataset.follow=String(this.follow);this.element.dataset.routeLength=this.world.length.toFixed(2);
+  this.element.dataset.animation=j.phase;this.element.dataset.position=[p.x,p.y,p.z].map(v=>v.toFixed(3)).join(',');this.element.dataset.travelerProject=this.projects[j.target].id;this.element.dataset.follow=String(this.follow);this.element.dataset.remaining=j.remaining.toFixed(2);this.element.dataset.view=this.mode;this.element.dataset.theme=this.theme||'';this.element.dataset.walked=j.walked.toFixed(2);
  }
- layout(){const camD=this.follow&&['walking','casting','opening'].includes(this.journey.phase)?this.journey.distance:this.cameraDistance;
-  this.islands.forEach(({group,edge},i)=>{const s=this.world.stations[i];group.visible=Math.abs(s.distance-camD)<(this.mobile?25:45);if(group.userData.highlight!==(i===this.selected)){group.userData.floor.material.color.set(i===this.selected?0xc5ac73:color.stone);group.userData.highlight=i===this.selected;}edge.visible=i===this.selected||i===this.hover||(['casting','opening'].includes(this.journey.phase)&&i===this.journey.target);edge.material.color.set(i===this.selected?color.gold:0xd8ddc7);});this.bridges.forEach(b=>b.group.visible=Math.abs(b.d-camD)<(this.mobile?25:45));
-  this.element.querySelectorAll('[data-card]').forEach(b=>{const i=Number(b.dataset.card),s=this.world.stations[i],p=new T.Vector3(s.x-1.8,s.y+.4,s.z+1.5).project(this.camera);b.hidden=!this.islands[i].group.visible||p.x<-.92||p.x>.93||p.y<-.85||p.y>.87||['detail','opening','closing'].includes(this.journey.phase);b.style.left=`${(p.x*.5+.5)*this.width}px`;b.style.top=`${(.5-p.y*.5)*this.height}px`;});
+ layout(){
+  const hidden=['detail','opening','closing'].includes(this.journey.phase),walking=this.journey.phase==='walking';
+  const fade=(group,intensity)=>{if(group.userData.intensity===intensity)return;group.userData.intensity=intensity;group.traverse(o=>{if(o.material?.color){o.material.userData.baseColor??=o.material.color.clone();o.material.color.copy(o.material.userData.baseColor).lerp(this.scene.background,1-intensity);}});};
+  this.sections.forEach(s=>fade(s.group,this.mode==='overview'||(s.a===this.theme&&s.b===this.theme)?1:walking?.32:.07));
+  this.islands.forEach(({group,edge},i)=>{
+   const station=this.world.stations[i],nearTraveler=walking&&Math.hypot(station.x-this.journey.position.x,station.z-this.journey.position.z)<10;
+   const highlighted=i===this.selected&&(this.mode==='theme'||this.world.stations[i].hub);
+   if(group.userData.highlight!==highlighted){group.userData.floor.material.color.set(highlighted?0xc5ac73:color.stone);group.userData.floor.material.userData.baseColor=group.userData.floor.material.color.clone();group.userData.highlight=highlighted;group.userData.intensity=undefined;}fade(group,this.mode==='overview'||station.theme===this.theme||nearTraveler?1:walking?.32:.07);
+   edge.visible=highlighted||i===this.hover||(['casting','opening'].includes(this.journey.phase)&&i===this.journey.target);edge.material.color.set(highlighted?color.gold:0xd8ddc7);
+  });
+  const project=(el,p)=>{p.project(this.camera);el.style.left=`${(p.x*.5+.5)*this.width}px`;el.style.top=`${(.5-p.y*.5)*this.height}px`;return Math.abs(p.x)<.98&&Math.abs(p.y)<.94;};
+  this.element.querySelectorAll('[data-theme]').forEach(b=>{
+   const theme=themes.find(t=>t.id===b.dataset.theme),s=this.world.stations.find(s=>s.id===theme.hub);
+   const shown=project(b,new T.Vector3(s.x,s.y+4.4,s.z));b.hidden=hidden||!shown||this.mode!=='overview';
+  });
+  this.element.querySelectorAll('[data-card]').forEach(b=>{
+   const i=+b.dataset.card,s=this.world.stations[i];const shown=project(b,new T.Vector3(s.x-s.size/2,s.y+.3,s.z+s.size/2));
+   const detailed=this.mode==='theme'&&s.theme===this.theme;const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*.75+6,this.width-labelWidth*.25-6)}px`;
+   // All projects stay keyboard reachable in overview; names reveal on focus/hover.
+   b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed);
+   b.classList.toggle('quiet',!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
+  });
  }
- wake(){if(!this.pending&&this.active&&!document.hidden){this.pending=true;requestAnimationFrame(t=>this.draw(t));}}
- draw(now){this.pending=false;if(!this.active||document.hidden)return;const dt=Math.min(.05,this.last?(now-this.last)/1000:.016);this.last=now;this.time+=dt;this.settling=Math.max(0,(this.settling||0)-dt);const arrived=this.journey.update(dt);const d=this.follow&&['walking','casting','opening','detail','closing'].includes(this.journey.phase)?this.journey.distance:this.cameraDistance;
-  this.cameraAt(d,false,dt);this.updateCharacter(dt);this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);if(arrived)this.onOpen(arrived.index);
-  if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
-  if(this.settling>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005)this.wake();else this.last=0;
+ wake(){this.element.dataset.cameraReady='false';if(!this.pending&&this.active&&!document.hidden){this.pending=true;requestAnimationFrame(t=>this.draw(t));}}
+ draw(now){
+  this.pending=false;if(!this.active||document.hidden)return;const dt=Math.min(.05,this.last?(now-this.last)/1000:.016);this.last=now;this.time+=dt;this.settling=Math.max(0,(this.settling||0)-dt);
+  const arrived=this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}this.cameraAt(false,dt);this.updateCharacter(dt);this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
+  if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
+  if(this.settling>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005)this.wake();else{this.last=0;this.element.dataset.cameraReady='true';}
  }
 }

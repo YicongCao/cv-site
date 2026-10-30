@@ -63,10 +63,34 @@ export function makeTraveler(){const root=new T.Group(),body=new T.Group();root.
  const shadow=box(root,0,.015,0,.65,.018,.5,0x334245);
  return {root,body,feet,arms,hat,shadow};
 }
-export function makeIsland(station){const g=new T.Group();g.position.set(station.x,station.y,station.z);const tileSize=.48,geo=shadedGeometry(tileSize,.23,tileSize),material=mats(color.stone).clone();const floor=new T.InstancedMesh(geo,material,64);const matrix=new T.Matrix4(),tint=new T.Color();
- for(let x=0;x<8;x++)for(let z=0;z<8;z++){matrix.makeTranslation((x-3.5)*.5,-.115,(z-3.5)*.5);floor.setMatrixAt(x*8+z,matrix);tint.setScalar(.88+((x*13+z*7+station.index)%9)*.015);floor.setColorAt(x*8+z,tint);}g.add(floor);g.userData.floor=floor;
- box(g,0,-.5,0,3.65,.6,3.65,0x64776d);for(const x of [-1.55,1.55])for(const z of [-1.55,1.55])box(g,x,-.95,z,.45,.5,.45,0x50635f);
- g.add(makeExhibit(station.type,station.index));batchBoxes(g);return g;
+export function makeIsland(station){
+ const g=new T.Group();g.position.set(station.x,station.y,station.z);
+ const n=station.hub?14:10,step=station.size/n,geo=shadedGeometry(step-.025,.23,step-.025);
+ const floor=new T.InstancedMesh(geo,mats(color.stone).clone(),n*n),matrix=new T.Matrix4(),tint=new T.Color();
+ for(let x=0;x<n;x++)for(let z=0;z<n;z++){
+  matrix.makeTranslation((x-(n-1)/2)*step,-.115,(z-(n-1)/2)*step);floor.setMatrixAt(x*n+z,matrix);
+  tint.setScalar(.88+((x*13+z*7+station.index)%9)*.015);floor.setColorAt(x*n+z,tint);
+ }
+ g.add(floor);g.userData.floor=floor;
+ box(g,0,-.55,0,station.size-.4,.65,station.size-.4,0x607369);
+ for(let i=0;i<n;i++)for(const side of [-1,1]){
+  const p=(i-(n-1)/2)*step,r=station.size/2-.22,h=.35+((i+station.index)%3)*.12;
+  box(g,p,-.6,side*r,step-.04,h,.38,0x81917c);box(g,side*r,-.65,p,.38,h,step-.04,0x738775);
+  if(i%3===0){box(g,p,-1.02,side*(r-.2),.34,.5,.4,0x53675f);}
+ }
+ const exhibit=makeExhibit(station.type,station.index);exhibit.position.set(.1,station.hub?.60:0,-.2);exhibit.scale.setScalar(station.hub?1.5:1.15);g.add(exhibit);
+ if(station.hub){
+  box(g,0,.18,0,4.9,.36,4.3,0x82937d);box(g,0,.40,0,4.5,.20,3.9,0xb0b69b);
+  for(const x of [-2,2])for(const z of [-1.7,1.7]){
+   box(g,x,.5,z,.35,1,.35,0x748976);box(g,x,1.05,z,.46,.12,.46,color.stone);box(g,x,1.20,z,.17,.22,.17,color.gold);
+  }
+  for(let step=0;step<3;step++)box(g,0,.06+step*.07,2.65-step*.25,.85,.12+step*.14,.3,color.stone);
+  const canvas=document.createElement('canvas');canvas.width=128;canvas.height=32;const ctx=canvas.getContext('2d');ctx.fillStyle='#43574a';ctx.fillRect(0,0,128,32);ctx.fillStyle='#eee6cb';ctx.font='bold 21px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(station.id==='nex'?'NEX':station.id==='pgos'?'PGOS':'WIN10',64,17);
+  const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;texture.magFilter=T.NearestFilter;texture.minFilter=T.NearestFilter;
+  const plaque=new T.Mesh(new T.PlaneGeometry(2.3,.58),new T.MeshBasicMaterial({map:texture}));plaque.position.set(0,.36,2.17);g.add(plaque);
+  if(station.id==='pgos')for(const [x,y,z] of [[0,3.4,0],[-.28,3.12,0],[.28,3.12,0],[0,3.12,.28]])box(g,x,y,z,.27,.27,.27,color.gold);
+ }
+ batchBoxes(g);return g;
 }
 
 export function batchBoxes(group){

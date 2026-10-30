@@ -1,0 +1,72 @@
+[
+  {
+    "time": 1793351269409,
+    "stage": {
+      "animation": "walking",
+      "cameraReady": "false",
+      "drawCalls": "96",
+      "follow": "true",
+      "position": "4.071,0.360,8.920",
+      "project": "bot",
+      "remaining": "40.75",
+      "renderer": "webgl",
+      "theme": "ai",
+      "travelerProject": "bot",
+      "view": "theme",
+      "walked": "1.15"
+    }
+  },
+  {
+    "time": 1793351269533,
+    "afterResize": true,
+    "stage": {
+      "animation": "walking",
+      "cameraReady": "false",
+      "drawCalls": "104",
+      "follow": "true",
+      "position": "4.071,0.360,7.587",
+      "project": "bot",
+      "remaining": "39.41",
+      "renderer": "webgl",
+      "theme": "ai",
+      "travelerProject": "bot",
+      "view": "theme",
+      "walked": "2.48"
+    }
+  },
+  {
+    "time": 1793351275760,
+    "stage": {
+      "animation": "detail",
+      "cameraReady": "true",
+      "drawCalls": "89",
+      "follow": "true",
+      "position": "-21.192,1.440,-7.092",
+      "project": "bot",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "theme": "ai",
+      "travelerProject": "bot",
+      "view": "theme",
+      "walked": "41.90"
+    },
+    "title": "Bot 开发者平台"
+  },
+  {
+    "time": 1793351277703,
+    "stage": {
+      "animation": "casting",
+      "cameraReady": "false",
+      "drawCalls": "99",
+      "follow": "true",
+      "position": "-21.192,1.440,-7.092",
+      "project": "bot",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "theme": "ai",
+      "travelerProject": "bot",
+      "view": "theme",
+      "walked": "41.90"
+    }
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "size": {
+      "width": 1440,
+      "height": 900
+    },
+    "pageWidth": 1440,
+    "projectAnchors": 15,
+    "scrollWidth": 1440,
+    "themeButtons": 4
+  },
+  {
+    "size": {
+      "width": 1280,
+      "height": 720
+    },
+    "pageWidth": 1280,
+    "projectAnchors": 15,
+    "scrollWidth": 1280,
+    "themeButtons": 4
+  },
+  {
+    "size": {
+      "width": 768,
+      "height": 1024
+    },
+    "pageWidth": 768,
+    "projectAnchors": 15,
+    "scrollWidth": 768,
+    "themeButtons": 4
+  },
+  {
+    "size": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390,
+    "projectAnchors": 15,
+    "scrollWidth": 390,
+    "themeButtons": 4
+  }
+]

@@ -1,35 +1,51 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {makeWorld,sampleRoute,Journey,exhibits} from '../src/world.js';
+import {makeWorld,Journey,shortestRoute,positionAt,distance,themes} from '../src/world.js';
 const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',import.meta.url)));
 const world=makeWorld(data.projects);
 function finish(j){let event;for(let i=0;i<2000&&!event;i++)event=j.update(1/60);return event;}
-test('all fifteen exhibits share a connected, continuous surface route',()=>{
- assert.equal(world.stations.length,15);assert.equal(new Set(exhibits).size,15);
- for(const s of world.stations){const p=sampleRoute(world,s.distance);for(const axis of ['x','y','z'])assert.ok(Math.abs(p[axis]-s.stop[axis])<1e-8);}
- for(let d=.02;d<world.length;d+=.02){const a=sampleRoute(world,d-.02),b=sampleRoute(world,d);assert.ok(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z)<=.02001);}
+test('three themes cover all fifteen projects once, preserving dates and assets',()=>{
+ const members=themes.flatMap(t=>t.members);assert.equal(members.length,15);assert.equal(new Set(members).size,15);
+ assert.deepEqual([...members].sort(),data.projects.map(p=>p.id).sort());assert.equal(world.stations.filter(s=>s.hub).length,3);
+ assert.equal(world.edges.filter(e=>e.bridge).length,15); // twelve spokes and a triangle
  assert.match(data.projects.find(p=>p.id==='cloudgame').period,/2019/);assert.match(data.projects.find(p=>p.id==='xidian').period,/毕业/);
  assert.equal(data.assets.length,229);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
 });
-test('full end-to-end walk uses uniform speed and takes 6–10 seconds',()=>{
- const j=new Journey(world);const duration=world.length/j.speed;assert.ok(duration>=6&&duration<=10);
- j.visit(14);let previous=0;while(j.phase==='walking'){j.update(.01);assert.ok(j.distance-previous<=j.speed*.01+1e-8);previous=j.distance;}
- assert.equal(j.distance,world.length);assert.equal(j.phase,'casting');assert.equal(finish(j).index,14);assert.equal(j.update(10),null);
+test('all 225 station pairs follow shortest paths and stay continuous',()=>{
+ const n=world.nodes.length,costs=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?0:Infinity));
+ for(const e of world.edges)costs[e.a][e.b]=costs[e.b][e.a]=e.length;
+ for(let k=0;k<n;k++)for(let i=0;i<n;i++)for(let j=0;j<n;j++)costs[i][j]=Math.min(costs[i][j],costs[i][k]+costs[k][j]);
+ let max=0;
+ for(const a of world.stations)for(const b of world.stations){
+  const route=shortestRoute(world,{node:a.stop},b.stop);assert.ok(Math.abs(route.cost-costs[a.stop][b.stop])<1e-8);max=Math.max(max,route.cost);
+  const journey=new Journey(world);journey.visit(a.index,true);journey.cancel();journey.visit(b.index);let prev=journey.position;
+  while(journey.phase==='walking'){journey.update(.025);const now=journey.position;assert.ok(distance(prev,now)<=journey.speed*.025+1e-8);prev=now;}
+  assert.ok(distance(journey.position,world.nodes[b.stop])<1e-8);assert.equal(finish(journey).index,b.index);
+ }
+ assert.ok(max/10<7,'longest walk should stay under seven seconds');
 });
-test('every station is reachable in reverse, including repeats',()=>{
- const j=new Journey(world);j.visit(14,true);
- for(let i=14;i>=0;i--){j.cancel();j.visit(i);assert.equal(finish(j).index,i);assert.equal(j.distance,world.stations[i].distance);}
- j.cancel();j.visit(0);assert.equal(j.phase,'casting');
+test('bridges do not cross unrelated island footprints',()=>{
+ for(const e of world.edges.filter(e=>e.bridge)){const a=world.nodes[e.a],b=world.nodes[e.b];
+  for(const s of world.stations){if(s.index===a.station||s.index===b.station)continue;
+   for(let t=0;t<=1;t+=.01){const p=positionAt(world,{edge:e.id,t});assert.ok(Math.abs(p.x-s.x)>=s.size/2+.3||Math.abs(p.z-s.z)>=s.size/2+.3,`${s.id} obstructs bridge ${e.id}`);}
+  }
+ }
 });
-test('latest target replans from actual position; repeat does not restart',()=>{
- const j=new Journey(world);j.visit(14);j.update(2);const actual=j.distance,token=j.token;
- assert.equal(j.visit(14),false);assert.equal(j.token,token);j.visit(0);assert.equal(j.distance,actual);j.update(.1);assert.ok(j.distance<actual);
- j.visit(7);j.visit(3);assert.equal(finish(j).index,3);
+test('retargeting from bridge interiors keeps actual position and chooses either endpoint',()=>{
+ for(const e of world.edges.filter(e=>e.bridge))for(const t of [.1,.5,.9]){
+  const j=new Journey(world);j.location={edge:e.id,t};const original=j.position;
+  for(const index of [0,14,3,10]){j.visit(index);assert.ok(distance(j.position,original)<1e-9);assert.ok(j.remaining<=Math.min(shortestRoute(world,{node:e.a},world.stations[index].stop).cost+t*e.length,shortestRoute(world,{node:e.b},world.stations[index].stop).cost+(1-t)*e.length)+1e-8);}
+  assert.equal(finish(j).index,10);
+ }
 });
-test('Escape cancels walking, casting and opening without a stale arrival',()=>{
- for(const phase of ['walking','casting','opening']){const j=new Journey(world);j.visit(14);j.phase=phase;j.elapsed=.4;const d=j.distance;j.cancel();for(let i=0;i<100;i++)assert.equal(j.update(.1),null);assert.equal(j.distance,d);assert.equal(j.phase,'idle');}
+test('repeat target does not restart; latest target is the only completion',()=>{
+ const j=new Journey(world);j.visit(14);j.update(.7);const token=j.token,p=j.position;assert.equal(j.visit(14),false);assert.equal(j.token,token);assert.deepEqual(j.position,p);
+ j.visit(0);j.visit(7);assert.equal(finish(j).index,7);assert.equal(j.update(10),null);
 });
-test('deep links position instantly; closing leaves traveler at station',()=>{
- const j=new Journey(world);j.visit(8,true);assert.equal(j.phase,'detail');assert.equal(j.distance,world.stations[8].distance);j.phase='closing';j.elapsed=0;j.update(.33);assert.equal(j.phase,'idle');assert.equal(j.distance,world.stations[8].distance);
+test('cancel during walk, cast or portal prevents any stale open',()=>{
+ for(const phase of ['walking','casting','opening']){const j=new Journey(world);j.visit(14);j.update(.6);j.phase=phase;const p=j.position;j.cancel();for(let i=0;i<100;i++)assert.equal(j.update(.1),null);assert.deepEqual(j.position,p);assert.equal(j.phase,'idle');}
+});
+test('deep links and closing retain the exact project stop',()=>{
+ const j=new Journey(world);j.visit(8,true);assert.equal(j.phase,'detail');assert.equal(j.location.node,world.stations[8].stop);j.phase='closing';j.elapsed=0;j.update(.33);assert.equal(j.phase,'idle');assert.equal(j.location.node,world.stations[8].stop);
 });

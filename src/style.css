@@ -1025,3 +1025,16 @@ dialog#detail {
 @media(max-width:850px){header{height:74px}.intro{top:24px;width:88%}h1,h1.latin{font-size:36px}h1.long-title{font-size:29px}#summary{font-size:14px;max-width:350px}.dark{margin-top:18px;font-size:13px;min-height:40px}#timeline{height:calc(100svh - 74px);min-height:660px}.island-label{font-size:10px;padding-bottom:10px}.island-year{font-size:9px}.years{background:#222e32cc}.years button{background:none}#stage[data-renderer=fallback] #cards{grid-template-columns:repeat(2,1fr)}.flat-project img{height:90px}}
 
 @media(max-width:850px){.detail-copy{order:-1}}
+/* Three island clusters: a complete map first, then a focused workshop. */
+header{gap:24px}.brand{margin-right:auto}#overview{border:1px solid #9ba88e;color:#eee6cb;padding:8px 15px;font-size:14px}#overview:hover{background:#3a4942}
+body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
+#timeline{min-height:500px}#stage{touch-action:none}
+.theme-label{position:absolute;transform:translate(-50%,-100%);white-space:nowrap;font-size:17px;font-weight:600;letter-spacing:.02em;padding:10px 12px;color:#eee8d4;border-bottom:1px solid #8d9a82;background:#222e32c9}
+.theme-label:hover,.theme-label[aria-pressed=true]{color:#edbd69;border-color:#edbd69}.theme-label:focus-visible{outline:2px solid #edbd69;outline-offset:5px}
+.island-label{font-size:12px;padding:5px 10px 10px;transform:translate(-75%,-90%);background:#222e3299}.island-label.quiet{opacity:0}.island-label.quiet:focus-visible{opacity:1}.island-label:focus-visible{outline-offset:2px}
+#stage[data-renderer=fallback]{top:0;padding-top:20px;touch-action:auto}.theme-focused #stage[data-renderer=fallback]{top:250px}#stage[data-renderer=fallback] #cards{display:block}.flat-cluster h2{font-size:20px;margin:12px 0}.flat-cluster>div{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:30px}
+@media(max-width:850px){header{gap:14px}#overview{padding:7px 10px;font-size:12px}.theme-label{font-size:13px;padding:7px 5px}.island-label{font-size:11px;padding:4px 6px}.flat-cluster>div{grid-template-columns:repeat(2,1fr)}.flat-cluster h2{font-size:17px}#timeline{min-height:560px}.intro{top:16px}#summary{max-width:95%}.theme-focused .browse{bottom:3%}}
+
+.theme-label{z-index:8}.island-label{z-index:4}.island-label.quiet{pointer-events:none}.island-label.quiet:focus-visible{pointer-events:auto}#stage canvas{touch-action:none}
+
+@media(max-width:850px){.island-label{font-size:12px}}
