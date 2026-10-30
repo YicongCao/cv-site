@@ -71,7 +71,7 @@ export class GallerySound {
   this.mix();this.emit();return !!this.running;
  }
  async toggle(){
-  const turnOn=!this.enabled||!this.running;this.enabled=turnOn;
+  const turnOn=!this.enabled;this.enabled=turnOn;
   try{this.storage.setItem('pixelcao:sound',turnOn?'on':'off');}catch{}
   if(turnOn)await this.activate();else this.mix();this.emit();
  }
@@ -170,7 +170,7 @@ export function installSound(){
  const sound=new GallerySound({onChange:s=>buttons.forEach(b=>{
   b.dataset.sound=s.state;b.dataset.music=s.musicFailed?'unavailable':s.source?'ready':'loading';b.dataset.steps=String(s.stepCount);b.dataset.taps=String(s.tapCount);b.dataset.items=String(s.itemCount);
   b.dataset.hoverSounds=String(s.hoverCount);b.dataset.hoverProject=s.hoverProject||'';b.dataset.hoverKind=s.hoverKind||'';b.dataset.hoverCounts=JSON.stringify(s.hoverCounts);
-  b.setAttribute('aria-pressed',String(!!s.running));b.setAttribute('aria-label',s.running?'关闭声音':'开启声音');b.title=s.running?'关闭声音':'开启声音';b.disabled=!!s.failed;
+  b.setAttribute('aria-pressed',String(s.enabled));b.setAttribute('aria-label',s.enabled?'关闭声音':'开启声音');b.title=s.enabled?'关闭声音':'开启声音';b.disabled=!!s.failed;
  })});
  buttons.forEach(b=>{b.innerHTML=`<svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges">${speaker}</svg>`;b.onclick=()=>sound.toggle();});sound.emit();
  const unlock=e=>{if(e.target.closest?.('[data-sound-toggle]'))return;if(e.type==='keydown'&&(!['Enter',' '].includes(e.key)||e.repeat))return;void sound.activate();};
@@ -180,5 +180,8 @@ export function installSound(){
  // A muted showcase may coexist with quiet ambience; audible video gets exclusive space.
  const updateVideo=()=>sound.setAudibleVideo([...document.querySelectorAll('video')].some(v=>!v.paused&&!v.ended&&!v.muted&&v.volume>0));
  for(const event of ['play','pause','ended','volumechange'])document.addEventListener(event,updateVideo,true);
+ // Start immediately where autoplay is allowed; a blocked context is resumed by
+ // the existing first-interaction listener, without asking users to unmute.
+ void sound.activate();
  return sound;
 }

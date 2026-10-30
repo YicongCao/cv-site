@@ -161,6 +161,38 @@
       white-space: nowrap;
     }
 
+    .vibe-section { padding: 24px; border: 1px solid #d9def0; border-left: 4px solid #7462bc; border-radius: 8px; background: linear-gradient(135deg, #f5f3fc, #f3f7ff); }
+    .vibe-section h2 { color: #6552a8; margin-bottom: 10px; }
+    .vibe-spark { width: 20px; height: 20px; flex: none; fill: currentColor; }
+    .vibe-intro { margin: 0 0 20px; color: #59627a; font-size: 13px; }
+    .vibe-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .vibe-card { min-width: 0; padding: 18px; border: 1px solid #dfe3ed; border-radius: 6px; background: white; break-inside: avoid; }
+    .vibe-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+    .vibe-card h3 { margin: 0; font-size: 18px; line-height: 1.4; }
+    .vibe-card .period { font-size: 12px; color: #7462bc; }
+    .vibe-summary { margin: 8px 0 14px; font-size: 13px; color: var(--muted); }
+    .vibe-card .work-shot { margin: 0 0 16px; }
+    .vibe-card .shot-link { background: #111; border-radius: 4px; }
+    .vibe-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }
+    .vibe-points { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+    .vibe-points li { margin: 0 0 10px; }
+    .vibe-points li:last-child { margin-bottom: 0; }
+    .vibe-points strong { color: #4f4388; }
+    @media screen and (max-width: 800px) {
+      .vibe-section { padding: 18px; }
+      .vibe-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .vibe-card { padding: 16px; }
+    }
+    @media print {
+      .vibe-section { padding: 10px; break-inside: avoid; background: #faf9fe; }
+      .vibe-grid { gap: 12px; }
+      .vibe-card { padding: 10px; }
+      .vibe-card h3 { font-size: 11pt; }
+      .vibe-intro, .vibe-summary, .vibe-points, .vibe-card .period { font-size: 8pt; }
+      .vibe-intro { margin-bottom: 10px; }
+      .vibe-points li { margin-bottom: 6px; }
+    }
+
     .experience-heading {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 310px;
@@ -446,6 +478,33 @@
           <strong>技术方向</strong>
           <p>具备 Agent、游戏联机后台（匹配、DS 服务器托管方向）、Chatbot、P2P 联机与 Windows LSP 网络代理等领域的研发经验。</p>
         </div>
+      </div>
+    </section>
+
+    <section class="vibe-section" aria-labelledby="vibe-title">
+      <h2 id="vibe-title"><svg class="vibe-spark" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 0h4v5h3v3h5v4h-5v3h-3v5H8v-5H5v-3H0V8h5V5h3z"/></svg>Vibe Coding · 独立作品</h2>
+      <p class="vibe-intro">以 Codex 协作开发，独立负责产品目标、技术选型、视觉与交互设计、迭代取舍和验收，把自己的想法逐步做成可运行的产品。</p>
+      <div class="vibe-grid">
+        <article class="vibe-card" id="project-photomuseum">
+          <div class="vibe-header"><h3>PhotoMuseum</h3><span class="period">2026/10 — 至今</span></div>
+          <p class="vibe-summary">把个人照片库变成可检索、可探索的空间展览。</p>
+          <figure class="work-shot"><a class="shot-link" href="/resume/resources/assets/gallery/vibe-photomuseum.jpg" data-lightbox aria-label="PhotoMuseum · 空间照片展厅"><img src="/resume/resources/assets/gallery/vibe-photomuseum.jpg" width="1280" height="720" alt="PhotoMuseum 的 Cover Flow 照片展厅" decoding="async"></a></figure>
+          <ul class="vibe-points">
+            <li><strong>产品与架构判断：</strong>从真实照片管理需求出发，选择 Python API／Worker、React 与 SQLite，明确 NAS 只读、本地识别和原图按需加载的边界。</li>
+            <li><strong>设计 AI 工作流：</strong>由检索与识别提供事实，受工具约束的 AI 助手完成策展；将隐私、缓存和运行成本纳入设计。</li>
+            <li><strong>以体验驱动迭代：</strong>从方案比较走到 Cover Flow、日历、地图与空间展厅，通过可撤销的人物确认、交互回归和录屏验证，持续优化加载与手势。</li>
+          </ul>
+        </article>
+        <article class="vibe-card" id="project-brushline-rally">
+          <div class="vibe-header"><h3>Brushline Rally</h3><span class="period">2026/10 — 至今</span></div>
+          <p class="vibe-summary">从驾驶白盒迭代为有统一视觉风格的离线拉力赛。</p>
+          <figure class="work-shot"><a class="shot-link" href="/resume/resources/assets/gallery/vibe-brushline-rally.jpg" data-lightbox aria-label="Brushline Rally · 拉力赛试玩"><img src="/resume/resources/assets/gallery/vibe-brushline-rally.jpg" width="1280" height="720" alt="Brushline Rally 的赛车、赛道与驾驶 HUD" decoding="async"></a></figure>
+          <ul class="vibe-points">
+            <li><strong>拆解目标与范围：</strong>先验证驾驶手感，再扩展赛道、车辆与挑战；用分阶段里程碑指导 Codex 协作，让每一步都有可玩的结果。</li>
+            <li><strong>技术与美术取舍：</strong>采用 Godot、GDScript 与 Jolt，调校轮胎、悬挂及驾驶辅助；串联 Blender 资产、丝网印刷风格、菜单与 HUD。</li>
+            <li><strong>建立验收闭环：</strong>用输入回放、车辆遥测和回归场景检验手感与性能，再完成试玩构建和演示录制，使 AI 产出可验证、可交付。</li>
+          </ul>
+        </article>
       </div>
     </section>
 

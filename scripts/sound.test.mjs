@@ -22,6 +22,16 @@ test('mute preference survives gestures; toggling does not reconstruct music',as
  assert.equal(r.sound.master.gain.value,0);assert.equal(r.stored.get('pixelcao:sound'),'off');assert.equal(r.sound.state,'muted');
  await r.sound.toggle();assert.deepEqual(r.counts(),{contexts:1,sources:1});
 });
+test('first visit enables sound; waiting for browser permission is not a muted preference',async()=>{
+ const r=rig();assert.equal(r.sound.enabled,true);assert.equal(r.sound.state,'waiting');
+ await r.sound.toggle();assert.equal(r.sound.enabled,false);assert.equal(r.stored.get('pixelcao:sound'),'off');assert.equal(r.counts().contexts,0);
+ await r.sound.toggle();assert.equal(r.sound.enabled,true);assert.equal(r.sound.state,'playing');
+});
+test('muting during a pending autoplay request stays muted when the browser later resumes',async()=>{
+ const {sound:s,context:c}=rig();let release;c.resume=()=>new Promise(resolve=>{release=()=>{c.state='running';resolve();};});
+ const pending=s.activate();await s.toggle();assert.equal(s.enabled,false);release();await pending;await s.loading;
+ assert.equal(s.master.gain.value,0);assert.equal(s.state,'muted');
+});
 test('footsteps follow distance, not idle frames, cancellation or teleport',()=>{
  const c=new FootstepCadence();assert.equal(c.update(0,false),false);assert.equal(c.update(0,true),false);assert.equal(c.update(2,true),false);assert.equal(c.update(2.6,true),true);
  for(let i=0;i<100;i++)assert.equal(c.update(2.6,false),false);

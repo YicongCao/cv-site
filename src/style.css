@@ -1169,10 +1169,10 @@ dialog#about{width:min(790px,calc(100vw - 40px));max-height:calc(100svh - 40px);
 
 .sound-toggle{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;color:#c6cdbd;border:1px solid #6c7f71;padding:9px;background:transparent}
 .sound-toggle svg{width:16px;height:16px;fill:currentColor}.sound-toggle:hover{color:#e4b35c;border-color:#e4b35c}
-.sound-toggle .sound-waves{display:none}.sound-toggle[data-sound=playing] .sound-waves{display:block}.sound-toggle[data-sound=playing] .sound-cross{display:none}
-.sound-toggle[data-sound=playing]{color:#e4b35c}
+.sound-toggle .sound-waves{display:none}.sound-toggle[aria-pressed=true] .sound-waves{display:block}.sound-toggle[aria-pressed=true] .sound-cross{display:none}
+.sound-toggle[aria-pressed=true]{color:#e4b35c}
 dialog .sound-toggle{position:absolute;right:74px;top:21px;z-index:5;color:#7f6b41;border-color:#b5bba9;width:36px;height:36px;background:#f4f0e4}
-dialog .sound-toggle[data-sound=playing]{color:#9c712c}
+dialog .sound-toggle[aria-pressed=true]{color:#9c712c}
 @media(max-width:850px){header{gap:12px}.brand{width:118px}.sound-toggle{width:32px;height:32px;padding:7px}dialog .sound-toggle{right:63px;top:16px;width:32px;height:32px}}
 
 .brand{transition:color .16s,filter .16s;position:relative}

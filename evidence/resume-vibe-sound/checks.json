@@ -1,0 +1,64 @@
+{
+  "initialSound": {
+    "cross": "none",
+    "enabled": "true",
+    "label": "关闭声音",
+    "music": "ready",
+    "state": "waiting",
+    "waves": "block"
+  },
+  "afterGesture": {
+    "enabled": "true",
+    "music": "ready",
+    "state": "playing"
+  },
+  "resumeCheck": {
+    "featured": [
+      {
+        "loaded": true,
+        "title": "PhotoMuseum"
+      },
+      {
+        "loaded": true,
+        "title": "Brushline Rally"
+      }
+    ],
+    "order": [
+      "个人概况",
+      "Vibe Coding · 独立作品",
+      "项目经验",
+      "证书与荣誉"
+    ],
+    "overflow": false
+  },
+  "zoomOpened": true,
+  "mobile": {
+    "cards": [
+      {
+        "bottom": 941.546875,
+        "right": 349,
+        "x": 44,
+        "y": 379.9375
+      },
+      {
+        "bottom": 1474.4375,
+        "right": 349,
+        "x": 44,
+        "y": 957.546875
+      }
+    ],
+    "columns": "305px",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  "mutedReload": {
+    "enabled": "false",
+    "label": "开启声音",
+    "state": "muted"
+  },
+  "reenabled": {
+    "enabled": "true",
+    "state": "playing"
+  },
+  "console": []
+}
