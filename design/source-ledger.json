@@ -5663,5 +5663,22 @@
     },
     "original": "/media/originals/videos/a248.flv",
     "display": "/media/videos/a248.mp4"
+  },
+  {
+    "id": "a249",
+    "path": "codex-clipboard-b5d36d6f-b711-4b11-82f2-50f5da5c74c3.png",
+    "bytes": 111421,
+    "sha256": "e90308643b1b6dcc922674aa835812a22bc79b4fb33d7ff0b7926d6e11fb27e2",
+    "type": "png",
+    "width": 360,
+    "height": 555,
+    "project": "accelerator",
+    "chapter": "腾讯网游加速器客户端",
+    "status": "included",
+    "note": "用户于 2026-10-30 提供，指定用于腾讯网游加速器展示；原比例直接复制。",
+    "duplicateOf": null,
+    "imported": true,
+    "original": "/media/originals/images/a249.png",
+    "display": "/media/originals/images/a249.png"
   }
 ]

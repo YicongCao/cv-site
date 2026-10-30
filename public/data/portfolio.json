@@ -379,9 +379,11 @@
         "异步网络模型",
         "Steam 社区加速"
       ],
-      "cover": null,
-      "assets": [],
-      "coverSrc": null
+      "cover": "a249",
+      "assets": [
+        "a249"
+      ],
+      "coverSrc": "/media/originals/images/a249.png"
     },
     {
       "id": "desktop",
@@ -3059,6 +3061,17 @@
       "src": "/media/videos/a248.mp4",
       "original": "/media/originals/videos/a248.flv",
       "preview": "/media/previews/a248.jpg"
+    },
+    {
+      "id": "a249",
+      "type": "png",
+      "width": 360,
+      "height": 555,
+      "chapter": "腾讯网游加速器客户端",
+      "project": "accelerator",
+      "src": "/media/originals/images/a249.png",
+      "original": "/media/originals/images/a249.png",
+      "preview": "/media/originals/images/a249.png"
     }
   ]
 }
