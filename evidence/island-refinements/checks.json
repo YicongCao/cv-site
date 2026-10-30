@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-31",
+  "topics": [
+    {
+      "description": 0,
+      "icon": 1,
+      "title": "理解用户意图"
+    },
+    {
+      "description": 0,
+      "icon": 1,
+      "title": "容器化训练"
+    },
+    {
+      "description": 0,
+      "icon": 1,
+      "title": "开放接入"
+    },
+    {
+      "description": 0,
+      "icon": 1,
+      "title": "文字冒险探索"
+    }
+  ],
+  "galleryImageProtected": true,
+  "galleryBlank": {
+    "gallery": true,
+    "preview": false
+  },
+  "dragProtected": true,
+  "returnedGallery": true,
+  "mobileLayout": {
+    "content": 390,
+    "particles": "0",
+    "topics": [
+      {
+        "icons": 1,
+        "title": "理解用户意图"
+      },
+      {
+        "icons": 1,
+        "title": "容器化训练"
+      },
+      {
+        "icons": 1,
+        "title": "开放接入"
+      },
+      {
+        "icons": 1,
+        "title": "文字冒险探索"
+      }
+    ],
+    "width": 390
+  }
+}

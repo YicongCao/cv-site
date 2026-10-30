@@ -1,4 +1,5 @@
 import {projectIcon} from './icons.js';
+import {installBlankDismiss} from './dialog-dismiss.js';
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function resolveGallery(config,projects,assets){
  return config.map(row=>{
@@ -41,6 +42,7 @@ export function installGallery({dialog,config,projects,assets,onProject,onClose,
  preview.querySelector('[data-preview-next]').onclick=()=>{if(previewIndex<previewRow.images.length-1){previewIndex++;showPreview();}};
  preview.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();e.stopPropagation();const next=previewIndex+(e.key==='ArrowRight'?1:-1);if(next>=0&&next<previewRow.images.length){previewIndex=next;showPreview();}}});
  preview.addEventListener('cancel',e=>{e.preventDefault();closePreview();});
+ installBlankDismiss(preview,closePreview);
  dialog.querySelector('[data-gallery-close]').onclick=onClose;dialog.addEventListener('cancel',e=>{e.preventDefault();onClose();});
  return {open(){if(!dialog.open){dialog.showModal();dialog.querySelector('[data-gallery-close]').focus({preventScroll:true});}},close(){if(preview.open)closePreview();dialog.close();},projectButton(id){return list.querySelector(`[data-gallery-detail="${id}"]`);}};
 }

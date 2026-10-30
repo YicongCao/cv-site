@@ -159,7 +159,7 @@ export class GallerySound {
   if(!this.cadence.update(distance,walking)||!this.running)return;
   const c=this.context,t=c.currentTime;if(t-this.lastStep<.16)return;this.lastStep=t;this.stepCount++;
   const pan=this.stepCount%2?.12:-.12;
-  const src=c.createBufferSource(),gain=c.createGain(),panner=c.createStereoPanner();src.buffer=this.footsteps[this.stepCount%2];gain.gain.value=.50;panner.pan.value=pan;
+  const src=c.createBufferSource(),gain=c.createGain(),panner=c.createStereoPanner();src.buffer=this.footsteps[this.stepCount%2];gain.gain.value=.35;panner.pan.value=pan;
   src.connect(gain);gain.connect(panner);panner.connect(this.effects);src.start();src.onended=()=>{src.disconnect();gain.disconnect();panner.disconnect();};this.emit();
  }
 }

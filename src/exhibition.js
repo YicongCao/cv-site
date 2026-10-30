@@ -3,6 +3,7 @@ import {IslandMotion,Meteors} from './island-motion.js';
 import {waveFlag} from './ambience.js';
 import {projectIcon} from './icons.js';
 import {placeLabels} from './label-layout.js';
+import {HoverExhaust} from './hover-exhaust.js';
 import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
@@ -43,6 +44,7 @@ export class Exhibition {
   const actorHit=new T.Mesh(new T.BoxGeometry(.9,1.9,.8),new T.MeshBasicMaterial({visible:false}));actorHit.position.y=.95;this.traveler.root.add(actorHit);
   this.profileButton=document.createElement('button');this.profileButton.className='traveler-profile-target';this.profileButton.setAttribute('aria-label','关于 pixelcao，白帽旅人');this.profileButton.setAttribute('aria-haspopup','dialog');this.profileButton.onclick=()=>this.onAbout?.();element.append(this.profileButton);
   this.islandMotion=new IslandMotion({element,islands:this.islands,world:this.world,onSound:onIslandSound});this.meteors=new Meteors(element);
+  this.exhaust=new HoverExhaust();this.scene.add(this.exhaust.group);
   this.createSpotlight();
   this.magic=new T.Group();this.scene.add(this.magic);this.sparks=[];for(let i=0;i<10;i++)this.sparks.push(box(this.magic,0,0,0,.07,.07,.07,color.gold));
   this.portal=new T.Group();this.scene.add(this.portal);for(const side of [-1,1]){box(this.portal,side,0,0,.035,2,.035,color.gold);box(this.portal,0,side,0,2,.035,.035,color.gold);}
@@ -121,7 +123,9 @@ export class Exhibition {
   }
   const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
   const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-  const overview=this.mode==='overview',left=overview?35:this.mobile?22:this.width*.32,rightPad=overview?35:28,top=(this.headerHeight||0)+(overview?35:this.mobile?220:40),bottom=75;
+  const overview=this.mode==='overview',left=overview?35:this.mobile?22:this.width*.32,rightPad=overview?35:28;
+  const introBottom=this.mobile&&!overview?document.querySelector('.intro').getBoundingClientRect().bottom-this.element.getBoundingClientRect().top+18:0;
+  const top=Math.max((this.headerHeight||0)+(overview?35:this.mobile?220:40),introBottom),bottom=75;
   const availableW=Math.max(100,this.width-left-rightPad),availableH=Math.max(150,this.height-top-bottom);
   const h=Math.max((maxY-minY)*this.height/availableH,(maxX-minX)*this.height/availableW)*1.12/this.zoom;
   const screenX=(left+this.width-rightPad)/2,screenY=(top+this.height-bottom)/2;
@@ -200,6 +204,7 @@ export class Exhibition {
   this.pending=false;if(!this.active||document.hidden)return;const dt=Math.min(.05,this.last?(now-this.last)/1000:.016);this.last=now;this.time+=dt;this.settling=Math.max(0,(this.settling||0)-dt);
   const holding=this.departureDelay>0;this.departureDelay=Math.max(0,(this.departureDelay||0)-dt);const arrived=holding||this.introActive?null:this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}if(this.introActive){this.introElapsed+=dt;if(this.introElapsed>=4.5)this.introActive=false;}this.skipButton.hidden=!this.introActive;this.element.dataset.intro=this.introActive?(this.introElapsed<1.2?'look':this.introElapsed<2.9?'scratch':'zoom'):'complete';this.cameraAt(false,dt);this.updateCharacter(dt);this.updateAmbience(dt);this.updateSpotlight(dt);
   const canHover=!this.reduced()&&!this.introActive&&!document.querySelector('dialog[open]')&&!this.down?.drag;if(!canHover)this.hover=-1;const focused=this.element.querySelector('[data-card]:focus-visible');const hover=canHover?(this.hover>=0?this.hover:focused?+focused.dataset.card:-1):-1;this.islandMotion.update(dt,hover>=0?hover:-1,this.camera,this.width,this.height);this.meteors.update(dt,canHover&&this.journey.phase==='idle',this.width,this.height);
+  this.exhaust.update(dt,hover>=0?this.world.stations[hover]:null,canHover);this.element.dataset.exhaustProject=hover>=0?this.world.stations[hover].id:'';this.element.dataset.exhaustCount=String(this.exhaust.activeCount);
   this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
   if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
   const moving=this.introActive||this.spotTransition||this.settling>0||this.ripples.length>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005;
