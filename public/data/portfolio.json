@@ -192,7 +192,9 @@
         "a152",
         "a173",
         "a174",
-        "a208"
+        "a208",
+        "a250",
+        "a251"
       ],
       "coverSrc": "/media/covers/pgos.webp",
       "workflow": [
@@ -221,6 +223,21 @@
           "icon": "cloud",
           "text": "基于 Knative 实现 Virtual Server 集群，允许开发者通过事件驱动扩展 PGOS 的能力边界。"
         }
+      ],
+      "mediaOrder": [
+        "a208",
+        "a173",
+        "a250",
+        "a251",
+        "a145",
+        "a146",
+        "a147",
+        "a148",
+        "a149",
+        "a150",
+        "a151",
+        "a152",
+        "a174"
       ]
     },
     {
@@ -2856,7 +2873,8 @@
       "project": "pgos",
       "src": "/media/originals/documents/a208.pdf",
       "original": "/media/originals/documents/a208.pdf",
-      "preview": null
+      "preview": null,
+      "title": "匹配技术 Tech Share"
     },
     {
       "id": "a210",
@@ -3253,6 +3271,28 @@
       "src": "/media/originals/images/a249.png",
       "original": "/media/originals/images/a249.png",
       "preview": "/media/originals/images/a249.png"
+    },
+    {
+      "id": "a250",
+      "type": "png",
+      "width": 2192,
+      "height": 962,
+      "chapter": "PGOS 服务能力全景",
+      "project": "pgos",
+      "src": "/media/originals/images/a250.png",
+      "original": "/media/originals/images/a250.png",
+      "preview": "/media/originals/images/a250.png"
+    },
+    {
+      "id": "a251",
+      "type": "png",
+      "width": 1790,
+      "height": 808,
+      "chapter": "PGOS 游戏研发与发行阶段",
+      "project": "pgos",
+      "src": "/media/originals/images/a251.png",
+      "original": "/media/originals/images/a251.png",
+      "preview": "/media/originals/images/a251.png"
     }
   ]
 }

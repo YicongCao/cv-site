@@ -5680,5 +5680,41 @@
     "imported": true,
     "original": "/media/originals/images/a249.png",
     "display": "/media/originals/images/a249.png"
+  },
+  {
+    "id": "a250",
+    "path": "/var/folders/tw/czcv9f0x2zj1mccw_41wj2m80000gn/T/codex-clipboard-93f3c72a-9109-4561-b9f6-1b3371d313b8.png",
+    "bytes": 238600,
+    "sha256": "7d9e49ffbf10857174fa3cd91de4d579dac7796b495e3a2242e44e8a063d2063",
+    "type": "png",
+    "width": 2192,
+    "height": 962,
+    "project": "pgos",
+    "chapter": "PGOS 服务能力全景",
+    "status": "included",
+    "note": "用户补充的 PGOS 插图，原样保存。",
+    "duplicateOf": null,
+    "imported": true,
+    "original": "/media/originals/images/a250.png",
+    "display": "/media/originals/images/a250.png",
+    "preview": "/media/originals/images/a250.png"
+  },
+  {
+    "id": "a251",
+    "path": "/var/folders/tw/czcv9f0x2zj1mccw_41wj2m80000gn/T/codex-clipboard-841445a5-1c9a-402b-b8dc-11b7f6bdb099.png",
+    "bytes": 108147,
+    "sha256": "4e7fb4ff1c4677ee37071c53689933a0db6bfe30f983622a8dab65b3223a083d",
+    "type": "png",
+    "width": 1790,
+    "height": 808,
+    "project": "pgos",
+    "chapter": "PGOS 游戏研发与发行阶段",
+    "status": "included",
+    "note": "用户补充的 PGOS 插图，原样保存。",
+    "duplicateOf": null,
+    "imported": true,
+    "original": "/media/originals/images/a251.png",
+    "display": "/media/originals/images/a251.png",
+    "preview": "/media/originals/images/a251.png"
   }
 ]

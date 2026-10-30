@@ -10,7 +10,7 @@ test('three themes cover all fourteen projects once, preserving dates and assets
  assert.deepEqual([...members].sort(),data.projects.map(p=>p.id).sort());assert.equal(world.stations.filter(s=>s.hub).length,3);
  assert.equal(world.edges.filter(e=>e.bridge).length,14); // eleven spokes and a triangle
  assert.match(data.projects.find(p=>p.id==='cloudgame').period,/2019/);assert.match(data.projects.find(p=>p.id==='xidian').period,/毕业/);
- assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,226);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
+ assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,228);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
 });
 test('all 196 station pairs follow shortest paths and stay continuous',()=>{
  const n=world.nodes.length,costs=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?0:Infinity));

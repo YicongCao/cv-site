@@ -47,7 +47,7 @@ import {installGallery} from './gallery.js';
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
     if(isImage(a))return `<img src="${esc(href(a))}" alt="${esc(a.chapter)}">`;
     if(isVideo(a)){const src=href(a);return `<video controls playsinline preload="metadata" poster="${esc(a.preview||'')}" src="${esc(src)}"></video>`;}
-    return `<div class="document"><a href="${esc(href(a))}" target="_blank" rel="noopener">阅读技术分享 ↗</a></div>`;
+    return `<div class="document"><a href="${esc(href(a))}" target="_blank" rel="noopener">${esc(a.title||'阅读技术分享')} ↗</a></div>`;
   }
   function watchVideo(container,a){const img=container.querySelector('img');if(img)img.addEventListener('error',()=>{container.innerHTML='<div class="document">图片暂时无法显示</div>';},{once:true});const v=container.querySelector('video');if(v)v.addEventListener('error',()=>{container.innerHTML=`<div class="document">${thumb(a)}<p><a href="${esc(a.original)}" target="_blank" rel="noopener">打开视频 ↗</a></p></div>`;},{once:true});}
   function stopMedia(container){container.querySelectorAll('video').forEach(v=>v.pause());}
@@ -80,7 +80,8 @@ import {installGallery} from './gallery.js';
     $('#ownership').hidden=!p.ownership;$('#ownership').textContent=p.ownership||'';$('#workflow').hidden=!p.workflow;
     $('#workflow').innerHTML=(p.workflow||[]).map((item,i)=>`<section>${icon(item.icon||['compass','agent','screen','route'][i%4])}<div><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></div></section>`).join('');
     $('#contributions').innerHTML=p.contributions.map(c=>`<li>${esc(c)}</li>`).join('');
-    mediaList=p.assets.map(id=>assets.get(id)).filter(usable).sort((a,b)=>Number(b.id===p.cover)-Number(a.id===p.cover));renderMedia();
+    const mediaOrder=p.mediaOrder||[p.cover,...p.assets.filter(id=>id!==p.cover)];
+    mediaList=mediaOrder.map(id=>assets.get(id)).filter(usable);renderMedia();
     detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';dialog.dataset.mediaLayout=mediaList.length>1?'collection':'single';
     document.body.classList.add('is-extracting');
     sound.island({id:null});sound.setDetail(true);dialog.showModal();dialog.scrollTop=0;$('#media').scrollTop=0;
