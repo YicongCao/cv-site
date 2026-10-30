@@ -129,7 +129,34 @@
         "a170",
         "a172"
       ],
-      "coverSrc": "/media/covers/nex.webp"
+      "coverSrc": "/media/covers/nex.webp",
+      "workflow": [
+        {
+          "title": "协议演进",
+          "icon": "protocol",
+          "text": "负责 Nex Agent 核心协议演进，将 SSE 纯文本与 XML 操作指令分阶段重构为原生 Tool Call + WebSocket RPC，贯通 Agent、前端消费、单元测试及旧协议清理。"
+        },
+        {
+          "title": "任务编排",
+          "icon": "route",
+          "text": "设计 Prechat/Postchat 智能路由与 Plan、Todo、askUser 协作机制，通过结构化输出、确定性门控和完成状态校验提升复杂任务执行的可控性。 推动 Subagent 演进为基于 planner、worker 和图状态机的 Orchestrator，落地分级门控、Token 预算、暂停恢复、断线重连、持久化及任务可视化。"
+        },
+        {
+          "title": "上下文治理",
+          "icon": "layers",
+          "text": "建设上下文窗口治理体系，实现 hot/warm zone 分级压缩、动态预算、工具消息配对、用量可视化及溢出后的自动压缩重发。"
+        },
+        {
+          "title": "工具可靠性",
+          "icon": "shield",
+          "text": "建立工具执行四层可靠性机制，覆盖前后端超时、Shell 串行队列、WebSocket 熔断与 WebContainer 健康检测，并治理流中断、并发写入和自动修复竞态。"
+        },
+        {
+          "title": "全链路诊断",
+          "icon": "chart",
+          "text": "从零建设 Agent 全链路诊断与 Telemetry，打通质量事件采集、链路追踪、错误分析、Token 月报及运维视图，支持从异常发现到会话级诊断。"
+        }
+      ]
     },
     {
       "id": "pgos",
@@ -167,7 +194,34 @@
         "a174",
         "a208"
       ],
-      "coverSrc": "/media/covers/pgos.webp"
+      "coverSrc": "/media/covers/pgos.webp",
+      "workflow": [
+        {
+          "title": "从立项到上线",
+          "icon": "compass",
+          "text": "2021 年至今参与 PGOS 游戏联机后台建设，完整经历竞品调研、技术选型、项目立项、核心模块研发及上线发布全流程。"
+        },
+        {
+          "title": "规则驱动匹配",
+          "icon": "rules",
+          "text": "研发游戏对战、玩家匹配与在线长连接等核心服务，支撑规则驱动的组队、竞技匹配及游戏会话分配。 建设可配置匹配能力，通过声明式 Ruleset 与表达式引擎描述玩家属性、队伍结构及多维约束，降低不同游戏项目的重复开发成本。"
+        },
+        {
+          "title": "匹配策略与运行验证",
+          "icon": "chart",
+          "text": "围绕匹配公平性、搜索效率与排队时长进行系统设计，支持按等待时间动态放宽规则、多模式匹配及多 Ruleset 并行执行。 参与匹配平台工程化建设，结合复合索引、优先队列、Ticket 生命周期管理、Simulator 与自动扩缩容支撑规则调试及分布式运行。"
+        },
+        {
+          "title": "对战服务器托管",
+          "icon": "pgos",
+          "text": "搭建 DS Hosting 服务，为游戏部署 DS 提供灵活扩缩容的服务器编队管理系统。"
+        },
+        {
+          "title": "事件驱动扩展",
+          "icon": "cloud",
+          "text": "基于 Knative 实现 Virtual Server 集群，允许开发者通过事件驱动扩展 PGOS 的能力边界。"
+        }
+      ]
     },
     {
       "id": "cloudgame",
@@ -187,7 +241,14 @@
       "assets": [
         "a207"
       ],
-      "coverSrc": "/media/covers/cloudgame.webp"
+      "coverSrc": "/media/covers/cloudgame.webp",
+      "workflow": [
+        {
+          "title": "WebSocket 创意原型",
+          "icon": "cloudgame",
+          "text": "2019 年创作，使用 WebSocket 实现原生云游戏。"
+        }
+      ]
     },
     {
       "id": "bot",
@@ -359,7 +420,29 @@
         "a204",
         "a205"
       ],
-      "coverSrc": "/media/covers/bot.webp"
+      "coverSrc": "/media/covers/bot.webp",
+      "workflow": [
+        {
+          "title": "理解用户意图",
+          "icon": "agent",
+          "text": "基于 Rasa NLU 实现意图识别与槽位提取，让 Chatbot 回答游戏百科、会议室预订、天气查询等问题。"
+        },
+        {
+          "title": "容器化训练",
+          "icon": "layers",
+          "text": "搭建容器化训练平台，帮助提升分类器准确率。"
+        },
+        {
+          "title": "开放接入",
+          "icon": "protocol",
+          "text": "编写 Bot 框架，开放第三方接入能力。"
+        },
+        {
+          "title": "文字冒险探索",
+          "icon": "reader",
+          "text": "开源业余开发的文字冒险游戏引擎 MarkdownGame。"
+        }
+      ]
     },
     {
       "id": "accelerator",
@@ -383,7 +466,29 @@
       "assets": [
         "a249"
       ],
-      "coverSrc": "/media/originals/images/a249.png"
+      "coverSrc": "/media/originals/images/a249.png",
+      "workflow": [
+        {
+          "title": "底层流量转发",
+          "icon": "protocol",
+          "text": "开发 LSP 框架，通过本地代理转发流量并搭载自定义协议，兼容同步、异步、事件、Overlapped、完成例程及 I/O 完成端口等网络模型。"
+        },
+        {
+          "title": "改善 P2P 联机",
+          "icon": "accelerator",
+          "text": "优化网络线路，通过提升 NAT 类型解决 P2P 游戏联机问题。"
+        },
+        {
+          "title": "线路压力验证",
+          "icon": "chart",
+          "text": "开发项目压测框架，并与运维协作完成后台线路压力测试。"
+        },
+        {
+          "title": "Steam 社区加速",
+          "icon": "route",
+          "text": "开发 HTTP 加速框架，提出 SOCKS5 系统代理与 DNS 劫持方案，并使用后者实现 Steam 社区加速功能。"
+        }
+      ]
     },
     {
       "id": "desktop",
@@ -407,7 +512,24 @@
         "a211",
         "a212"
       ],
-      "coverSrc": "/media/covers/desktop.webp"
+      "coverSrc": "/media/covers/desktop.webp",
+      "workflow": [
+        {
+          "title": "移动应用桌面化",
+          "icon": "desktop",
+          "text": "基于 Android 模拟器开发桌面玩机客户端，实现直接在 PC 桌面使用天天快报、快手、抖音等移动应用。"
+        },
+        {
+          "title": "重做桌面交互",
+          "icon": "input",
+          "text": "提出并实现返回按钮拖动、模拟硬件滚轮等体验优化策略。"
+        },
+        {
+          "title": "数据反馈",
+          "icon": "chart",
+          "text": "完成数据上报埋点并分析用户数据。"
+        }
+      ]
     },
     {
       "id": "cleaner",
@@ -428,7 +550,19 @@
       "assets": [
         "a188"
       ],
-      "coverSrc": "/media/covers/cleaner.webp"
+      "coverSrc": "/media/covers/cleaner.webp",
+      "workflow": [
+        {
+          "title": "清理工具与数据反馈",
+          "icon": "cleaner",
+          "text": "开发电脑管家清理工具，完成数据上报埋点与用户数据分析。"
+        },
+        {
+          "title": "探索自动识别",
+          "icon": "rules",
+          "text": "结合朴素贝叶斯与 TF-IDF 算法，实现基于路径的电脑垃圾自动识别 Demo，并编写专利。"
+        }
+      ]
     },
     {
       "id": "win10",
@@ -450,7 +584,19 @@
         "a246",
         "a247"
       ],
-      "coverSrc": "/media/covers/win10.webp"
+      "coverSrc": "/media/covers/win10.webp",
+      "workflow": [
+        {
+          "title": "熟悉的开始菜单",
+          "icon": "win10",
+          "text": "开发 Win10 经典开始菜单，在 Windows 10 上还原 Windows 7 风格的开始菜单功能。"
+        },
+        {
+          "title": "系统初始设置",
+          "icon": "rules",
+          "text": "开发 Win10 设置助手，帮助用户完成系统安装后的初始设置。"
+        }
+      ]
     },
     {
       "id": "uwp",
@@ -476,7 +622,24 @@
         "a217",
         "a218"
       ],
-      "coverSrc": "/media/covers/uwp.webp"
+      "coverSrc": "/media/covers/uwp.webp",
+      "workflow": [
+        {
+          "title": "聚合内容",
+          "icon": "layers",
+          "text": "开发 UWP 客户端与爬虫接口，动态聚合知乎日报、PingWest、豆瓣一刻、煎蛋等 10 余个站点的内容，以信息流卡片形式展示。"
+        },
+        {
+          "title": "多种输入，同一体验",
+          "icon": "input",
+          "text": "持续优化加载速度、响应式布局与过渡动画，适配触屏、鼠标和键盘，支持内容收藏与导出。"
+        },
+        {
+          "title": "应用商店交付",
+          "icon": "uwp",
+          "text": "将应用提交至 Windows 应用商店，以“爱看段子”发布。"
+        }
+      ]
     },
     {
       "id": "reader",
@@ -519,7 +682,19 @@
         "a242",
         "a243"
       ],
-      "coverSrc": "/media/covers/reader.webp"
+      "coverSrc": "/media/covers/reader.webp",
+      "workflow": [
+        {
+          "title": "从产品到服务端",
+          "icon": "compass",
+          "text": "完成产品设计，独立开发前端与后台，采用 Python + Django，并部署于 Google App Engine。"
+        },
+        {
+          "title": "延伸到 Windows Phone",
+          "icon": "phone",
+          "text": "开发简致阅读 Windows Phone 客户端。"
+        }
+      ]
     },
     {
       "id": "ishowfx",
@@ -547,7 +722,24 @@
         "a182",
         "a183"
       ],
-      "coverSrc": "/media/covers/ishowfx.webp"
+      "coverSrc": "/media/covers/ishowfx.webp",
+      "workflow": [
+        {
+          "title": "批量下载",
+          "icon": "ishowfx",
+          "text": "开发图片批量下载工具，实现四种批量下载模式。"
+        },
+        {
+          "title": "发现与筛选",
+          "icon": "rules",
+          "text": "实现资源智能探测、批量添加网页与多级网址分析，并支持网页与图片过滤、图片尺寸自适应及搜索引擎适配。"
+        },
+        {
+          "title": "发布与交付",
+          "icon": "chart",
+          "text": "发布至非凡、多特软件站，累计下载量过万。"
+        }
+      ]
     },
     {
       "id": "xidian",
@@ -567,7 +759,14 @@
       "assets": [
         "a248"
       ],
-      "coverSrc": "/media/covers/xidian.webp"
+      "coverSrc": "/media/covers/xidian.webp",
+      "workflow": [
+        {
+          "title": "导航产品实践",
+          "icon": "xidian",
+          "text": "大学毕业设计，完成导航项目并制作演示。"
+        }
+      ]
     }
   ],
   "assets": [

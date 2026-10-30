@@ -1131,6 +1131,8 @@ dialog#about{width:min(790px,calc(100vw - 40px));max-height:calc(100svh - 40px);
   #detail:has(#workflow:not([hidden])) #ownership{order:4;margin:0}
   #detail:has(#workflow:not([hidden])) .media-column{order:5}
   #detail:has(#workflow:not([hidden])) #workflow{order:6;margin-top:8px}
+  #detail[data-media-layout=collection]:has(#workflow:not([hidden])) #workflow{order:5}
+  #detail[data-media-layout=collection]:has(#workflow:not([hidden])) .media-column{order:6}
 }
 /* Keep moving labels from turning a camera-navigation click into a project visit. */
 .theme-label:disabled,.island-label:disabled{opacity:1;cursor:default}.island-label.quiet:disabled{opacity:0}

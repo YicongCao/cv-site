@@ -73,12 +73,13 @@ import {installBrandIdle} from './brand-idle.js';
     if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#explore');
     selected=projects.indexOf(p);activeTheme=projectTheme(p.id).id;renderTimeline(true);if(fromHistory&&exhibition)exhibition.locate(selected);
     $('#detail-period').textContent=p.period;$('#detail-title').textContent=p.title;$('#detail-summary').textContent=p.summary;
+    $('#detail-summary').hidden=p.workflow?.length===1;
     $('.detail-copy > h3').hidden=$('#contributions').hidden=!!p.workflow||['cloudgame','xidian'].includes(p.id);
     $('#ownership').hidden=!p.ownership;$('#ownership').textContent=p.ownership||'';$('#workflow').hidden=!p.workflow;
-    $('#workflow').innerHTML=(p.workflow||[]).map((item,i)=>`<section>${icon(['compass','agent','screen','route'][i])}<div><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></div></section>`).join('');
+    $('#workflow').innerHTML=(p.workflow||[]).map((item,i)=>`<section>${icon(item.icon||['compass','agent','screen','route'][i%4])}<div><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></div></section>`).join('');
     $('#contributions').innerHTML=p.contributions.map(c=>`<li>${esc(c)}</li>`).join('');
     mediaList=p.assets.map(id=>assets.get(id)).filter(usable).sort((a,b)=>Number(b.id===p.cover)-Number(a.id===p.cover));renderMedia();
-    detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';
+    detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';dialog.dataset.mediaLayout=mediaList.length>1?'collection':'single';
     document.body.classList.add('is-extracting');
     sound.island({id:null});sound.setDetail(true);dialog.showModal();dialog.scrollTop=0;$('#media').scrollTop=0;
 

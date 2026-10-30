@@ -20,7 +20,15 @@ const paths={
  uwp:'M0 1h16v14H0zm2 2v10h12V3zm1 1h3v3H3zm5 0h5v1H8zm0 2h4v1H8zM3 9h10v1H3zm0 2h8v1H3z',
  reader:'M0 2h6v1h4V2h6v12h-6v1H6v-1H0zm2 2v8h4v1h1V5H6V4zm7 1v8h1v-1h4V4h-4v1z',
  ishowfx:'M1 0h11v2H3v8H1zm3 3h11v11H4zm2 2v7h7V5zm1 5 2-3h1v2h2v2H7zM0 12h2v2h2v2H0z',
- xidian:'M5 0h6v2h2v2h-2v8h4v4H1v-4h4V4H3V2h2zm2 3v4h2V3zm0 6v3h2V9zM3 14v1h10v-1z'
+ xidian:'M5 0h6v2h2v2h-2v8h4v4H1v-4h4V4H3V2h2zm2 3v4h2V3zm0 6v3h2V9zM3 14v1h10v-1z',
+ protocol:'M0 3h5v2h2v6H5v2H0zm2 2v6h2V5zm7-2h2v2h5v8h-5v2H9v-4H8V7h1zm3 4v4h2V7z',
+ layers:'M0 0h12v12H0zm2 2v8h8V2zm2 1h4v1H4zm0 3h4v1H4zm0 3h3v1H4zm9-6h2v12H3v-2h10z',
+ shield:'M2 1h12v8h-2v3h-2v2H6v-2H4V9H2zm2 2v5h2v3h2v1h1v-1h1V8h2V3zm2 3h2v2h1V6h2v3H9v2H7V9H6z',
+ chart:'M0 1h2v12h14v2H0zm4 7h2v3H4zm4-3h2v6H8zm4-4h2v10h-2z',
+ rules:'M0 3h3V1h3v2h10v2H6v2H3V5H0zm0 8h10V9h3v2h3v2h-3v2h-3v-2H0z',
+ cloud:'M5 1h6v2h2v3h2v2h1v5H0V8h1V6h3V3h1zm1 2v4H3v2H2v2h12V9h-3V5H9V3z',
+ input:'M2 0h2v2h2v2h2v2h2v2h2v2H8v2h2v3H7v-3H5v2H2z'
 };
 export function icon(name){return `<svg class="pixel-icon" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" fill-rule="evenodd" d="${paths[name]||paths.compass}"/></svg>`;}
 export function projectIcon(id){return icon(id==='bot'?'agent':id);}
+export function hasIcon(name){return Object.hasOwn(paths,name);}
