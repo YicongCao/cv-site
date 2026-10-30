@@ -1,9 +1,11 @@
+import {installSound} from './sound.js';
 import {Exhibition} from './exhibition.js';
 import {themes} from './world.js';
 import {icon} from './icons.js';
 import {pixelSVG} from './pixel.js';
 (async () => {
   'use strict';
+  const sound=installSound();
   const response=await fetch('/data/portfolio.json');if(!response.ok)throw new Error('作品数据加载失败');const data=await response.json();
   const projects=data.projects, assets=new Map(data.assets.map(a=>[a.id,a]));
   const $=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
@@ -37,7 +39,7 @@ import {pixelSVG} from './pixel.js';
   function overview(){if(motionBusy||$('#detail').open)return;activeTheme=null;renderTimeline(true);exhibition?.overview();$('#stage').focus({preventScroll:true});}
   function select(n){if(motionBusy||$('#detail').open)return;selected=n;activeTheme=projectTheme(projects[n].id).id;renderTimeline();}
   function browse(delta){if(!activeTheme){focusTheme(themes[delta>0?0:2].id);return;}const ids=themes.find(t=>t.id===activeTheme).members,i=ids.indexOf(projects[selected].id);select(projects.findIndex(p=>p.id===ids[Math.max(0,Math.min(ids.length-1,i+delta))]));}
-  function visitProject(index){if(motionBusy||$('#detail').open)return;selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
+  function visitProject(index){if(motionBusy||$('#detail').open)return;void sound.tap();selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
   function mediaHtml(a){
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
     if(isImage(a))return `<img src="${esc(href(a))}" alt="${esc(a.chapter)}">`;
@@ -77,7 +79,7 @@ import {pixelSVG} from './pixel.js';
     mediaList=p.assets.map(id=>assets.get(id)).filter(usable).sort((a,b)=>Number(b.id===p.cover)-Number(a.id===p.cover));renderMedia();
     detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';
     document.body.classList.add('is-extracting');
-    dialog.showModal();dialog.scrollTop=0;$('#media').scrollTop=0;
+    sound.setDetail(true);dialog.showModal();dialog.scrollTop=0;$('#media').scrollTop=0;
 
     dialog.classList.remove('measuring');dialog.classList.add('detail-reveal');document.body.classList.add('detail-open');document.body.classList.remove('is-extracting');
     await delay(250);dialog.dataset.ready='true';$('#close-detail').focus({preventScroll:true});motionBusy=false;startVideos();
@@ -90,7 +92,7 @@ import {pixelSVG} from './pixel.js';
     $('#detail').classList.remove('detail-reveal');$('#detail').classList.add('detail-leave');document.body.classList.add('is-returning');
     await delay(160);$('#detail').close();if(detailSpatial&&exhibition)await exhibition.close();
     $('#detail').classList.remove('detail-leave');document.body.classList.remove('detail-open','is-returning');$('#media').innerHTML='';
-    detailSpatial=false;motionBusy=false;renderTimeline(true);
+    detailSpatial=false;motionBusy=false;sound.setDetail(false);sound.setAudibleVideo(false);renderTimeline(true);
     if(!fromHistory){if(history.state?.portfolioDetail)history.back();else history.replaceState(null,'',location.pathname+location.search);}
     (returnFocus?.isConnected?returnFocus:$('#explore')).focus({preventScroll:true});flushHistory();
   }
@@ -106,7 +108,7 @@ import {pixelSVG} from './pixel.js';
   $('#large-prev').onclick=()=>{mediaIndex--;showLarge();};$('#large-next').onclick=()=>{mediaIndex++;showLarge();};
   document.addEventListener('keydown',e=>{if($('#about').open)return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
-  try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
+  try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onWalk:(distance,moving)=>sound.walk(distance,moving),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');
   $('#about-content').innerHTML=`<div class="about-heading"><div class="portrait" aria-hidden="true"><svg viewBox="0 0 32 40" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2zM15 28h2v8h-2z"/></svg></div><div><h2 id="about-title">曹一聪 <span>pixelcao</span></h2><p>T10 工程师 · 2016 年加入腾讯</p></div></div>
   <p class="about-lead">让想法成为可运行、可验证的产品。</p>

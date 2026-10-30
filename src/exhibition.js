@@ -7,8 +7,8 @@ const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normaliz
 const direction=new T.Vector3(1,1,1).normalize();
 const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
- constructor({element,projects,onSelect,onOpen,onTheme,onFailure}){
-  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure});
+ constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk}){
+  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk});
   this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
   this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
@@ -144,6 +144,7 @@ export class Exhibition {
  updateCharacter(dt){const j=this.journey,p=j.position,walking=j.phase==='walking',target=this.world.stations[j.target];let angle=walking?(j.direction??this.heading):Math.atan2(target.x+.35-p.x,target.z-.45-p.z);const delta=T.MathUtils.euclideanModulo(angle-this.heading+Math.PI,Math.PI*2)-Math.PI;this.heading+=delta*Math.min(1,dt*15||1);
   const t=this.traveler;t.root.position.set(p.x,p.y+.025,p.z);t.root.rotation.y=this.heading;const desiredStep=walking?Math.sin(j.walked*1.25):0;this.step=walking?desiredStep:T.MathUtils.lerp(this.step||0,0,Math.min(1,dt*22));const step=this.step;t.feet.forEach((f,i)=>{f.position.z=(i?1:-1)*step*.15;f.position.y=.08+Math.max(0,(i?1:-1)*step)*.12;});t.body.position.y=walking?Math.abs(step)*.035:0;t.hat.rotation.z=walking?step*.035:0;
   const casting=['casting','opening','detail','closing'].includes(j.phase);const armTarget=casting?-clamp(j.phase==='casting'?j.elapsed/.3:j.phase==='closing'?1-j.elapsed/.32:1,0,1)*2.3:step*.28;t.arms[1].rotation.x=T.MathUtils.lerp(t.arms[1].rotation.x,armTarget,Math.min(1,dt*25||1));t.arms[0].rotation.x=-step*.28;
+  this.onWalk?.(j.walked,walking&&!(this.departureDelay>0));
   t.head.rotation.set(0,0,0);t.arms[1].rotation.z=0;
   if(this.introActive){const time=this.introElapsed;t.root.rotation.y=Math.PI/4;t.head.rotation.y=time<1.5?Math.sin(time*4)*.45:Math.sin(time*2)*.08;
    const lift=clamp((time-1.2)/.35,0,1)*(1-clamp((time-2.65)/.25,0,1));t.head.rotation.z=-lift*.14;t.arms[1].rotation.z=-lift*2.65;t.arms[1].rotation.x=-lift*(.45+Math.sin(time*15)*.15);}

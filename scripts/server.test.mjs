@@ -21,3 +21,7 @@ test('video range seeking, suffix, HEAD and invalid ranges',async()=>{
  r=await request(url,{method:'HEAD',headers:{Range:'bytes=32-63'}});assert.equal(r.status,206);assert.equal(r.body.length,0);assert.equal(r.headers['content-length'],'32');
  for(const Range of ['bytes=999999999-','bytes=2-1','bytes=0-1,2-3','bytes=-0','bytes=-'])assert.equal((await request(url,{headers:{Range}})).status,416,Range);
 });
+test('original background music is served locally with audio MIME and range support',async()=>{
+ let r=await request('/audio/quiet-islands.mp3',{method:'HEAD'});assert.equal(r.status,200);assert.equal(r.headers['content-type'],'audio/mpeg');assert.ok(Number(r.headers['content-length'])>100000);
+ r=await request('/audio/quiet-islands.mp3',{headers:{Range:'bytes=0-31'}});assert.equal(r.status,206);assert.equal(r.body.length,32);
+});

@@ -76,3 +76,7 @@ npm test
 ## 展馆地标与聚光
 
 三大主题按 1/2/3 编号，NEX 与 PGOS 为实体像素字块立牌，Win10 为蓝色四窗格立体徽标。首次主动访问先用 0.65 秒聚光引导旅人，随后跟随步行和施法；取消或进入详情后退出，减少动态效果时跳过。验收见 `evidence/landmarks/validation.md`。背景候选及内置 ImageGen 提示词见 `design/background-directions/index.html`，背景方案尚未替换到站点。
+
+### 声音
+
+首次交互后播放原创氛围 BGM、步幅同步的脚步和点按音效。页眉与弹窗内的扬声器按钮统一控制声音，并记住静音选择。详情降低音乐音量；视频出声时 BGM 避让，页面进入后台时暂停。音频文件已包含在 `public/audio/`，正常构建不需要 FFmpeg。声音设计与验证见 `design/sound/README.md`。
