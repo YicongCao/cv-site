@@ -1,0 +1,73 @@
+[
+  {
+    "ms": 282,
+    "animation": "walking",
+    "drawCalls": "85",
+    "follow": "true",
+    "position": "2.700",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "ms": 3362,
+    "animation": "walking",
+    "drawCalls": "125",
+    "follow": "true",
+    "position": "41.251",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "ms": 6393,
+    "animation": "walking",
+    "drawCalls": "126",
+    "follow": "true",
+    "position": "79.166",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "ms": 9421,
+    "animation": "walking",
+    "drawCalls": "83",
+    "follow": "true",
+    "position": "116.875",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "ms": 9652,
+    "animation": "casting",
+    "drawCalls": "93",
+    "follow": "true",
+    "position": "119.122",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "ms": 10742,
+    "animation": "opening",
+    "drawCalls": "97",
+    "follow": "true",
+    "position": "119.122",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "phase": "detail",
+    "ms": 11416,
+    "title": "西电导航"
+  }
+]

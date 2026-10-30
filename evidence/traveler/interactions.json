@@ -1,0 +1,206 @@
+[
+  {
+    "case": "long-trip-start",
+    "animation": "walking",
+    "drawCalls": "85",
+    "follow": "true",
+    "position": "2.709",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "case": "reverse",
+    "animation": "walking",
+    "drawCalls": "69",
+    "follow": "true",
+    "position": "4.585",
+    "project": "brushline",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "brushline"
+  },
+  {
+    "case": "latest-target-and-repeat",
+    "animation": "walking",
+    "drawCalls": "94",
+    "follow": "true",
+    "position": "6.254",
+    "project": "pgos",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "pgos"
+  },
+  {
+    "case": "latest-result",
+    "title": "PGOS 游戏联机后台"
+  },
+  {
+    "case": "back",
+    "animation": "idle",
+    "drawCalls": "122",
+    "follow": "true",
+    "position": "25.534",
+    "project": "pgos",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "pgos"
+  },
+  {
+    "case": "forward",
+    "animation": "detail",
+    "drawCalls": "122",
+    "follow": "true",
+    "position": "25.534",
+    "project": "pgos",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "pgos"
+  },
+  {
+    "case": "escape-walking",
+    "animation": "walking",
+    "drawCalls": "125",
+    "follow": "true",
+    "position": "28.450",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "case": "escape-casting",
+    "animation": "casting",
+    "drawCalls": "108",
+    "follow": "true",
+    "position": "25.534",
+    "project": "pgos",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "pgos"
+  },
+  {
+    "case": "bot-last-image",
+    "decoded": true,
+    "src": "/media/originals/images/a205.png"
+  },
+  {
+    "case": "escape-lightbox-only",
+    "detail": true,
+    "lightbox": false
+  },
+  {
+    "case": "focus-restored",
+    "focus": "explore",
+    "phase": "idle"
+  },
+  {
+    "case": "escape-walking-settled",
+    "animation": "idle",
+    "drawCalls": "52",
+    "follow": "true",
+    "position": "45.247",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "case": "escape-casting-settled",
+    "animation": "idle",
+    "drawCalls": "120",
+    "follow": "true",
+    "position": "42.538",
+    "project": "bot",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "bot"
+  },
+  {
+    "case": "reduced-motion",
+    "animation": "detail",
+    "drawCalls": "83",
+    "follow": "true",
+    "position": "119.122",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "case": "flat-project-count",
+    "count": 15
+  },
+  {
+    "case": "flat-open",
+    "title": "西电导航"
+  },
+  {
+    "case": "resize-walking",
+    "before": {
+      "animation": "walking",
+      "drawCalls": "85",
+      "follow": "true",
+      "position": "2.688",
+      "project": "xidian",
+      "renderer": "webgl",
+      "routeLength": "119.12",
+      "travelerProject": "xidian"
+    },
+    "after": {
+      "animation": "walking",
+      "drawCalls": "85",
+      "follow": "true",
+      "position": "3.126",
+      "project": "xidian",
+      "renderer": "webgl",
+      "routeLength": "119.12",
+      "travelerProject": "xidian"
+    },
+    "canceled": {
+      "animation": "idle",
+      "drawCalls": "61",
+      "follow": "true",
+      "position": "3.126",
+      "project": "xidian",
+      "renderer": "webgl",
+      "routeLength": "119.12",
+      "travelerProject": "xidian"
+    }
+  },
+  {
+    "case": "missing-image",
+    "text": "图片暂时无法显示"
+  },
+  {
+    "case": "keyboard-open",
+    "title": "PhotoMuseum"
+  },
+  {
+    "case": "manual-camera-pauses-follow",
+    "animation": "walking",
+    "drawCalls": "108",
+    "follow": "false",
+    "position": "13.304",
+    "project": "xidian",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "xidian"
+  },
+  {
+    "case": "visit-restores-follow",
+    "animation": "walking",
+    "drawCalls": "110",
+    "follow": "true",
+    "position": "20.803",
+    "project": "pgos",
+    "renderer": "webgl",
+    "routeLength": "119.12",
+    "travelerProject": "pgos"
+  },
+  {
+    "case": "raycast-island-click",
+    "title": "iShowFX 图文精灵"
+  }
+]

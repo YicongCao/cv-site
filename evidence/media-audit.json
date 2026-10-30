@@ -1,5 +1,5 @@
 {
-  "images": 471,
+  "images": 470,
   "videos": [
     {
       "id": "a001",
@@ -77,13 +77,6 @@
       "width": 2560,
       "height": 1440,
       "seconds": 52.05
-    },
-    {
-      "id": "a184",
-      "codec": "h264",
-      "width": 1920,
-      "height": 966,
-      "seconds": 436.233288
     },
     {
       "id": "a218",

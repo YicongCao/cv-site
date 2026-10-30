@@ -1,0 +1,28 @@
+$ npm run check
+
+> pixelcao-gallery@1.0.0 check
+> node --check server.mjs && node --check src/app.js && node --check src/exhibition.js && node scripts/validate.mjs
+
+{"projects":15,"assets":229,"sha256":"229 verified","localReferences":717,"resume":"all links resolve"}
+
+$ npm test
+
+> pixelcao-gallery@1.0.0 test
+> node --test scripts/*.test.mjs
+
+✔ all fifteen exhibits share a connected, continuous surface route (2.518709ms)
+✔ full end-to-end walk uses uniform speed and takes 6–10 seconds (0.305583ms)
+✔ every station is reachable in reverse, including repeats (0.164541ms)
+✔ latest target replans from actual position; repeat does not restart (0.048083ms)
+✔ Escape cancels walking, casting and opening without a stale arrival (0.069875ms)
+✔ deep links position instantly; closing leaves traveler at station (0.040667ms)
+✔ GET/HEAD, content types and all static-only boundaries (10.0845ms)
+✔ video range seeking, suffix, HEAD and invalid ranges (2.521917ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.340375
