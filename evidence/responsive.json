@@ -1,0 +1,30 @@
+[
+  {
+    "dialogOverflow": false,
+    "height": 900,
+    "mediaLoaded": true,
+    "pageOverflow": false,
+    "width": 1440
+  },
+  {
+    "dialogOverflow": false,
+    "height": 720,
+    "mediaLoaded": true,
+    "pageOverflow": false,
+    "width": 1280
+  },
+  {
+    "dialogOverflow": false,
+    "height": 1024,
+    "mediaLoaded": true,
+    "pageOverflow": false,
+    "width": 768
+  },
+  {
+    "dialogOverflow": false,
+    "height": 844,
+    "mediaLoaded": true,
+    "pageOverflow": false,
+    "width": 390
+  }
+]

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>pixelcao · 作品</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="/" aria-label="pixelcao">pixelcao</a><a class="resume-link" href="/resume/" target="_blank" rel="noopener">简历 <span aria-hidden="true">↗</span></a></header>
+<main><section id="timeline" aria-label="作品展厅">
+<div class="intro"><h1 id="title"></h1><p id="summary"></p><button class="dark" id="explore">查看项目 <span aria-hidden="true">↗</span></button></div>
+<div id="stage" tabindex="0" aria-label="作品展架，左右方向键切换项目"><div id="cards"></div></div>
+<div class="browse"><button id="previous" aria-label="上一个项目">←</button><button id="next" aria-label="下一个项目">→</button></div>
+<nav class="years" aria-label="跳转到作品时期"><button data-jump="brushline">近期</button><button data-jump="nex">2025</button><button data-jump="pgos">2021</button><button data-jump="cloudgame">2019</button><button data-jump="bot">2018</button><button data-jump="accelerator">2017</button><button data-jump="uwp">2016</button><button data-jump="reader">2013</button><button data-jump="ishowfx">2010</button><button data-jump="xidian">毕业设计</button></nav>
+</section></main>
+<dialog id="detail" aria-labelledby="detail-title"><button id="close-detail" class="close" aria-label="关闭项目详情">×</button><div class="detail-layout"><div class="media-column"><div id="media" class="main-media"></div><div class="media-toolbar"><button id="expand" aria-label="放大当前素材">⤢</button></div></div><div class="detail-copy"><p id="detail-period"></p><h2 id="detail-title"></h2><div class="red-rule"></div><p id="detail-summary"></p><h3>我的工作</h3><ul id="contributions"></ul></div></div></dialog>
+<dialog id="lightbox" aria-label="素材大图"><button id="close-lightbox" class="close" aria-label="关闭素材大图">×</button><div id="large-media"></div><div class="large-nav"><button id="large-prev" aria-label="上一份素材">←</button><button id="large-next" aria-label="下一份素材">→</button></div><a id="original-link" target="_blank" rel="noopener">打开原图 ↗</a></dialog>
+<noscript><p>请启用 JavaScript 浏览作品展厅，或<a href="/resume/">查看完整简历</a>。</p></noscript>
+<script src="/app.js" defer></script>
+</body></html>

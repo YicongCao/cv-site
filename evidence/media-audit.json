@@ -1,0 +1,106 @@
+{
+  "images": 471,
+  "videos": [
+    {
+      "id": "a001",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1416,
+      "seconds": 293.087814
+    },
+    {
+      "id": "a032",
+      "codec": "h264",
+      "width": 640,
+      "height": 1136,
+      "seconds": 79.59
+    },
+    {
+      "id": "a033",
+      "codec": "h264",
+      "width": 640,
+      "height": 1136,
+      "seconds": 74.121678
+    },
+    {
+      "id": "a034",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 203.0
+    },
+    {
+      "id": "a085",
+      "codec": "h264",
+      "width": 1080,
+      "height": 2160,
+      "seconds": 29.678
+    },
+    {
+      "id": "a086",
+      "codec": "h264",
+      "width": 1080,
+      "height": 2160,
+      "seconds": 51.915
+    },
+    {
+      "id": "a144",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "seconds": 75.0
+    },
+    {
+      "id": "a154",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1210,
+      "seconds": 373.433333
+    },
+    {
+      "id": "a172",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1242,
+      "seconds": 42.156625
+    },
+    {
+      "id": "a174",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1136,
+      "seconds": 77.879728
+    },
+    {
+      "id": "a175",
+      "codec": "h264",
+      "width": 2560,
+      "height": 1440,
+      "seconds": 52.05
+    },
+    {
+      "id": "a184",
+      "codec": "h264",
+      "width": 1920,
+      "height": 966,
+      "seconds": 436.233288
+    },
+    {
+      "id": "a218",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 379.712
+    },
+    {
+      "id": "a248",
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 308.501333
+    }
+  ],
+  "pdf": [
+    "a208"
+  ]
+}

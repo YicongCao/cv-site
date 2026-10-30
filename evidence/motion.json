@@ -1,0 +1,16 @@
+[
+  {
+    "animation": "extracting",
+    "frame": "125",
+    "progress": "0.524",
+    "project": "cloudgame",
+    "renderer": "webgl"
+  },
+  {
+    "animation": "returning",
+    "frame": "210",
+    "progress": "0.569",
+    "project": "cloudgame",
+    "renderer": "webgl"
+  }
+]
