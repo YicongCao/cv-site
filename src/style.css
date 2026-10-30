@@ -1076,3 +1076,7 @@ header button, .resume-link, #explore, #detail-period, .years,
   .flat-project span { font-size:12px; }
   #detail-period { line-height:1.5; }
 }
+
+/* Follow the traveler without blocking island input or dimming reading surfaces. */
+.traveler-focus{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0;background:radial-gradient(circle var(--light-radius,90px) at var(--light-x,50%) var(--light-y,50%),transparent 28%,rgba(8,18,23,.06) 60%,rgba(8,18,23,.52) 150%)}
+@media(prefers-reduced-motion:reduce){.traveler-focus{display:none}}

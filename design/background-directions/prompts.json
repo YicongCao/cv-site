@@ -1,0 +1,23 @@
+[
+  {
+    "id": "a-sea",
+    "prompt": "Use case: ui-mockup. Edit the attached actual portfolio screenshot into a polished background concept. Preserve the screenshot's exact 15-island layout, three hubs connected by branches, isometric orthographic angle, miniature exhibits, NEX and PGOS physical pixel letter signposts, blue four-pane Windows emblem, small original white-hat traveler, header pixelcao, all three numbered Chinese theme headings and their positions. No new navigation or labels. Keep scene as restrained crisp pixel art, sage stone, ivory type and warm gold accents. Only redesign the background and supporting atmosphere around/below the islands, preserve readable foreground and project identity. No photographic realism, no glossy mirror reflections, no bloom overload. Wide desktop composition matching input. Direction A — Quiet tidal archipelago. Dark desaturated teal ocean beneath the stone islands, which rest just above the waterline. Sparse tiny horizontal pixel ripples and broken low contrast shore wavelets, gentle contact shadow beneath each platform, subdued diffuse water glints only near island bases. Water should be calm, sophisticated and uncluttered. Large quiet dark area behind header and labels. The islands feel naturally connected by stone bridges over a calm sea.",
+    "tool": "image_gen.imagegen",
+    "reference": "../../evidence/landmarks/overview.png",
+    "original": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-b062cdc4-1b87-47c8-ad12-82b9491fab50.png"
+  },
+  {
+    "id": "b-cloud",
+    "prompt": "Use case: ui-mockup. Edit the attached actual portfolio screenshot into a polished background concept. Preserve the screenshot's exact 15-island layout, three hubs connected by branches, isometric orthographic angle, miniature exhibits, NEX and PGOS physical pixel letter signposts, blue four-pane Windows emblem, small original white-hat traveler, header pixelcao, all three numbered Chinese theme headings and their positions. No new navigation or labels. Keep scene as restrained crisp pixel art, sage stone, ivory type and warm gold accents. Only redesign the background and supporting atmosphere around/below the islands, preserve readable foreground and project identity. No photographic realism, no glossy mirror reflections, no bloom overload. Wide desktop composition matching input. Direction B — Mistborne floating islands. Deep blue-green atmospheric void with broad, very subtle layered pixel cloud banks far below the platforms. Islands visibly float, bottoms exposed, no sea or water. Low contrast horizontal fog layers and a soft distant teal gradient add depth, brightest mist behind the lower periphery but keep header dark and empty. Calm dreamlike monument architecture, generous negative space, no stars or glitter. Foreground islands remain much brighter and sharper than the mist.",
+    "tool": "image_gen.imagegen",
+    "reference": "../../evidence/landmarks/overview.png",
+    "original": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-c4bc42af-3657-4d21-8e1e-2b4e43d37e6d.png"
+  },
+  {
+    "id": "c-sandbox",
+    "prompt": "Use case: ui-mockup. Edit the attached actual portfolio screenshot into a polished background concept. Preserve the screenshot's exact 15-island layout, three hubs connected by branches, isometric orthographic angle, miniature exhibits, NEX and PGOS physical pixel letter signposts, blue four-pane Windows emblem, small original white-hat traveler, header pixelcao, all three numbered Chinese theme headings and their positions. No new navigation or labels. Keep scene as restrained crisp pixel art, sage stone, ivory type and warm gold accents. Only redesign the background and supporting atmosphere around/below the islands, preserve readable foreground and project identity. No photographic realism, no glossy mirror reflections, no bloom overload. Wide desktop composition matching input. Direction C — The digital cartographer's table. Islands sit above a dark matte teal isometric terrain table with subtle sparse topographic stepped contour lines and a very faint large-scale square grid. Not neon cyberpunk. A few tiny muted stone elevation steps in distant corners, no extra buildings or objects, terrain dissolves into dark blank edges. Grounding contact shadows, architectural model room mood, low contrast design and generous negative space. No ocean, no clouds, no reflections, no extra words or markings.",
+    "tool": "image_gen.imagegen",
+    "reference": "../../evidence/landmarks/overview.png",
+    "original": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-ba12eec0-c8dd-45c8-92ab-dc677a04dfb3.png"
+  }
+]

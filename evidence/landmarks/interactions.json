@@ -1,0 +1,125 @@
+[
+  {
+    "case": "first-departure",
+    "stage": {
+      "animation": "walking",
+      "cameraReady": "false",
+      "departure": "true",
+      "drawCalls": "129",
+      "follow": "true",
+      "position": "4.071,0.360,10.071",
+      "project": "nex",
+      "remaining": "25.14",
+      "renderer": "webgl",
+      "spotlight": "0.80",
+      "theme": "ai",
+      "travelerProject": "nex",
+      "view": "theme",
+      "walked": "0.00"
+    }
+  },
+  {
+    "case": "walking",
+    "stage": {
+      "animation": "walking",
+      "cameraReady": "false",
+      "departure": "false",
+      "drawCalls": "98",
+      "follow": "true",
+      "position": "4.071,0.360,9.245",
+      "project": "nex",
+      "remaining": "24.31",
+      "renderer": "webgl",
+      "spotlight": "1.00",
+      "theme": "ai",
+      "travelerProject": "nex",
+      "view": "theme",
+      "walked": "0.83"
+    }
+  },
+  {
+    "case": "cancel",
+    "stage": {
+      "animation": "idle",
+      "cameraReady": "false",
+      "departure": "false",
+      "drawCalls": "72",
+      "follow": "false",
+      "position": "4.071,0.360,9.079",
+      "project": "nex",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "spotlight": "0.00",
+      "theme": "ai",
+      "travelerProject": "nex",
+      "view": "theme",
+      "walked": "0.99"
+    }
+  },
+  {
+    "case": "detail-clears-spot",
+    "title": "Nex 在线 Vibe Coding 平台",
+    "stage": {
+      "animation": "detail",
+      "cameraReady": "true",
+      "departure": "false",
+      "drawCalls": "72",
+      "follow": "true",
+      "position": "-15.021,0.720,5.121",
+      "project": "nex",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "spotlight": "0.00",
+      "theme": "ai",
+      "travelerProject": "nex",
+      "view": "theme",
+      "walked": "25.14"
+    }
+  },
+  {
+    "case": "mobile-walk",
+    "stage": {
+      "animation": "walking",
+      "cameraReady": "false",
+      "departure": "false",
+      "drawCalls": "99",
+      "follow": "true",
+      "position": "-12.370,0.720,5.121",
+      "project": "pgos",
+      "remaining": "22.49",
+      "renderer": "webgl",
+      "spotlight": "0.86",
+      "theme": "games",
+      "travelerProject": "pgos",
+      "view": "theme",
+      "walked": "27.79"
+    },
+    "width": {
+      "inner": 390,
+      "scroll": 390
+    }
+  },
+  {
+    "case": "reduced",
+    "stage": {
+      "animation": "detail",
+      "cameraReady": "true",
+      "departure": "false",
+      "drawCalls": "114",
+      "follow": "true",
+      "position": "4.071,0.360,10.071",
+      "project": "pgos",
+      "remaining": "0.00",
+      "renderer": "webgl",
+      "spotlight": "0.00",
+      "theme": "games",
+      "travelerProject": "pgos",
+      "view": "theme",
+      "walked": "0.00"
+    }
+  },
+  {
+    "case": "console",
+    "logs": []
+  }
+]

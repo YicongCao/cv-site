@@ -72,3 +72,7 @@ npm test
 ## 界面字体
 
 标题、主题、项目标牌、导航、按钮和年份使用方舟像素 Ark Pixel 12px 简体中文比例版（2026.10.25），以 12/24/36/48/60px 排版，不模拟粗体。段落与贡献列表保留系统无衬线字体，pixelcao 保留自绘字标。字体与 OFL 1.1 许可证位于 `public/fonts/ark-pixel/`，完整自托管，无 CDN。来源与 SHA-256、当前所有项目标题/年份/导航文字的无缺字核对见 `design/typography/`。
+
+## 展馆地标与聚光
+
+三大主题按 1/2/3 编号，NEX 与 PGOS 为实体像素字块立牌，Win10 为蓝色四窗格立体徽标。首次主动访问先用 0.65 秒聚光引导旅人，随后跟随步行和施法；取消或进入详情后退出，减少动态效果时跳过。验收见 `evidence/landmarks/validation.md`。背景候选及内置 ImageGen 提示词见 `design/background-directions/index.html`，背景方案尚未替换到站点。

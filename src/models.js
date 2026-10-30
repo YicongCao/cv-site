@@ -85,10 +85,21 @@ export function makeIsland(station){
    box(g,x,.5,z,.35,1,.35,0x748976);box(g,x,1.05,z,.46,.12,.46,color.stone);box(g,x,1.20,z,.17,.22,.17,color.gold);
   }
   for(let step=0;step<3;step++)box(g,0,.06+step*.07,2.65-step*.25,.85,.12+step*.14,.3,color.stone);
-  const canvas=document.createElement('canvas');canvas.width=128;canvas.height=32;const ctx=canvas.getContext('2d');ctx.fillStyle='#43574a';ctx.fillRect(0,0,128,32);ctx.fillStyle='#eee6cb';ctx.font='bold 21px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(station.id==='nex'?'NEX':station.id==='pgos'?'PGOS':'WIN10',64,17);
-  const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;texture.magFilter=T.NearestFilter;texture.minFilter=T.NearestFilter;
-  const plaque=new T.Mesh(new T.PlaneGeometry(2.3,.58),new T.MeshBasicMaterial({map:texture}));plaque.position.set(0,.36,2.17);g.add(plaque);
-  if(station.id==='pgos')for(const [x,y,z] of [[0,3.4,0],[-.28,3.12,0],[.28,3.12,0],[0,3.12,.28]])box(g,x,y,z,.27,.27,.27,color.gold);
+  // Physical, extruded pixel signage remains legible from the overview camera.
+  const sign=new T.Group();sign.rotation.y=Math.PI/4;sign.position.set(0,0,-.2);g.add(sign);
+  if(station.id==='win10'){
+   // Four blue panes, separated by real gaps and visibly thick side faces.
+   const blue=0x0078d7;sign.position.z=.9;sign.rotation.y=Math.PI/5;
+   for(const x of [-.77,.77])for(const y of [-.77,.77])box(sign,x,4.05+y,0,1.08,1.08,.26,blue);
+   for(const x of [-.60,.60])box(sign,x,2.05,-.08,.13,2.05,.17,color.dark);
+  }else{
+   const letters={N:['10001','11001','10101','10011','10001','10001','10001'],E:['11111','10000','10000','11110','10000','10000','11111'],X:['10001','10001','01010','00100','01010','10001','10001'],P:['11110','10001','10001','11110','10000','10000','10000'],G:['01111','10000','10000','10111','10001','10001','01111'],O:['01110','10001','10001','10001','10001','10001','01110'],S:['01111','10000','10000','01110','00001','00001','11110']};
+   const text=station.id==='nex'?'NEX':'PGOS',unit=.18,width=(text.length*6-1)*unit;
+   box(sign,0,3.65,-.13,width+.42,1.64,.22,0x273d40);
+   for(const x of [-width*.35,width*.35]){box(sign,x,1.95,-.12,.13,2,.18,color.dark);box(sign,x,.96,-.12,.46,.10,.5,color.stone);}
+   [...text].forEach((letter,i)=>letters[letter].forEach((row,r)=>[...row].forEach((v,c)=>{if(v==='1')box(sign,-width/2+(i*6+c+.5)*unit,3.65+(3-r)*unit,.04,unit,unit,.16,station.id==='pgos'?color.gold:color.cream);})))
+  }
+
  }
  batchBoxes(g);return g;
 }

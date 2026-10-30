@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>pixelcao · 背景方向</title><style>
+@font-face{font-family:Ark;src:url('../../public/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2')}*{box-sizing:border-box}body{margin:0;background:#1c282d;color:#eee6cb;font:16px/1.7 system-ui,sans-serif}main{max-width:1440px;margin:auto;padding:30px 24px}h1{font:36px/1.5 Ark,monospace;margin:0 0 8px}p{margin:8px 0 20px;max-width:960px;color:#bbc6bd}nav{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}button{font:24px/1.4 Ark,monospace;background:#27373a;color:#e8e5cf;border:1px solid #62756b;padding:12px 18px;cursor:pointer}button[aria-pressed=true]{border-color:#e4b35c;color:#e4b35c}button:focus-visible,a:focus-visible{outline:2px solid #e4b35c;outline-offset:4px}#concept{width:100%;display:block;border:1px solid #485c55}a{color:#e4b35c}details{margin-top:24px}summary{cursor:pointer}details img{width:100%;margin-top:18px}footer{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0;color:#aab9b0}@media(max-width:650px){main{padding:22px 14px}h1{font-size:24px}button{font-size:12px;padding:10px}nav{gap:8px}}
+</style><main><h1>pixelcao · 背景方向</h1><p>基于本轮实际展馆截图，用 ImageGen 生成的三版概念。立牌、主题序号、旅人聚光已实装；背景等待选定。</p>
+<nav aria-label="背景概念"><button data-id="a-sea" aria-pressed="true">A 静谧像素海</button><button data-id="b-cloud" aria-pressed="false">B 雾中浮岛</button><button data-id="c-sandbox" aria-pressed="false">C 数字沙盘</button></nav>
+<p id="description">推荐 A。海面赋予岛屿与桥梁自然的空间关系。实现时采用暗青色、稀疏像素涟漪与岸边波纹，避免镜面反射，远景灯塔和山石不列入默认实现。</p>
+<a id="full" href="a-sea.png" target="_blank"><img id="concept" src="a-sea.png" alt="A 静谧像素海概念图"></a>
+<details><summary>本轮已实现的页面与聚光效果</summary><img src="../../evidence/landmarks/overview.png" alt="真实展馆全景"><img src="../../evidence/landmarks/walking.png" alt="旅人聚光跟随"></details>
+<footer><a href="http://127.0.0.1:3000/" target="_blank">打开实际展馆 ↗</a><a href="prompts.json">生成提示词与来源</a><a href="../../evidence/landmarks/validation.md">验证记录</a></footer>
+</main><script>
+const options={
+'a-sea':['A 静谧像素海','推荐 A。海面赋予岛屿与桥梁自然的空间关系。实现时采用暗青色、稀疏像素涟漪与岸边波纹，避免镜面反射，远景灯塔和山石不列入默认实现。'],
+'b-cloud':['B 雾中浮岛','更偏幻想旅程，与白帽旅人、施法呼应。落地时降低云层亮度与密度，保留少量远雾和底部岩层；避免云海抢走展品和角色的注意力。'],
+'c-sandbox':['C 数字沙盘','更偏工程与系统构建。用低对比等高线、稀疏网格和哑光地形建立空间层次，静态也成立；色彩最克制，但探索感弱于海面和浮岛。']};
+for(const b of document.querySelectorAll('nav button'))b.onclick=()=>{for(const q of document.querySelectorAll('nav button'))q.setAttribute('aria-pressed',String(q===b));const [title,description]=options[b.dataset.id];document.querySelector('#description').textContent=description;document.querySelector('#concept').src=b.dataset.id+'.png';document.querySelector('#concept').alt=title+'概念图';document.querySelector('#full').href=b.dataset.id+'.png';};
+</script></html>

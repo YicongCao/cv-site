@@ -1,8 +1,8 @@
 // The same graph supplies bridge geometry, island lanes, and traveler navigation.
 export const themes = [
-  {id:'ai',title:'AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
-  {id:'games',title:'游戏与实时交互',hub:'pgos',members:['pgos','cloudgame','accelerator','kinect']},
-  {id:'clients',title:'客户端与数字体验',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
+  {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
+  {id:'games',title:'2. 游戏与实时交互',hub:'pgos',members:['pgos','cloudgame','accelerator','kinect']},
+  {id:'clients',title:'3. 客户端与数字体验',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
 ];
 const layout = {
   nex: [-10,-7,.72,'code'], museum: [-18,-14,1.08,'photos'],

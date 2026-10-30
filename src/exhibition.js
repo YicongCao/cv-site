@@ -33,13 +33,14 @@ export class Exhibition {
    if(e.bridge&&len>5)box(section,(a.x+b.x)/2,(a.y+b.y)/2-.65,(a.z+b.z)/2,.5,1,.5,0x556b60);
    batchBoxes(section);section.traverse(o=>{if(o.material)o.material=o.material.clone();});this.sections.push({group:section,a:this.world.stations[a.station].theme,b:this.world.stations[b.station].theme});
   }
-  this.traveler=makeTraveler();this.scene.add(this.traveler.root);
+  this.traveler=makeTraveler();this.scene.add(this.traveler.root);this.traveler.root.scale.setScalar(1.15);
+  this.createSpotlight();
   this.magic=new T.Group();this.scene.add(this.magic);this.sparks=[];for(let i=0;i<10;i++)this.sparks.push(box(this.magic,0,0,0,.07,.07,.07,color.gold));
   this.portal=new T.Group();this.scene.add(this.portal);for(const side of [-1,1]){box(this.portal,side,0,0,.035,2,.035,color.gold);box(this.portal,0,side,0,2,.035,.035,color.gold);}
   this.pointer=new T.Vector2();this.ray=new T.Raycaster();this.center=new T.Vector3();this.goalCenter=new T.Vector3();this.viewHeight=40;
   this.bindInput();this.syncLabels();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.wake();
   document.addEventListener('visibilitychange',()=>{this.last=0;if(!document.hidden)this.wake();});
-  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
+  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
@@ -48,11 +49,32 @@ export class Exhibition {
  visit(index,{immediate=false}={}){
   if(['detail','closing'].includes(this.journey.phase))return;
   const instant=immediate||this.reduced();if(!this.journey.visit(index,instant))return;
+  if(!this.hasVisited&&!instant){this.departureDelay=.65;this.hasVisited=true;}
   this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=true;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();
   if(instant){this.cameraAt(true);this.updateCharacter(0);this.onOpen(index);}this.wake();
  }
- cancel(){if(['walking','casting','opening'].includes(this.journey.phase)){this.journey.cancel();this.follow=false;this.settling=.2;this.magic.visible=false;this.portal.visible=false;this.wake();}}
+ cancel(){if(['walking','casting','opening'].includes(this.journey.phase)){this.journey.cancel();this.departureDelay=0;this.follow=false;this.settling=.2;this.magic.visible=false;this.portal.visible=false;this.wake();}}
  close(){this.journey.phase=this.reduced()?'idle':'closing';this.journey.elapsed=0;this.wake();return new Promise(resolve=>{this.closeResolve=resolve;if(this.reduced()){resolve();this.closeResolve=null;}});}
+ createSpotlight(){
+  // A screen-space light pool keeps the protagonist readable with unlit pixel materials.
+  this.focusShade=document.createElement('div');this.focusShade.className='traveler-focus';this.focusShade.setAttribute('aria-hidden','true');this.element.append(this.focusShade);
+  this.spotlight=new T.Group();this.scene.add(this.spotlight);this.spotAmount=0;
+  const material=new T.ShaderMaterial({transparent:true,depthWrite:false,side:T.DoubleSide,blending:T.AdditiveBlending,uniforms:{strength:{value:0}},vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 vUv;uniform float strength;void main(){float a=(1.-vUv.y)*.075*strength;gl_FragColor=vec4(.9,.85,.65,a);}'});
+  this.lightBeam=new T.Mesh(new T.CylinderGeometry(.20,1.15,6,8,1,true),material);this.lightBeam.position.y=3;this.spotlight.add(this.lightBeam);
+  const ring=new T.Mesh(new T.RingGeometry(.72,.84,8),new T.MeshBasicMaterial({color:0xffe4a0,transparent:true,opacity:0,depthWrite:false,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=.045;this.spotlight.add(ring);this.lightRing=ring;
+ }
+ updateSpotlight(dt){
+  const active=!this.reduced()&&['walking','casting'].includes(this.journey.phase);
+  const p=this.journey.position,screen=new T.Vector3(p.x,p.y+.8,p.z).project(this.camera);
+  const goal=active&&Math.abs(screen.x)<1.1&&Math.abs(screen.y)<1.1?1:0;
+  this.spotAmount=T.MathUtils.lerp(this.spotAmount,goal,Math.min(1,dt*7));if(Math.abs(this.spotAmount-goal)<.005)this.spotAmount=goal;
+  this.spotTransition=this.spotAmount!==goal;this.spotlight.visible=this.spotAmount>.001;
+  this.spotlight.position.set(p.x,p.y+.02,p.z);this.lightBeam.material.uniforms.strength.value=this.spotAmount;this.lightRing.material.opacity=this.spotAmount*.6;
+  this.focusShade.style.opacity=String(this.spotAmount);
+  this.focusShade.style.setProperty('--light-x',`${(screen.x*.5+.5)*this.width}px`);this.focusShade.style.setProperty('--light-y',`${(.5-screen.y*.5)*this.height}px`);
+  this.focusShade.style.setProperty('--light-radius',`${Math.max(this.mobile?65:90,2.6*this.height/this.viewHeight)}px`);
+  this.element.dataset.spotlight=this.spotAmount.toFixed(2);this.element.dataset.departure=String(this.departureDelay>0);
+ }
  syncLabels(){
   const layer=this.element.querySelector('#cards');if(!layer)return;layer.replaceChildren();
   for(const theme of themes){
@@ -66,7 +88,7 @@ export class Exhibition {
  resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
  framing(){
   let stations=this.mode==='overview'?this.world.stations:this.world.stations.filter(s=>s.theme===this.theme);
-  const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?3.8:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
+  const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?4.9:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
   if(this.follow&&this.journey.phase==='walking'){
    const p=this.journey.position;
    if(this.journey.remaining>16){points.length=0;for(const x of [-9,9])for(const z of [-9,9])for(const y of [0,3])points.push(new T.Vector3(p.x+x,p.y+y,p.z+z));}
@@ -120,7 +142,7 @@ export class Exhibition {
   const project=(el,p)=>{p.project(this.camera);el.style.left=`${(p.x*.5+.5)*this.width}px`;el.style.top=`${(.5-p.y*.5)*this.height}px`;return Math.abs(p.x)<.98&&Math.abs(p.y)<.94;};
   this.element.querySelectorAll('[data-theme]').forEach(b=>{
    const theme=themes.find(t=>t.id===b.dataset.theme),s=this.world.stations.find(s=>s.id===theme.hub);
-   const shown=project(b,new T.Vector3(s.x,s.y+4.4,s.z));b.hidden=hidden||!shown||this.mode!=='overview';
+   const shown=project(b,new T.Vector3(s.x,s.y+5.6,s.z));b.hidden=hidden||!shown||this.mode!=='overview';
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{
    const i=+b.dataset.card,s=this.world.stations[i];const shown=project(b,new T.Vector3(s.x-s.size/2,s.y+.3,s.z+s.size/2));
@@ -133,8 +155,8 @@ export class Exhibition {
  wake(){this.element.dataset.cameraReady='false';if(!this.pending&&this.active&&!document.hidden){this.pending=true;requestAnimationFrame(t=>this.draw(t));}}
  draw(now){
   this.pending=false;if(!this.active||document.hidden)return;const dt=Math.min(.05,this.last?(now-this.last)/1000:.016);this.last=now;this.time+=dt;this.settling=Math.max(0,(this.settling||0)-dt);
-  const arrived=this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}this.cameraAt(false,dt);this.updateCharacter(dt);this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
+  const holding=this.departureDelay>0;this.departureDelay=Math.max(0,(this.departureDelay||0)-dt);const arrived=holding?null:this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}this.cameraAt(false,dt);this.updateCharacter(dt);this.updateSpotlight(dt);this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
   if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
-  if(this.settling>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005)this.wake();else{this.last=0;this.element.dataset.cameraReady='true';}
+  if(this.spotTransition||this.settling>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005)this.wake();else{this.last=0;this.element.dataset.cameraReady='true';}
  }
 }
