@@ -1,0 +1,20 @@
+[
+  {
+    "action": "visit Nex from PGOS",
+    "phase": "detail",
+    "items": "1",
+    "sound": "playing"
+  },
+  {
+    "action": "revisit Nex at current stop",
+    "phase": "opening",
+    "items": "2",
+    "sound": "playing"
+  },
+  {
+    "action": "revisit Nex while muted",
+    "phase": "opening",
+    "items": "2",
+    "sound": "muted"
+  }
+]

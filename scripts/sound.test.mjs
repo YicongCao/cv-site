@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {GallerySound,FootstepCadence,makeFootstepSamples} from '../src/sound.js';
+import {GallerySound,FootstepCadence,makeFootstepSamples,makeItemChimeSamples} from '../src/sound.js';
 function rig(preference=null){
  const stored=new Map([['pixelcao:sound',preference]]),storage={getItem:k=>stored.get(k),setItem:(k,v)=>stored.set(k,v)};
  const param=()=>({value:0,cancelScheduledValues(){},setTargetAtTime(v){this.value=v;},setValueAtTime(v){this.value=v;},linearRampToValueAtTime(v){this.value=v;},exponentialRampToValueAtTime(v){this.value=v;}});
@@ -65,4 +65,29 @@ test('robot prefers local Chinese speech and cancels its utterance on mute',asyn
  s.speech={getVoices:()=>[{lang:'zh-CN',localService:false},{lang:'zh-CN',localService:true}],speak:u=>queued=u,cancel:()=>cancelled++};s.Utterance=class{constructor(text){this.text=text;}};s.tone=()=>bleeps++;
  s.island({id:'bot',phase:'line',text:'你好'});assert.equal(queued.text,'你好');assert.equal(queued.voice.localService,true);assert.ok(queued.pitch>1);
  s.island({id:'bot',phase:'syllable'});assert.equal(bleeps,0);await s.toggle();assert.equal(cancelled,1);assert.equal(s.robotSpeaking,false);
+});
+test('item chime triggers once at portal opening, with no walk, cast or deep-link sound',async()=>{
+ const {sound:s,counts}=rig();await s.activate();await s.loading;
+ for(const phase of ['walking','casting','detail'])s.portal(phase,1);
+ assert.equal(s.itemCount,0);
+ for(let i=0;i<30;i++)s.portal('opening',2);
+ assert.equal(s.itemCount,1);assert.equal(counts().sources,2);assert.ok(s.itemVoice);
+ s.portal('detail',2);assert.ok(s.itemVoice); // allow the short decay to complete
+ s.portal('idle',3);assert.equal(s.itemVoice,null);
+ s.portal('opening',4);assert.equal(s.itemCount,2);
+});
+test('muted, hidden and interrupted item animations never queue a late sound',async()=>{
+ const {sound:s}=rig('off');s.portal('opening',1);assert.equal(s.context,undefined);
+ await s.toggle();await s.loading;s.portal('opening',1);assert.equal(s.itemCount,0);
+ s.portal('opening',2);assert.equal(s.itemCount,1);s.portal('walking',3);assert.equal(s.itemVoice,null);
+ s.portal('opening',3);await s.toggle();assert.equal(s.itemVoice,null);
+ await s.toggle();s.portal('opening',3);assert.equal(s.itemCount,2);
+ await s.setHidden(true);s.portal('opening',4);await s.setHidden(false);s.portal('opening',4);assert.equal(s.itemCount,2);
+ s.setAudibleVideo(true);s.portal('opening',5);s.setAudibleVideo(false);s.portal('opening',5);assert.equal(s.itemCount,2);
+});
+test('item chime is short, deterministic, audible and free of clipped edges',()=>{
+ const a=makeItemChimeSamples(48000),b=makeItemChimeSamples(48000);
+ const rms=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0)/a.length),peak=a.reduce((max,x)=>Math.max(max,Math.abs(x)),0);
+ assert.equal(a.length,42240);assert.deepEqual(a,b);assert.ok(rms>.03&&rms<.2);assert.ok(peak>.1&&peak<.8);
+ assert.equal(a[0],0);assert.ok(Math.abs(a.at(-1))<.0001);
 });

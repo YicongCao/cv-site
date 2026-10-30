@@ -13,6 +13,20 @@ export function makeFootstepSamples(rate,variant=0){
  for(let i=0;i<samples.length;i++)samples[i]*=.65/peak;
  return samples;
 }
+// Original, noise-free RPG item chime: a short rising arpeggio and glassy decay.
+export function makeItemChimeSamples(rate){
+ const samples=new Float32Array(Math.ceil(rate*.88));
+ for(const [at,frequency,length,volume] of [[0,523.25,.30,.24],[.085,659.25,.30,.23],[.17,783.99,.34,.22],[.28,1046.5,.60,.28]]){
+  const offset=Math.round(at*rate),count=Math.ceil(length*rate);
+  for(let i=0;i<count&&offset+i<samples.length;i++){
+   const t=i/rate,phase=2*Math.PI*frequency*t;
+   const envelope=Math.min(1,t/.006)*Math.exp(-t*7)*Math.min(1,(length-t)/.035);
+   const triangle=2/Math.PI*Math.asin(Math.sin(phase));
+   samples[offset+i]+=volume*envelope*(.65*Math.sin(phase)+.25*triangle+.10*Math.sin(phase*2));
+  }
+ }
+ return samples;
+}
 // One audio graph for the entire gallery. No timers and no per-frame audio allocation.
 export class FootstepCadence {
  constructor(){this.distance=null;this.bucket=null;}
@@ -28,7 +42,7 @@ export class GallerySound {
  }}={}){
   Object.assign(this,{speech,Utterance,contextFactory,storage,onChange,loadMusic});
   try{this.enabled=storage.getItem('pixelcao:sound')!=='off';}catch{this.enabled=true;}
-  this.hidden=false;this.detail=false;this.audibleVideo=false;this.cadence=new FootstepCadence();this.lastTap=-Infinity;this.lastStep=-Infinity;this.stepCount=0;this.tapCount=0;
+  this.hidden=false;this.detail=false;this.audibleVideo=false;this.cadence=new FootstepCadence();this.lastTap=-Infinity;this.lastStep=-Infinity;this.stepCount=0;this.tapCount=0;this.itemCount=0;this.lastPortalToken=null;
  }
  get running(){return this.enabled&&!this.hidden&&this.context?.state==='running';}
  get state(){return !this.enabled?'muted':this.failed?'unavailable':this.running?'playing':'waiting';}
@@ -40,6 +54,7 @@ export class GallerySound {
    this.music=c.createGain();this.music.gain.value=.42;this.music.connect(this.master);
    this.effects=c.createGain();this.effects.gain.value=.65;this.effects.connect(this.master);
    this.footsteps=[0,1].map(variant=>{const samples=makeFootstepSamples(c.sampleRate,variant),buffer=c.createBuffer(1,samples.length,c.sampleRate);buffer.getChannelData(0).set(samples);return buffer;});
+   const itemSamples=makeItemChimeSamples(c.sampleRate);this.itemBuffer=c.createBuffer(1,itemSamples.length,c.sampleRate);this.itemBuffer.getChannelData(0).set(itemSamples);
    c.onstatechange=()=>this.emit();
    this.loading=this.loadMusic().then(bytes=>c.decodeAudioData(bytes)).then(buffer=>{
     this.source=c.createBufferSource();this.source.buffer=buffer;this.source.loop=true;this.source.connect(this.music);
@@ -59,7 +74,7 @@ export class GallerySound {
   if(turnOn)await this.activate();else this.mix();this.emit();
  }
  mix(){
-  if(!this.context)return;if(!this.enabled||this.hidden){this.stopEngine();this.stopRobot();}const t=this.context.currentTime;
+  if(!this.context)return;if(!this.enabled||this.hidden||this.audibleVideo){this.stopItem();}if(!this.enabled||this.hidden){this.stopEngine();this.stopRobot();}const t=this.context.currentTime;
   this.master.gain.cancelScheduledValues(t);this.master.gain.setTargetAtTime(this.running?.85:0,t,.04);
   this.music.gain.cancelScheduledValues(t);this.music.gain.setTargetAtTime(this.audibleVideo?0:this.detail?.13:.42,t,.3);
  }
@@ -81,6 +96,17 @@ export class GallerySound {
   const requested=Date.now();if(!await this.activate()||Date.now()-requested>350)return;
   const t=this.context.currentTime;if(t-this.lastTap<.09)return;this.lastTap=t;this.tapCount++;
   this.tone(880,.09,.24,'sine',-.08);this.tone(1320,.027,.34,'sine',.08);this.emit();
+ }
+ stopItem(){if(!this.itemVoice)return;const {src}=this.itemVoice;this.itemVoice=null;src.stop();}
+ portal(phase,token){
+  const opening=phase==='opening'&&token!==this.lastPortalToken;
+  if(phase==='opening')this.lastPortalToken=token;
+  if(['idle','walking','casting','closing'].includes(phase))this.stopItem();
+  if(!opening||!this.running||this.audibleVideo)return;
+  this.stopItem();const src=this.context.createBufferSource(),gain=this.context.createGain();
+  src.buffer=this.itemBuffer;gain.gain.value=.75;src.connect(gain);gain.connect(this.effects);
+  const voice=this.itemVoice={src,gain};src.onended=()=>{src.disconnect();gain.disconnect();if(this.itemVoice===voice)this.itemVoice=null;};
+  src.start();this.itemCount++;this.emit();
  }
  stopEngine(){
   if(!this.engine)return;const e=this.engine;this.engine=null;const t=this.context.currentTime;e.gain.gain.setTargetAtTime(0,t,.025);e.osc.stop(t+.12);e.osc.onended=()=>{e.osc.disconnect();e.filter.disconnect();e.gain.disconnect();};this.emit();
@@ -121,7 +147,7 @@ const speaker='<path d="M1 6h3l4-4v12l-4-4H1z"/><path class="sound-waves" d="M10
 export function installSound(){
  const buttons=[...document.querySelectorAll('[data-sound-toggle]')];
  const sound=new GallerySound({onChange:s=>buttons.forEach(b=>{
-  b.dataset.sound=s.state;b.dataset.music=s.musicFailed?'unavailable':s.source?'ready':'loading';b.dataset.steps=String(s.stepCount);b.dataset.taps=String(s.tapCount);
+  b.dataset.sound=s.state;b.dataset.music=s.musicFailed?'unavailable':s.source?'ready':'loading';b.dataset.steps=String(s.stepCount);b.dataset.taps=String(s.tapCount);b.dataset.items=String(s.itemCount);
   b.setAttribute('aria-pressed',String(!!s.running));b.setAttribute('aria-label',s.running?'关闭声音':'开启声音');b.title=s.running?'关闭声音':'开启声音';b.disabled=!!s.failed;
  })});
  buttons.forEach(b=>{b.innerHTML=`<svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges">${speaker}</svg>`;b.onclick=()=>sound.toggle();});sound.emit();
