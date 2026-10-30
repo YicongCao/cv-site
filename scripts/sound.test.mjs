@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {GallerySound,FootstepCadence} from '../src/sound.js';
+import {GallerySound,FootstepCadence,makeFootstepSamples} from '../src/sound.js';
 function rig(preference=null){
  const stored=new Map([['pixelcao:sound',preference]]),storage={getItem:k=>stored.get(k),setItem:(k,v)=>stored.set(k,v)};
  const param=()=>({value:0,cancelScheduledValues(){},setTargetAtTime(v){this.value=v;},setValueAtTime(v){this.value=v;},linearRampToValueAtTime(v){this.value=v;},exponentialRampToValueAtTime(v){this.value=v;}});
@@ -42,4 +42,11 @@ test('rapid click events are coalesced; muted walking has no delayed sound burst
 test('missing music keeps optional effects usable and unsupported audio stays silent',async()=>{
  const r=rig();r.sound.loadMusic=async()=>{throw new Error('404');};await r.sound.activate();await r.sound.loading;assert.equal(r.sound.musicFailed,true);await r.sound.tap();assert.equal(r.sound.tapCount,1);
  const failed=new GallerySound({storage:{getItem:()=>null},contextFactory:()=>{throw new Error('unsupported');}});assert.equal(await failed.activate(),false);assert.equal(failed.enabled,false);
+});
+
+test('shoe friction has audible energy, quiet boundaries, headroom and different feet',()=>{
+ const a=makeFootstepSamples(48000),b=makeFootstepSamples(48000,1);
+ const rms=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0)/a.length);
+ assert.ok(rms>.10&&rms<.25,`friction RMS ${rms}`);assert.ok(Math.max(...a.map(Math.abs))<.66);
+ assert.equal(a[0],0);assert.ok(Math.abs(a.at(-1))<.001);assert.notDeepEqual(a,b);
 });

@@ -1,3 +1,18 @@
+// Short shoe scuffs: two friction swells, with low rumble and sharp hiss removed.
+// Render once at context creation, then reuse buffers for every footfall.
+export function makeFootstepSamples(rate,variant=0){
+ const samples=new Float32Array(Math.floor(rate*.19));let seed=8723+variant*173,low=0,slow=0,peak=0;
+ const fastAlpha=1-Math.exp(-2*Math.PI*3400/rate),slowAlpha=1-Math.exp(-2*Math.PI*380/rate);
+ for(let i=0;i<samples.length;i++){
+  seed=(seed*1664525+1013904223)>>>0;const white=seed/4294967296*2-1;
+  low+=fastAlpha*(white-low);slow+=slowAlpha*(low-slow);
+  const t=i/rate,edge=Math.min(1,t/.008,(.19-t)/.025);
+  const envelope=(.8*Math.exp(-(((t-.045)/.028)**2))+.55*Math.exp(-(((t-.115)/.038)**2)))*Math.max(0,edge);
+  samples[i]=(low-slow)*envelope;peak=Math.max(peak,Math.abs(samples[i]));
+ }
+ for(let i=0;i<samples.length;i++)samples[i]*=.65/peak;
+ return samples;
+}
 // One audio graph for the entire gallery. No timers and no per-frame audio allocation.
 export class FootstepCadence {
  constructor(){this.distance=null;this.bucket=null;}
@@ -24,8 +39,7 @@ export class GallerySound {
    const c=this.context=this.contextFactory();this.master=c.createGain();this.master.gain.value=0;this.master.connect(c.destination);
    this.music=c.createGain();this.music.gain.value=.42;this.music.connect(this.master);
    this.effects=c.createGain();this.effects.gain.value=.65;this.effects.connect(this.master);
-   this.noise=c.createBuffer(1,Math.floor(c.sampleRate*.09),c.sampleRate);const samples=this.noise.getChannelData(0);let seed=8723;
-   for(let i=0;i<samples.length;i++){seed=(seed*1664525+1013904223)>>>0;samples[i]=(seed/4294967296*2-1)*(1-i/samples.length)**2;}
+   this.footsteps=[0,1].map(variant=>{const samples=makeFootstepSamples(c.sampleRate,variant),buffer=c.createBuffer(1,samples.length,c.sampleRate);buffer.getChannelData(0).set(samples);return buffer;});
    c.onstatechange=()=>this.emit();
    this.loading=this.loadMusic().then(bytes=>c.decodeAudioData(bytes)).then(buffer=>{
     this.source=c.createBufferSource();this.source.buffer=buffer;this.source.loop=true;this.source.connect(this.music);
@@ -71,9 +85,9 @@ export class GallerySound {
  walk(distance,walking){
   if(!this.cadence.update(distance,walking)||!this.running)return;
   const c=this.context,t=c.currentTime;if(t-this.lastStep<.16)return;this.lastStep=t;this.stepCount++;
-  const pan=this.stepCount%2?.12:-.12;this.tone(this.stepCount%2?185:164,.085,.085,'sine',pan);
-  const src=c.createBufferSource(),filter=c.createBiquadFilter(),gain=c.createGain();src.buffer=this.noise;filter.type='lowpass';filter.frequency.value=950;gain.gain.value=.035;
-  src.connect(filter);filter.connect(gain);gain.connect(this.effects);src.start();src.onended=()=>{src.disconnect();filter.disconnect();gain.disconnect();};this.emit();
+  const pan=this.stepCount%2?.12:-.12;
+  const src=c.createBufferSource(),gain=c.createGain(),panner=c.createStereoPanner();src.buffer=this.footsteps[this.stepCount%2];gain.gain.value=.50;panner.pan.value=pan;
+  src.connect(gain);gain.connect(panner);panner.connect(this.effects);src.start();src.onended=()=>{src.disconnect();gain.disconnect();panner.disconnect();};this.emit();
  }
 }
 
