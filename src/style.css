@@ -1288,8 +1288,8 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 .media-illustration{background:#fff}
 #project-topics li{margin:0;display:flex;align-items:center;gap:10px}
 #project-topics .pixel-icon{width:18px;height:18px;flex:none;color:#b39358}
-#stage .traveler-thought{position:absolute;z-index:9;pointer-events:none;width:80px;height:56px;transform:translate(-50%,-100%);image-rendering:pixelated;image-rendering:crisp-edges}
+#stage .traveler-thought{position:absolute;z-index:9;pointer-events:none;width:64px;height:80px;transform:translate(-50%,-100%);image-rendering:pixelated;image-rendering:crisp-edges}
 #stage .traveler-thought[hidden]{display:none}
-@media(max-width:850px){#stage .traveler-thought{width:64px;height:45px}}
+@media(max-width:850px){#stage .traveler-thought{width:48px;height:60px}}
 @media(prefers-reduced-motion:reduce){#stage .traveler-thought{display:none}}
 @media(max-width:850px){#project-topics{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;margin-top:16px;font-size:14px;max-width:100%}#project-topics li{gap:8px}#project-topics .pixel-icon{width:16px;height:16px}}

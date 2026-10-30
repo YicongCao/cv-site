@@ -1,0 +1,29 @@
+{
+  "desktop": {
+    "canvas": [
+      64,
+      80
+    ],
+    "display": [
+      64,
+      80
+    ],
+    "hidden": false
+  },
+  "mobile": {
+    "canvas": [
+      64,
+      80
+    ],
+    "display": [
+      48,
+      60
+    ],
+    "documentWidth": 390,
+    "hidden": false
+  },
+  "contentBody": [
+    64,
+    64
+  ]
+}

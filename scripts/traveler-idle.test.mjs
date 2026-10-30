@@ -46,7 +46,7 @@ test('thought balloon draws animated pixel lines without text and clears when in
   camera.position.set(10,10,10);camera.lookAt(0,0,0);camera.updateMatrixWorld();idle.clock.action='think';idle.clock.elapsed=1.4;
   idle.update(0,true,traveler,0,camera,1280,720,86);assert.equal(canvas.hidden,false);assert.equal(element.dataset.idleAction,'think');assert.equal(strokes.length,37);
   const first=strokes.slice();idle.update(.14,true,traveler,0,camera,1280,720,86);assert.equal(strokes.length,74);assert.notDeepEqual(strokes.slice(37),first);
-  assert.equal(canvas.textContent,undefined);assert.ok(strokes.every(([x,y])=>x>=0&&x<=80&&y>=0&&y<=44));
+  assert.equal(canvas.textContent,undefined);assert.ok(strokes.every(([x,y])=>x>=0&&x<=64&&y>=0&&y<=64));
   idle.update(.02,false,traveler,0,camera,1280,720,86);assert.equal(canvas.hidden,true);assert.equal(element.dataset.idleAction,'');idle.dispose();assert.ok(removed);
  }finally{delete globalThis.document;}
 });

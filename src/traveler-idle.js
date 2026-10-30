@@ -58,7 +58,7 @@ export function applyIdlePose(traveler,p,heading){
 export class TravelerIdle {
  constructor(element){
   this.element=element;this.clock=new IdleClock();this.pixelFrame=-1;
-  this.bubble=document.createElement('canvas');this.bubble.className='traveler-thought';this.bubble.width=80;this.bubble.height=56;
+  this.bubble=document.createElement('canvas');this.bubble.className='traveler-thought';this.bubble.width=64;this.bubble.height=80;
   this.bubble.hidden=true;this.bubble.setAttribute('aria-hidden','true');element.append(this.bubble);this.ctx=this.bubble.getContext('2d');
  }
  update(dt,enabled,traveler,heading,camera,width,height,headerHeight){
@@ -68,19 +68,20 @@ export class TravelerIdle {
    const frame=Math.floor(this.clock.elapsed*8);
    if(frame!==this.pixelFrame){this.pixelFrame=frame;this.drawThought(frame);}
    const p=traveler.root.position,point=new T.Vector3(p.x+.65,p.y+2.2,p.z-.65).project(camera);
-   this.bubble.style.left=`${Math.max(46,Math.min(width-46,(point.x*.5+.5)*width))}px`;
-   this.bubble.style.top=`${Math.max(headerHeight+65,Math.min(height-12,(.5-point.y*.5)*height))}px`;
+   const margin=width<=850?32:40,bubbleHeight=width<=850?60:80;
+   this.bubble.style.left=`${Math.max(margin,Math.min(width-margin,(point.x*.5+.5)*width))}px`;
+   this.bubble.style.top=`${Math.max(headerHeight+bubbleHeight+8,Math.min(height-12,(.5-point.y*.5)*height))}px`;
    this.bubble.style.opacity=String(pose.bubble);this.bubble.hidden=false;
   }
   this.element.dataset.idleAction=action||'';this.element.dataset.idleTime=this.clock.elapsed.toFixed(2);this.element.dataset.idleNext=Math.max(0,this.clock.next).toFixed(2);
  }
  drawThought(frame){
-  const c=this.ctx,phase=frame*.32;c.clearRect(0,0,80,56);
-  // A stepped speech balloon with a moving, tangled pixel line. No text or glyphs.
-  c.fillStyle='#708375';c.fillRect(4,0,72,44);c.fillRect(0,4,80,36);c.fillRect(14,42,14,8);c.fillRect(10,48,10,4);
-  c.fillStyle='#eee6cb';c.fillRect(6,2,68,40);c.fillRect(2,6,76,32);c.fillRect(16,40,10,6);c.fillRect(12,46,6,4);
+  const c=this.ctx,phase=frame*.32;c.clearRect(0,0,64,80);
+  // The 64 × 64 content body is square; the tail has its own space below it.
+  c.fillStyle='#708375';c.fillRect(4,0,56,64);c.fillRect(0,4,64,56);c.fillRect(14,62,14,8);c.fillRect(10,68,10,6);
+  c.fillStyle='#eee6cb';c.fillRect(6,2,52,60);c.fillRect(2,6,60,52);c.fillRect(16,60,10,8);c.fillRect(12,66,6,6);
   c.strokeStyle='#4c6158';c.lineWidth=2;c.lineJoin='miter';c.beginPath();
-  for(let i=0;i<=36;i++){const q=i/36*Math.PI*5,x=Math.round((40+Math.sin(q*1.8+phase)*21+Math.cos(q*.7-phase)*4)/2)*2,y=Math.round((22+Math.cos(q*2.1-phase*.7)*10)/2)*2;if(i===0)c.moveTo(x,y);else c.lineTo(x,y);}
+  for(let i=0;i<=36;i++){const q=i/36*Math.PI*5,x=Math.round((32+Math.sin(q*1.8+phase)*18+Math.cos(q*.7-phase)*3)/2)*2,y=Math.round((32+Math.cos(q*2.1-phase*.7)*18)/2)*2;if(i===0)c.moveTo(x,y);else c.lineTo(x,y);}
   c.stroke();
  }
  reset(){this.clock.reset();this.bubble.hidden=true;}
