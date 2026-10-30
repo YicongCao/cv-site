@@ -11,7 +11,7 @@ import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
 const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
 const direction=new T.Vector3(1,1,1).normalize();
-const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航'};
+const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航','km-compiler':'编译原理','km-bot':'Bot 与 NLP','km-network':'网络与 NAT'};
 const featuredLabels=new Set(['nex','pgos','bot','brushline','museum']);
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview}){
@@ -23,7 +23,7 @@ export class Exhibition {
   this.scene=new T.Scene();this.scene.background=new T.Color(0x222e32);
   this.camera=new T.OrthographicCamera(-10,10,8,-8,.1,300);
   this.renderer=new T.WebGLRenderer({antialias:false,alpha:false,preserveDrawingBuffer:true});this.renderer.setPixelRatio(1);this.renderer.outputColorSpace=T.SRGBColorSpace;
-  this.renderer.domElement.setAttribute('aria-label','三座主题岛群与白帽旅人');element.prepend(this.renderer.domElement);element.dataset.renderer='webgl';
+  this.renderer.domElement.setAttribute('aria-label','四座主题岛群与白帽旅人');element.prepend(this.renderer.domElement);element.dataset.renderer='webgl';
   this.islands=this.world.stations.map(s=>{
    const group=makeIsland(s);this.scene.add(group);group.traverse(o=>{if(o.material)o.material=o.material.clone();});
    const edge=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(s.size,.06,s.size)),new T.LineBasicMaterial({color:color.gold}));edge.position.y=.03;group.add(edge);return {group,edge};
@@ -63,17 +63,18 @@ export class Exhibition {
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.browsingTransition=true;this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
  overview(){this.cancel();this.browsingTransition=true;this.mode='overview';this.theme=null;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
- locate(index){this.skipIntro();this.browsingTransition=false;this.journey.cancel();this.journey.visit(index,true);this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.cameraAt(true);this.wake();}
+ locate(index){this.skipIntro();this.browsingTransition=false;this.journey.cancel();if(this.world.stations[index].walkable)this.journey.visit(index,true);this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.cameraAt(true);this.wake();}
  visit(index,{immediate=false}={}){
   if(['detail','closing'].includes(this.journey.phase))return;
   this.skipIntro();this.browsingTransition=false;this.addRipple(index);
+  if(!this.world.stations[index].walkable){this.cancel();this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.onOpen(index);this.wake();return;}
   const instant=immediate||this.reduced();if(!this.journey.visit(index,instant))return;
   if(!this.hasVisited&&!instant){this.departureDelay=.65;this.hasVisited=true;}
   this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=true;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();
   if(instant){this.cameraAt(true);this.updateCharacter(0);this.onOpen(index);}this.wake();
  }
  cancel(){this.skipIntro();if(['walking','casting','opening'].includes(this.journey.phase)){this.journey.cancel();this.departureDelay=0;this.follow=false;this.settling=.2;this.magic.visible=false;this.portal.visible=false;this.wake();}}
- close(){this.journey.phase=this.reduced()?'idle':'closing';this.journey.elapsed=0;this.wake();return new Promise(resolve=>{this.closeResolve=resolve;if(this.reduced()){resolve();this.closeResolve=null;}});}
+ close(){if(!this.world.stations[this.selected].walkable){this.wake();return Promise.resolve();}this.journey.phase=this.reduced()?'idle':'closing';this.journey.elapsed=0;this.wake();return new Promise(resolve=>{this.closeResolve=resolve;if(this.reduced()){resolve();this.closeResolve=null;}});}
  skipIntro(){if(!this.introActive)return;this.introActive=false;this.browsingTransition=true;this.introElapsed=4.5;this.skipButton.hidden=true;this.wake();}
  addRipple(index){
   const station=this.world.stations[index],p=this.clickPoint||station;this.clickPoint=null;
@@ -196,7 +197,7 @@ export class Exhibition {
   const actor=this.journey.position;const actorShown=project(this.profileButton,new T.Vector3(actor.x,actor.y+1,actor.z));this.profileButton.hidden=hidden||!actorShown;
   this.element.querySelectorAll('[data-theme]').forEach(b=>{b.disabled=!!this.browsingTransition;
    const theme=themes.find(t=>t.id===b.dataset.theme),s=this.world.stations.find(s=>s.id===theme.hub);
-   const shown=project(b,new T.Vector3(s.x,s.y+5.6,s.z));b.hidden=hidden||!shown||this.mode!=='overview';
+   const offset=(theme.labelOffsetU||0)/Math.SQRT2;const shown=project(b,new T.Vector3(s.x+offset,s.y+5.6,s.z-offset));b.hidden=hidden||!shown||this.mode!=='overview';
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=!!this.browsingTransition;
    const i=+b.dataset.card,s=this.world.stations[i],onRight=b.dataset.labelSide==='right',side=onRight?1:-1,ax=onRight?.25:.75;

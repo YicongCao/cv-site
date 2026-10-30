@@ -3,6 +3,7 @@ export const themes = [
   {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
   {id:'games',title:'2. 游戏后台相关项目',hub:'pgos',members:['pgos','cloudgame','accelerator']},
   {id:'clients',title:'3. 客户端相关项目',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
+  {id:'km',labelOffsetU:2.5,title:'4. 古法手作 KM 头条好文',hub:'km-compiler',members:['km-compiler','km-bot','km-network']},
 ];
 export const shortcuts=[['bot','desktop'],['brushline','cloudgame'],['accelerator','ishowfx']];
 const layout = {
@@ -14,12 +15,14 @@ const layout = {
   cleaner: [16,-19,1.44,'cleaner'], uwp: [23,-11,1.08,'feed'],
   reader: [23,1,.36,'books'], ishowfx: [16,9,0,'printer'],
   xidian: [7,4,.36,'campus'],
+  'km-compiler': [33,20,.72,'compiler'], 'km-bot': [27,30,1.08,'spellbook'],
+  'km-network': [40,30,.36,'nat'],
 };
 export const distance = (a,b) => Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
 export function makeWorld(projects) {
   const stations=projects.map((p,index)=>{
     const [u,v,y,type]=layout[p.id],theme=themes.find(t=>t.members.includes(p.id));
-    return {id:p.id,index,theme:theme.id,hub:theme.hub===p.id,size:theme.hub===p.id?7:5.2,
+    return {id:p.id,index,walkable:!p.articleOnly,theme:theme.id,hub:theme.hub===p.id,size:theme.hub===p.id?7:5.2,
       x:(u+v)/Math.SQRT2,y,z:(v-u)/Math.SQRT2,type};
   });
   const nodes=[],edges=[],adj=[];
@@ -75,6 +78,7 @@ export class Journey {
   get remaining(){return this.segments.reduce((sum,s)=>sum+Math.abs(s.to-s.from)*this.world.edges[s.edge].length,0);}
   get direction(){const s=this.segments[0];if(!s)return null;const e=this.world.edges[s.edge],a=this.world.nodes[s.to===1?e.a:e.b],b=this.world.nodes[s.to===1?e.b:e.a];return Math.atan2(b.x-a.x,b.z-a.z);}
   visit(index,immediate=false){
+    if(!this.world.stations[index]?.walkable)return false;
     if(!immediate&&this.target===index&&['walking','casting','opening'].includes(this.phase))return false;
     this.target=index;this.token++;this.elapsed=0;const goal=this.world.stations[index].stop;
     if(immediate){this.location={node:goal};this.segments=[];this.phase='detail';return true;}

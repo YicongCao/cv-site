@@ -1,3 +1,4 @@
+import {articleCards} from './articles.js';
 import {installSound} from './sound.js';
 import {Exhibition} from './exhibition.js';
 import {themes} from './world.js';
@@ -43,7 +44,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function focusTheme(id){if(motionBusy||$('#detail').open)return;activeTheme=id;selected=projects.findIndex(p=>p.id===themes.find(t=>t.id===id).hub);renderTimeline(true);exhibition?.focusTheme(id);}
   function overview(){if(motionBusy||$('#detail').open)return;activeTheme=null;renderTimeline(true);exhibition?.overview();$('#stage').focus({preventScroll:true});}
   function select(n){if(motionBusy||$('#detail').open)return;selected=n;activeTheme=projectTheme(projects[n].id).id;renderTimeline();}
-  function browse(delta){if(!activeTheme){focusTheme(themes[delta>0?0:2].id);return;}const ids=themes.find(t=>t.id===activeTheme).members,i=ids.indexOf(projects[selected].id);select(projects.findIndex(p=>p.id===ids[Math.max(0,Math.min(ids.length-1,i+delta))]));}
+  function browse(delta){if(!activeTheme){focusTheme(themes[delta>0?0:themes.length-1].id);return;}const ids=themes.find(t=>t.id===activeTheme).members,i=ids.indexOf(projects[selected].id);select(projects.findIndex(p=>p.id===ids[Math.max(0,Math.min(ids.length-1,i+delta))]));}
   function visitProject(index){if(motionBusy||$('#detail').open)return;void sound.tap();selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
   function mediaHtml(a){
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
@@ -66,25 +67,28 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   }
   function renderMedia(){
     stopMedia($('#media'));videoObserver?.disconnect();mediaIndex=0;
-    $('#media').classList.toggle('masonry',mediaList.length>1);
-    $('#media').innerHTML=mediaList.length>1?'<div class="masonry-grid">'+mediaList.map((a,i)=>`<figure data-item="${i}">${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`).join('')+'</div>':mediaHtml(mediaList[0]);
-    if(mediaList.length>1)all('[data-item]').forEach(el=>watchVideo(el,mediaList[Number(el.dataset.item)]));else watchVideo($('#media'),mediaList[0]);
+    const p=projects[selected],cards=articleCards(p,data.articles,assets),collection=mediaList.length>1||!!cards;
+    const figure=(a,i)=>`<figure data-item="${i}">${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`;
+    $('#media').classList.toggle('masonry',collection);
+    $('#media').innerHTML=collection?'<div class="masonry-grid">'+cards+mediaList.map(figure).join('')+'</div>':mediaHtml(mediaList[0]);
+    if(collection)all('[data-item]').forEach(el=>watchVideo(el,mediaList[Number(el.dataset.item)]));else watchVideo($('#media'),mediaList[0]);
     all('[data-expand]').forEach(b=>b.onclick=()=>openLarge(Number(b.dataset.expand)));
     $('#expand').hidden=!mediaList[0]||(!isImage(mediaList[0])&&!isVideo(mediaList[0]));
-    $('.media-toolbar').hidden=mediaList.length!==1||!mediaList[0];
+    $('.media-toolbar').hidden=collection||!mediaList[0];
   }
   async function openProject(p,{fromHistory=false}={}){
     if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#major-gallery').open?(gallery.projectButton(p.id)||$('[data-gallery-close]')):$('#explore');
     selected=projects.indexOf(p);activeTheme=projectTheme(p.id).id;renderTimeline(true);if(fromHistory&&exhibition)exhibition.locate(selected);
     $('#detail-period').textContent=p.period;$('#detail-title').textContent=p.title;$('#detail-summary').textContent=p.summary;
-    $('#detail-summary').hidden=p.workflow?.length===1;
-    $('.detail-copy > h3').hidden=$('#contributions').hidden=!!p.workflow||['cloudgame','xidian'].includes(p.id);
+    $('#detail').classList.toggle('article-detail',!!p.articleOnly);
+    $('#detail-summary').hidden=p.articleOnly||p.workflow?.length===1;
+    $('.detail-copy > h3').hidden=$('#contributions').hidden=!!p.articleOnly||!!p.workflow||['cloudgame','xidian'].includes(p.id);
     $('#ownership').hidden=!p.ownership;$('#ownership').textContent=p.ownership||'';$('#workflow').hidden=!p.workflow;
     $('#workflow').innerHTML=(p.workflow||[]).map((item,i)=>`<section>${icon(item.icon||['compass','agent','screen','route'][i%4])}<div><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></div></section>`).join('');
     $('#contributions').innerHTML=p.contributions.map(c=>`<li>${esc(c)}</li>`).join('');
     const mediaOrder=p.mediaOrder||[p.cover,...p.assets.filter(id=>id!==p.cover)];
-    mediaList=mediaOrder.map(id=>assets.get(id)).filter(usable);renderMedia();
-    detailSpatial=!!exhibition;const dialog=$('#detail');dialog.dataset.ready='false';dialog.dataset.mediaLayout=mediaList.length>1?'collection':'single';
+    mediaList=p.articleOnly?[]:mediaOrder.map(id=>assets.get(id)).filter(usable);renderMedia();
+    detailSpatial=!!exhibition&&!p.articleOnly;const dialog=$('#detail');dialog.dataset.ready='false';dialog.dataset.mediaLayout=mediaList.length+(p.articles?.length||0)>1?'collection':'single';
     document.body.classList.add('is-extracting');
     sound.island({id:null});sound.setDetail(true);dialog.showModal();dialog.scrollTop=0;$('#media').scrollTop=0;
 

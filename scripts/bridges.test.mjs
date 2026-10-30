@@ -19,7 +19,7 @@ test('all three shortcuts are bidirectional, shorter than the original hub route
  }
 });
 test('every gated station journey completes; only shortcut edges on the selected path rise',()=>{
- for(const a of world.stations)for(const z of world.stations){
+ for(const a of world.stations.filter(s=>s.walkable))for(const z of world.stations.filter(s=>s.walkable)){
   const {j,b}=start(a.id,z.id),planned=new Set(j.segments.map(s=>s.edge));let event;
   for(let n=0;n<1800&&!event;n++){
    const before=j.position;event=step(j,b,.05);

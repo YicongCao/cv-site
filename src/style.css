@@ -1292,4 +1292,27 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 #stage .traveler-thought[hidden]{display:none}
 @media(max-width:850px){#stage .traveler-thought{width:48px;height:60px}}
 @media(prefers-reduced-motion:reduce){#stage .traveler-thought{display:none}}
+/* KM screenshots retain the article's own typography and evidence. */
+.km-card{break-inside:avoid;margin:0 0 16px;border:2px solid #929c8d;box-shadow:3px 3px 0 #c0c5b7;background:#fff;min-width:0}
+.km-article{display:block;text-decoration:none;color:#29372f}
+.km-card:hover,.km-card:focus-within{border-color:#a87932;box-shadow:3px 3px 0 #b39558}
+.km-article:focus-visible{outline:3px solid #a87932;outline-offset:3px}
+.km-article img{filter:none;display:block;width:100%;height:auto;max-height:none;object-fit:contain;background:white}
+.km-article-title{display:flex;gap:10px;align-items:flex-start;padding:14px 14px 4px;font-size:18px;line-height:1.55}
+.km-article-title .pixel-icon{width:18px;height:18px;flex:none;margin-top:4px;color:#9a763a}
+.km-article-link{display:block;padding:0 14px 13px;color:#916b2e;font-size:16px;text-align:right}
+#detail.article-detail{width:min(1060px,calc(100vw - 48px))}
+#detail.article-detail .detail-layout{display:flex;flex-direction:column;gap:24px}
+#detail.article-detail .detail-copy{display:contents}
+#detail.article-detail #detail-title{order:0;margin:0;padding-right:50px}
+#detail.article-detail .media-column{order:1;position:static;width:100%;min-width:0}
+#detail.article-detail #media{height:auto;max-height:none;overflow:visible;padding:0 4px 4px 0}
+#detail.article-detail .masonry-grid{columns:1;max-width:900px;margin:auto}
+#detail.article-detail #detail-period,#detail.article-detail .red-rule{display:none}
+@media(max-width:850px){
+ #detail.article-detail{width:calc(100vw - 24px);padding:60px 18px 24px}
+ #detail.article-detail .detail-layout{gap:20px}
+ .km-article-title{font-size:16px;padding:12px 10px 2px;gap:8px}
+ .km-article-link{padding:0 10px 10px}
+}
 @media(max-width:850px){#project-topics{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;margin-top:16px;font-size:14px;max-width:100%}#project-topics li{gap:8px}#project-topics .pixel-icon{width:16px;height:16px}}

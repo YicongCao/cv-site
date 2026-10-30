@@ -240,6 +240,9 @@
         "a151",
         "a152",
         "a174"
+      ],
+      "articles": [
+        "km-487077"
       ]
     },
     {
@@ -461,6 +464,11 @@
           "icon": "reader",
           "text": "开源业余开发的文字冒险游戏引擎 MarkdownGame。"
         }
+      ],
+      "articles": [
+        "km-408159",
+        "km-404906",
+        "km-392451"
       ]
     },
     {
@@ -511,6 +519,9 @@
           "icon": "route",
           "text": "开发 HTTP 加速框架，提出 SOCKS5 系统代理与 DNS 劫持方案，并使用后者实现 Steam 社区加速功能。"
         }
+      ],
+      "articles": [
+        "km-379323"
       ]
     },
     {
@@ -789,6 +800,68 @@
           "icon": "xidian",
           "text": "大学毕业设计，完成导航项目并制作演示。"
         }
+      ]
+    },
+    {
+      "id": "km-compiler",
+      "title": "编译原理",
+      "period": "2021",
+      "summary": "把编译原理讲给非科班的同学。",
+      "contributions": [],
+      "kind": "KM 文章",
+      "keywords": [
+        "表达式",
+        "编译原理",
+        "技术写作"
+      ],
+      "cover": "a257",
+      "coverSrc": "/media/originals/images/a257.jpg",
+      "assets": [],
+      "articleOnly": true,
+      "articles": [
+        "km-487077"
+      ]
+    },
+    {
+      "id": "km-bot",
+      "title": "Bot 与 NLP",
+      "period": "2018 — 2019",
+      "summary": "从魔法故事走进 Bot、词向量与自然语言。",
+      "contributions": [],
+      "kind": "KM 文章",
+      "keywords": [
+        "Bot",
+        "Word2Vec",
+        "NLP"
+      ],
+      "cover": "a258",
+      "coverSrc": "/media/originals/images/a258.jpg",
+      "assets": [],
+      "articleOnly": true,
+      "articles": [
+        "km-408159",
+        "km-404906",
+        "km-392451"
+      ]
+    },
+    {
+      "id": "km-network",
+      "title": "网络与 NAT",
+      "period": "2018",
+      "summary": "从游戏联机讲清网络中的 NAT 问题。",
+      "contributions": [],
+      "kind": "KM 文章",
+      "keywords": [
+        "游戏联机",
+        "NAT",
+        "技术写作"
+      ],
+      "cover": "a261",
+      "coverSrc": "/media/originals/images/a261.jpg",
+      "assets": [],
+      "articleOnly": true,
+      "articles": [
+        "km-379323"
       ]
     }
   ],
@@ -3356,6 +3429,103 @@
       "src": "/media/originals/images/a256.png",
       "original": "/media/originals/images/a256.png",
       "preview": "/media/originals/images/a256.png"
+    },
+    {
+      "id": "a257",
+      "type": "jpg",
+      "width": 1280,
+      "height": 446,
+      "chapter": "给非科班出身看的编译原理入门",
+      "project": "pgos",
+      "src": "/media/originals/images/a257.jpg",
+      "original": "/media/originals/images/a257.jpg",
+      "preview": "/media/originals/images/a257.jpg"
+    },
+    {
+      "id": "a258",
+      "type": "jpg",
+      "width": 1280,
+      "height": 444,
+      "chapter": "用 Bot 复刻经典——哈利波特与机器人",
+      "project": "bot",
+      "src": "/media/originals/images/a258.jpg",
+      "original": "/media/originals/images/a258.jpg",
+      "preview": "/media/originals/images/a258.jpg"
+    },
+    {
+      "id": "a259",
+      "type": "jpg",
+      "width": 1280,
+      "height": 442,
+      "chapter": "感受 AI 之美——Word2Vec 之旅",
+      "project": "bot",
+      "src": "/media/originals/images/a259.jpg",
+      "original": "/media/originals/images/a259.jpg",
+      "preview": "/media/originals/images/a259.jpg"
+    },
+    {
+      "id": "a260",
+      "type": "jpg",
+      "width": 1280,
+      "height": 398,
+      "chapter": "价值上亿的 AI 代码？叩开 NLP 世界的大门",
+      "project": "bot",
+      "src": "/media/originals/images/a260.jpg",
+      "original": "/media/originals/images/a260.jpg",
+      "preview": "/media/originals/images/a260.jpg"
+    },
+    {
+      "id": "a261",
+      "type": "jpg",
+      "width": 1280,
+      "height": 438,
+      "chapter": "助力网游加速 之 改善网络的 NAT 类型",
+      "project": "accelerator",
+      "src": "/media/originals/images/a261.jpg",
+      "original": "/media/originals/images/a261.jpg",
+      "preview": "/media/originals/images/a261.jpg"
+    }
+  ],
+  "articles": [
+    {
+      "id": "km-487077",
+      "title": "给非科班出身看的编译原理入门",
+      "url": "https://km.woa.com/articles/show/487077",
+      "image": "a257",
+      "project": "pgos",
+      "date": "2021-01-13"
+    },
+    {
+      "id": "km-408159",
+      "title": "用 Bot 复刻经典——哈利波特与机器人",
+      "url": "https://km.woa.com/articles/show/408159",
+      "image": "a258",
+      "project": "bot",
+      "date": "2019-05-27"
+    },
+    {
+      "id": "km-404906",
+      "title": "感受 AI 之美——Word2Vec 之旅",
+      "url": "https://km.woa.com/articles/show/404906",
+      "image": "a259",
+      "project": "bot",
+      "date": "2019-04-26"
+    },
+    {
+      "id": "km-392451",
+      "title": "价值上亿的 AI 代码？叩开 NLP 世界的大门",
+      "url": "https://km.woa.com/articles/show/392451",
+      "image": "a260",
+      "project": "bot",
+      "date": "2018-12-25"
+    },
+    {
+      "id": "km-379323",
+      "title": "助力网游加速 之 改善网络的 NAT 类型",
+      "url": "https://km.woa.com/articles/show/379323",
+      "image": "a261",
+      "project": "accelerator",
+      "date": "2018-09-05"
     }
   ]
 }

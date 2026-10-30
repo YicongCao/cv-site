@@ -67,6 +67,9 @@ export class IslandMotion {
   else if(station.id==='win10'){ref.tiles.forEach((p,i)=>{const u=t%4,open=ease((u-i*.06)/.7)*(1-ease((u-2.6)/.7));p.scale.copy(p.userData.homeScale).multiplyScalar(Math.max(.001,open));p.position.y=1+Math.floor(i/3)*.28+open*.1;});}
   else if(station.id==='desktop'){const u=(t%2)/2;ref.sync.visible=true;ref.sync.position.set(-.4+u*1.4,1.25+Math.sin(u*Math.PI)*.65,.4);ref.sync.rotation.y=t*3;}
   else if(station.id==='nex'){ref.cursor.visible=true;ref.cursor.position.y=1.65-(t*.6%1)*.75;ref.cursor.scale.x=.5+(Math.sin(t*6)+1)*.3;}
+  else if(station.type==='compiler'){ref.kmTokens.forEach((m,i)=>{m.position.y=m.userData.home.y+Math.max(0,Math.sin(t*2-i*.8))*.3;});}
+  else if(station.type==='spellbook'){ref.kmOrbit.rotation.y=t*.7;ref.kmOrbit.position.y=2.12+Math.sin(t*2)*.08;}
+  else if(station.type==='nat'){ref.kmTokens.forEach((m,i)=>{const u=(t*.45+i/3)%1;m.position.set((i-1)*.65*(1-u),.25+u*.7,.8-u*1.8);});}
   if(station.id!=='brushline'&&station.id!=='bot')this.onSound?.({id:station.id,phase,time:t});
   this.element.dataset.hoverProject=station.id;this.element.dataset.hoverTime=t.toFixed(2);this.element.dataset.hoverPhase=phase;
  }
@@ -77,6 +80,8 @@ export class IslandMotion {
   for(const key of ['packet','map','sync','cursor'])if(ref[key])ref[key].visible=false;
   if(ref.flow){ref.flow.group.visible=false;ref.flow.update(0);}
   if(ref.page)ref.page.rotation.y=0;
+  if(ref.kmOrbit){ref.kmOrbit.rotation.y=0;ref.kmOrbit.position.y=2.12;}
+  if(ref.kmTokens)ref.kmTokens.forEach(m=>m.position.copy(m.userData.home));
   for(const key of ['bits','nodes','tiles'])if(ref[key])ref[key].forEach(p=>{p.position.copy(p.userData.home);p.rotation.set(0,0,0);p.scale.copy(p.userData.homeScale).multiplyScalar(key==='tiles'?.001:1);});
   this.element.dataset.hoverProject='';this.element.dataset.hoverTime='0';this.element.dataset.hoverPhase='';
  }

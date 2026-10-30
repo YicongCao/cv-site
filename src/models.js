@@ -48,6 +48,37 @@ export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35
   else {for(let i=0;i<3;i++){box(g,-.8+i*.8,.9,-i*.15,.65,1.65,.12,color.cream);for(let j=0;j<3;j++){box(g,-.8+i*.8,1.43-j*.44,-i*.15+.07,.52,.24,.02,[color.green,color.dark,color.gold][j]);}}}break;
  case 'printer':
   box(g,0,.65,0,1.7,.9,1.1,color.stone);box(g,0,1.14,-.2,1.4,.13,.6,color.dark);box(g,0,.5,.7,1.15,.04,.7,color.cream);box(g,0,.53,.75,.9,.02,.45,color.green);screen(g,-.65,1.6,-.55,.55,.6,'windows');break;
+ case 'compiler': {
+  // A manuscript becomes a syntax tree: one root, two branches, four tokens.
+  box(g,0,.25,0,2.3,.5,1.65,color.dark);
+  box(g,-.8,1.35,-.5,.85,1.75,.14,color.cream);
+  for(let i=0;i<5;i++)box(g,-.8,1.85-i*.23,-.41,.55-(i%2)*.18,.045,.02,i<2?color.red:color.dark);
+  const tree=new T.Group();g.add(tree);tree.position.set(.7,.6,.1);
+  box(tree,0,1.18,0,.12,1.75,.12,color.gold);box(tree,0,.85,0,1.25,.09,.09,color.gold);
+  for(const x of [-.57,.57]){box(tree,x,.55,0,.09,.68,.09,color.gold);box(tree,x,.23,0,.65,.09,.09,color.gold);box(tree,x,.9,0,.26,.28,.22,color.green);}
+  box(tree,0,1.85,0,.37,.4,.3,color.cream);
+  ref.kmTokens=[];for(let i=0;i<4;i++){const m=movable(box(tree,-.87+i*.58,.23,.12,.17,.17,.17,color.cream));m.userData.home=m.position.clone();ref.kmTokens.push(m);}
+  break;}
+ case 'spellbook': {
+  box(g,0,.3,0,.8,.6,.65,color.dark);box(g,0,.65,0,1.4,.13,.95,color.gold);
+  const book=new T.Group();g.add(book);book.position.set(0,1.24,0);book.rotation.x=-.34;
+  for(const side of [-1,1]){const half=new T.Group();half.rotation.y=side*.28;book.add(half);box(half,side*.45,0,0,.92,1.05,.12,color.red);box(half,side*.43,.02,.09,.78,.9,.07,color.cream);for(let i=0;i<4;i++)box(half,side*.43,.3-i*.17,.14,.5,.035,.02,color.dark);}
+  box(book,0,0,.12,.07,1.15,.1,color.gold);
+  ref.kmOrbit=movable(new T.Group());g.add(ref.kmOrbit);ref.kmOrbit.position.y=2.12;
+  for(let i=0;i<3;i++){const a=i*Math.PI*2/3;box(ref.kmOrbit,Math.cos(a)*.8,Math.sin(a)*.2,Math.sin(a)*.65,.22,.22,.22,[color.gold,color.cream,color.green][i]);}
+  const wand=box(g,1.15,1.2,.1,.09,1.2,.09,color.dark);wand.rotation.z=-.45;box(g,1.38,1.77,.1,.25,.25,.18,color.gold);
+  break;}
+ case 'nat': {
+  // A router gateway divides private nodes and the public network.
+  box(g,0,.35,-.1,.7,.7,.75,color.dark);box(g,0,.75,-.1,.92,.1,.92,color.cream);
+  for(const x of [-.36,.36])box(g,x,1.02,-.3,.06,.56,.06,color.dark);
+  box(g,0,.42,.3,.35,.08,.035,color.gold);
+  for(const x of [-.9,.9]){box(g,x,.18,.8,.48,.35,.4,color.green);box(g,x,.09,.25,.07,.08,.7,color.cream);}
+  box(g,0,.1,.25,1.8,.08,.07,color.cream);box(g,0,.1,-.9,.07,.08,.9,color.gold);
+  for(const x of [-.6,0,.6]){box(g,x,1.7,-1,.48,.38,.4,color.cream);box(g,x,1.63,-1,.58,.2,.45,color.cream);}
+  box(g,0,1,-1,.08,.9,.08,color.gold);
+  ref.kmTokens=[];for(let i=0;i<3;i++){const m=movable(box(g,(i-1)*.65,.25,.8,.16,.16,.16,color.gold));m.userData.home=m.position.clone();ref.kmTokens.push(m);}
+  break;}
  case 'campus':
   box(g,0,.05,0,2.7,.1,2.1,color.green);for(let i=0;i<5;i++){const x=-.9+(i%3)*.85,z=-.5+Math.floor(i/3)*1.1;box(g,x,.35,z,.55,.6,.6,color.cream);box(g,x,.69,z,.65,.09,.7,color.red);}
   box(g,0,.12,.2,2.5,.03,.15,color.stone);break;
@@ -101,9 +132,9 @@ export function makeIsland(station){
   }
   for(let step=0;step<3;step++)box(g,0,.06+step*.07,2.65-step*.25,.85,.12+step*.14,.3,color.stone);
   // The cloth is animated separately; its pole joins the static island batch.
-  const sign=new T.Group();sign.rotation.y=Math.PI/4;sign.position.set(0,0,-.2);g.add(sign);
+  if(['nex','pgos','win10'].includes(station.id)){const sign=new T.Group();sign.rotation.y=Math.PI/4;sign.position.set(0,0,-.2);g.add(sign);
   const flag=makeFlag(station.id);sign.add(flag);g.userData.flag=flag;
-  box(sign,-2.2,2.25,0,.12,4.5,.12,color.dark);box(sign,-2.2,4.57,0,.22,.22,.22,color.gold);
+  box(sign,-2.2,2.25,0,.12,4.5,.12,color.dark);box(sign,-2.2,4.57,0,.22,.22,.22,color.gold);}
 
 
  }
