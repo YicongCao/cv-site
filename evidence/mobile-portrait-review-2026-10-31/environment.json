@@ -1,0 +1,42 @@
+{
+  "mode": "Desktop webview with portrait viewport; ordinary pointer click and drag; no multi-touch injection",
+  "canvasTouchAction": "none",
+  "currentViewport": [
+    430,
+    932
+  ],
+  "stage": {
+    "animation": "idle",
+    "archive": "expanded",
+    "archiveMask": "0.00",
+    "bridgeWaiting": "false",
+    "bridges": "[{\"id\":\"bot--desktop\",\"visible\":0,\"ready\":0,\"total\":10,\"occupied\":false,\"rising\":0,\"falling\":0,\"supported\":true},{\"id\":\"brushline--cloudgame\",\"visible\":0,\"ready\":0,\"total\":22,\"occupied\":false,\"rising\":0,\"falling\":0,\"supported\":true},{\"id\":\"accelerator--ishowfx\",\"visible\":0,\"ready\":0,\"total\":12,\"occupied\":false,\"rising\":0,\"falling\":0,\"supported\":true}]",
+    "cameraReady": "true",
+    "departure": "false",
+    "drawCalls": "136",
+    "exhaustCount": "0",
+    "exhaustProject": "",
+    "follow": "false",
+    "hoverPhase": "",
+    "hoverProject": "",
+    "hoverTime": "0",
+    "idleAction": "",
+    "idleNext": "1.03",
+    "idleTime": "0.00",
+    "intro": "complete",
+    "meteorNext": "12.16",
+    "meteorPasses": "62",
+    "position": "-21.192,1.440,-7.092",
+    "project": "pgos",
+    "remaining": "0.00",
+    "renderer": "webgl",
+    "ripples": "0",
+    "routeShortcuts": "",
+    "spotlight": "0.00",
+    "theme": "games",
+    "travelerProject": "bot",
+    "view": "theme",
+    "walked": "41.90",
+    "windTime": "775.53"
+  }
+}

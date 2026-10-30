@@ -1,0 +1,8 @@
+{
+  "cross": {
+    "phase": "casting",
+    "project": "pgos",
+    "theme": "games"
+  },
+  "opened": "PGOS 游戏联机后台"
+}

@@ -1,0 +1,11 @@
+{
+  "during": {
+    "disabled": false,
+    "ready": "false"
+  },
+  "afterDrag": {
+    "phase": "idle",
+    "project": "nex",
+    "ready": "true"
+  }
+}

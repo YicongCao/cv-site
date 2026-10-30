@@ -1,0 +1,191 @@
+[
+  {
+    "controls": [
+      {
+        "height": 44,
+        "label": "关于 pixelcao",
+        "width": 104
+      },
+      {
+        "height": 44,
+        "label": "返回全景",
+        "width": 96
+      },
+      {
+        "height": 44,
+        "label": "项目画廊",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "关闭声音",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "简历 ↗",
+        "width": 58
+      },
+      {
+        "height": 44,
+        "label": "放大小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "缩小小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "上一个项目",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "下一个项目",
+        "width": 44
+      }
+    ],
+    "height": 667,
+    "intro": {
+      "bottom": 190.59375,
+      "height": 114.59375,
+      "left": 16,
+      "right": 359,
+      "top": 76,
+      "width": 343,
+      "x": 16,
+      "y": 76
+    },
+    "mapTop": "204.59375px",
+    "overflow": false,
+    "width": 375
+  },
+  {
+    "controls": [
+      {
+        "height": 44,
+        "label": "关于 pixelcao",
+        "width": 104
+      },
+      {
+        "height": 44,
+        "label": "返回全景",
+        "width": 96
+      },
+      {
+        "height": 44,
+        "label": "项目画廊",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "关闭声音",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "简历 ↗",
+        "width": 58
+      },
+      {
+        "height": 44,
+        "label": "放大小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "缩小小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "上一个项目",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "下一个项目",
+        "width": 44
+      }
+    ],
+    "height": 844,
+    "intro": {
+      "bottom": 190.59375,
+      "height": 114.59375,
+      "left": 16,
+      "right": 374,
+      "top": 76,
+      "width": 358,
+      "x": 16,
+      "y": 76
+    },
+    "mapTop": "204.59375px",
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "controls": [
+      {
+        "height": 44,
+        "label": "关于 pixelcao",
+        "width": 104
+      },
+      {
+        "height": 44,
+        "label": "返回全景",
+        "width": 96
+      },
+      {
+        "height": 44,
+        "label": "项目画廊",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "关闭声音",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "简历 ↗",
+        "width": 58
+      },
+      {
+        "height": 44,
+        "label": "放大小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "缩小小岛",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "上一个项目",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "label": "下一个项目",
+        "width": 44
+      }
+    ],
+    "height": 932,
+    "intro": {
+      "bottom": 190.59375,
+      "height": 114.59375,
+      "left": 16,
+      "right": 414,
+      "top": 76,
+      "width": 398,
+      "x": 16,
+      "y": 76
+    },
+    "mapTop": "204.59375px",
+    "overflow": false,
+    "width": 430
+  }
+]

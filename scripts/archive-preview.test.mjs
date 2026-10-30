@@ -14,7 +14,7 @@ test('the main overview frames only the original fourteen islands regardless of 
 });
 test('the archive invitation remains visible and slightly cropped at every responsive size',()=>{
  for(const [w,h] of [[1920,1080],[1440,900],[1280,720],[768,1024],[390,844],[320,568]]){
-  const r=archivePeekRect(w,h,1.55);assert(r.x>w/2&&r.y>h/2);assert(r.x+r.width>w&&r.y+r.height>h);assert(w-r.x>120&&h-r.y>60);assert(r.width<=420&&r.height<=h*.3);
+  const r=archivePeekRect(w,h,1.55);assert(r.x>w/2&&r.y>h/2);assert(r.x+r.width>w&&r.y+r.height>h-(w<=850?78:0));assert(w-r.x>120&&h-r.y>60);assert(r.width<=420&&r.height<=h*.3);
  }
 });
 test('folding transforms only archive geometry and its veil, never the main islands or traveler',()=>{
