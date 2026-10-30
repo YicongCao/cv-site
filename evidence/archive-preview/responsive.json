@@ -1,0 +1,82 @@
+[
+  {
+    "archive": "collapsed",
+    "kmHidden": true,
+    "mask": "0.48",
+    "overflow": false,
+    "peek": {
+      "bottom": 948.59375,
+      "height": 270,
+      "left": 1097.5625,
+      "right": 1515.15625,
+      "top": 678.59375,
+      "width": 417.59375,
+      "x": 1097.5625,
+      "y": 678.59375
+    },
+    "size": [
+      1440,
+      900
+    ]
+  },
+  {
+    "archive": "collapsed",
+    "kmHidden": true,
+    "mask": "0.48",
+    "overflow": false,
+    "peek": {
+      "bottom": 758.875,
+      "height": 216,
+      "left": 975.609375,
+      "right": 1346.796875,
+      "top": 542.875,
+      "width": 371.1875,
+      "x": 975.609375,
+      "y": 542.875
+    },
+    "size": [
+      1280,
+      720
+    ]
+  },
+  {
+    "archive": "collapsed",
+    "kmHidden": true,
+    "mask": "0.48",
+    "overflow": false,
+    "peek": {
+      "bottom": 1056.03125,
+      "height": 178.0625,
+      "left": 585.359375,
+      "right": 808.078125,
+      "top": 877.96875,
+      "width": 222.71875,
+      "x": 585.359375,
+      "y": 877.96875
+    },
+    "size": [
+      768,
+      1024
+    ]
+  },
+  {
+    "archive": "collapsed",
+    "kmHidden": true,
+    "mask": "0.48",
+    "overflow": false,
+    "peek": {
+      "bottom": 871.328125,
+      "height": 151.90625,
+      "left": 234.1875,
+      "right": 424.1875,
+      "top": 719.421875,
+      "width": 190,
+      "x": 234.1875,
+      "y": 719.421875
+    },
+    "size": [
+      390,
+      844
+    ]
+  }
+]

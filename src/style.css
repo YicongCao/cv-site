@@ -1067,6 +1067,11 @@ body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
 #timeline{min-height:500px}#stage{touch-action:none}
 .theme-label{position:absolute;transform:translate(-50%,-100%);white-space:nowrap;font-size:17px;font-weight:600;letter-spacing:.02em;padding:10px 12px;color:#eee8d4;border-bottom:1px solid #8d9a82;background:#222e32c9}
 .theme-label:hover,.theme-label[aria-pressed=true]{color:#edbd69;border-color:#edbd69}.theme-label:focus-visible{outline:2px solid #edbd69;outline-offset:5px}
+.theme-label.archive-peek{transform:none;background:transparent;border:0;padding:12px 12px 0;text-align:left;display:flex;align-items:flex-start;justify-content:flex-start;white-space:normal;font-size:18px;line-height:1.5;font-weight:400;color:#c7cdc6;text-shadow:0 2px #222e32;opacity:.85;transition:color .18s,opacity .18s}
+.theme-label.archive-peek:hover,.theme-label.archive-peek:focus-visible{color:#f0eedf;opacity:1}
+.theme-label.archive-peek:focus-visible{outline-offset:-8px}
+@media(max-width:850px){.theme-label.archive-peek{font-size:12px;padding:8px 6px 0;line-height:1.5}}
+.flat-archive-peek h2 button{padding:14px;border:1px solid #9ca79d;background:#c8cec821;color:#c7cdc6}
 .island-label{font-size:12px;padding:5px 10px 10px;transform:translate(-75%,-90%);background:#222e3299}.island-label.quiet{opacity:0}.island-label.quiet:focus-visible{opacity:1}.island-label:focus-visible{outline-offset:2px}
 #stage[data-renderer=fallback]{top:0;padding-top:20px;touch-action:auto}.theme-focused #stage[data-renderer=fallback]{top:250px}#stage[data-renderer=fallback] #cards{display:block}.flat-cluster h2{font-size:20px;margin:12px 0}.flat-cluster>div{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:30px}
 @media(max-width:850px){header{gap:14px}#overview{padding:7px 10px;font-size:12px}.theme-label{font-size:13px;padding:7px 5px}.island-label{font-size:11px;padding:4px 6px}.flat-cluster>div{grid-template-columns:repeat(2,1fr)}.flat-cluster h2{font-size:17px}#timeline{min-height:560px}.intro{top:16px}#summary{max-width:95%}.theme-focused .browse{bottom:3%}}

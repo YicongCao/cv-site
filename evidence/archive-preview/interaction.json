@@ -1,0 +1,20 @@
+{
+  "position": "4.071,0.360,10.071",
+  "opening": {
+    "archive": "expanded",
+    "cameraReady": "false",
+    "detail": false,
+    "mask": "0.07",
+    "position": "4.071,0.360,10.071"
+  },
+  "expanded": {
+    "mask": "0.00",
+    "position": "4.071,0.360,10.071",
+    "theme": "km"
+  },
+  "returned": {
+    "archive": "collapsed",
+    "mask": "0.48",
+    "position": "4.071,0.360,10.071"
+  }
+}

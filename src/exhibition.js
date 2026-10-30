@@ -6,6 +6,7 @@ import {placeLabels} from './label-layout.js';
 import {HoverExhaust} from './hover-exhaust.js';
 import {RisingBridges} from './rising-bridges.js';
 import {TravelerIdle} from './traveler-idle.js';
+import {framedStations,archivePeekRect} from './archive-preview.js';
 import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
@@ -21,11 +22,12 @@ export class Exhibition {
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
   this.introActive=!this.reduced()&&!new URLSearchParams(location.hash.slice(1)).has('project');this.introElapsed=0;this.ripples=[];
   this.scene=new T.Scene();this.scene.background=new T.Color(0x222e32);
+  this.archiveMask={value:0};
   this.camera=new T.OrthographicCamera(-10,10,8,-8,.1,300);
   this.renderer=new T.WebGLRenderer({antialias:false,alpha:false,preserveDrawingBuffer:true});this.renderer.setPixelRatio(1);this.renderer.outputColorSpace=T.SRGBColorSpace;
   this.renderer.domElement.setAttribute('aria-label','四座主题岛群与白帽旅人');element.prepend(this.renderer.domElement);element.dataset.renderer='webgl';
   this.islands=this.world.stations.map(s=>{
-   const group=makeIsland(s);this.scene.add(group);group.traverse(o=>{if(o.material)o.material=o.material.clone();});
+   const group=makeIsland(s);this.scene.add(group);group.traverse(o=>{if(o.material){o.material=o.material.clone();if(!s.walkable)this.maskArchive(o.material);}});
    const edge=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(s.size,.06,s.size)),new T.LineBasicMaterial({color:color.gold}));edge.position.y=.03;group.add(edge);return {group,edge};
   });
   this.walkway=new T.Group();this.scene.add(this.walkway);this.sections=[];
@@ -41,7 +43,7 @@ export class Exhibition {
     }
    }
    if(e.bridge&&len>5)box(section,(a.x+b.x)/2,(a.y+b.y)/2-.65,(a.z+b.z)/2,.5,1,.5,0x556b60);
-   batchBoxes(section);section.traverse(o=>{if(o.material)o.material=o.material.clone();});this.sections.push({group:section,a:this.world.stations[a.station].theme,b:this.world.stations[b.station].theme});
+   batchBoxes(section);section.traverse(o=>{if(o.material){o.material=o.material.clone();if(this.world.stations[a.station].theme==='km')this.maskArchive(o.material);}});this.sections.push({group:section,a:this.world.stations[a.station].theme,b:this.world.stations[b.station].theme});
   }
   this.bridges=new RisingBridges(this.world);this.scene.add(this.bridges.group);
   this.traveler=makeTraveler();this.scene.add(this.traveler.root);this.traveler.root.scale.setScalar(1.15);
@@ -60,9 +62,35 @@ export class Exhibition {
   document.addEventListener('visibilitychange',()=>{this.last=0;this.hover=-1;this.focused=-1;this.idle.reset();this.onIslandSound?.({id:null});if(!document.hidden)this.wake();});
   this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.islandMotion.bubble.remove();this.idle.dispose();this.onIslandSound?.({id:null});this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
+ maskArchive(material){
+  // A gray-white translucent veil composited only over the archive's surfaces.
+  material.onBeforeCompile=shader=>{shader.uniforms.archiveMask=this.archiveMask;shader.fragmentShader='uniform float archiveMask;\n'+shader.fragmentShader.replace('#include <colorspace_fragment>','#include <colorspace_fragment>\ngl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(.80,.83,.80),archiveMask);');};
+  material.customProgramCacheKey=()=> 'archive-preview-mask-v1';
+ }
+ updateArchive(dt){
+  const stations=this.world.stations.filter(s=>!s.walkable),collapsed=this.mode==='overview';
+  const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?4.9:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
+  const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up)),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  const rect=archivePeekRect(this.width,this.height,(maxX-minX)/(maxY-minY));this.archiveRect=rect;
+  const units=this.viewHeight/this.height,targetScale=collapsed?Math.min(rect.width/(maxX-minX),rect.height/(maxY-minY))*units:1;
+  const offset=new T.Vector3();
+  if(collapsed){
+   const x=this.center.dot(right)+(rect.x+rect.width/2-this.width/2)*units-(minX+maxX)/2*targetScale;
+   const y=this.center.dot(up)+(this.height/2-rect.y-rect.height/2)*units-(minY+maxY)/2*targetScale;
+   offset.copy(right).multiplyScalar(x).addScaledVector(up,y);
+  }
+  const alpha=this.reduced()||!this.archivePose?1:1-Math.exp(-dt*7);
+  this.archivePose??={scale:targetScale,offset:offset.clone()};
+  this.archivePose.scale=T.MathUtils.lerp(this.archivePose.scale,targetScale,alpha);this.archivePose.offset.lerp(offset,alpha);
+  this.archiveMask.value=T.MathUtils.lerp(this.archiveMask.value,collapsed?.48:0,alpha);
+  this.archiveMoving=Math.abs(this.archivePose.scale-targetScale)>.0001||this.archivePose.offset.distanceTo(offset)>.005||Math.abs(this.archiveMask.value-(collapsed?.48:0))>.001;
+  for(const s of stations){const group=this.islands[s.index].group;group.position.set(s.x,s.y,s.z).multiplyScalar(this.archivePose.scale).add(this.archivePose.offset);group.scale.setScalar(this.archivePose.scale);group.visible=!this.introActive;}
+  for(const section of this.sections)if(section.a==='km'){section.group.position.copy(this.archivePose.offset);section.group.scale.setScalar(this.archivePose.scale);section.group.visible=!this.introActive;}
+  this.element.dataset.archive=collapsed?'collapsed':'expanded';this.element.dataset.archiveMask=this.archiveMask.value.toFixed(2);
+ }
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.browsingTransition=true;this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
- overview(){this.cancel();this.browsingTransition=true;this.mode='overview';this.theme=null;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
+ overview(){this.cancel();this.hover=-1;this.focused=-1;this.browsingTransition=true;this.mode='overview';this.theme=null;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
  locate(index){this.skipIntro();this.browsingTransition=false;this.journey.cancel();if(this.world.stations[index].walkable)this.journey.visit(index,true);this.selected=index;this.theme=this.world.stations[index].theme;this.mode='theme';this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.cameraAt(true);this.wake();}
  visit(index,{immediate=false}={}){
   if(['detail','closing'].includes(this.journey.phase))return;
@@ -115,12 +143,12 @@ export class Exhibition {
   // Fixed world axis (screen-right is x - z) keeps sign sides stable while panning.
   this.world.stations.forEach((s,i)=>{
    const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
-   b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
+   b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.mode==='overview'&&!s.walkable?this.onTheme('km'):this.onSelect(i,{visit:true});layer.append(b);
   });
  }
  resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.headerHeight=document.querySelector('header')?.getBoundingClientRect().height||0;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
  framing(){
-  let stations=this.mode==='overview'?this.world.stations:this.world.stations.filter(s=>s.theme===this.theme);
+  let stations=framedStations(this.world.stations,this.mode,this.theme);
   const shortcut=this.follow?this.bridges.state.focusEdge(this.journey):null;
   if(shortcut)stations=[this.world.stations[this.world.nodes[shortcut.a].station],this.world.stations[this.world.nodes[shortcut.b].station]];
   const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?4.9:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
@@ -157,9 +185,9 @@ export class Exhibition {
   el.addEventListener('pointermove',e=>{
    if(this.down){const dx=e.clientX-this.down.x,dy=e.clientY-this.down.y;if(Math.hypot(dx,dy)>8)this.down.drag=true;
     if(this.down.drag){this.follow=false;this.pan.copy(this.down.pan).addScaledVector(right,-dx*this.viewHeight/this.height).addScaledVector(up,dy*this.viewHeight/this.height);this.pan.clampLength(0,20);this.wake();}
-   }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':this.mode==='theme'&&this.isBlank()?'zoom-out':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
+   }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':this.mode==='theme'&&this.isBlank()?'zoom-out':'grab';const hover=hit>=0&&this.mode==='overview'&&!this.world.stations[hit].walkable?-1:hit;if(hover!==this.hover){this.hover=hover;this.wake();}}
   });
-  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}else if(d.background&&this.mode==='theme'&&this.isBlank()){this.onOverview?.();}}});
+  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){if(this.mode==='overview'&&!this.world.stations[hit].walkable)this.onTheme('km');else{this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}}else if(d.background&&this.mode==='theme'&&this.isBlank()){this.onOverview?.();}}});
   el.addEventListener('pointercancel',()=>{this.down=null;this.hover=-1;this.wake();});
   el.addEventListener('pointerleave',()=>{this.hover=-1;this.wake();});
   el.addEventListener('wheel',e=>{if(this.introActive){this.skipIntro();}if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
@@ -189,14 +217,18 @@ export class Exhibition {
   this.islands.forEach(({group,edge},i)=>{
    const station=this.world.stations[i],bridgeNeighbor=bridgeNeighbors.has(i);
    const nearTraveler=walking&&(bridgeNeighbor||Math.hypot(station.x-this.journey.position.x,station.z-this.journey.position.z)<10);
-   const highlighted=i===this.selected&&(this.mode==='theme'||this.world.stations[i].hub);
+   const collapsed=this.mode==='overview'&&!station.walkable;const highlighted=!collapsed&&i===this.selected&&(this.mode==='theme'||this.world.stations[i].hub);
    if(group.userData.highlight!==highlighted){group.userData.floor.material.color.set(highlighted?0xc5ac73:color.stone);group.userData.floor.material.userData.baseColor=group.userData.floor.material.color.clone();group.userData.highlight=highlighted;group.userData.intensity=undefined;}fade(group,this.mode==='overview'||station.theme===this.theme||nearTraveler?1:walking?.32:.07);
-   edge.visible=highlighted||i===this.hover||(['casting','opening'].includes(this.journey.phase)&&i===this.journey.target);edge.material.color.set(highlighted?color.gold:0xd8ddc7);
+   edge.visible=!collapsed&&(highlighted||i===this.hover||(['casting','opening'].includes(this.journey.phase)&&i===this.journey.target));edge.material.color.set(highlighted?color.gold:0xd8ddc7);
   });
   const project=(el,p)=>{p.project(this.camera);el.style.left=`${(p.x*.5+.5)*this.width}px`;el.style.top=`${(.5-p.y*.5)*this.height}px`;return Math.abs(p.x)<.98&&Math.abs(p.y)<.94;};
   const actor=this.journey.position;const actorShown=project(this.profileButton,new T.Vector3(actor.x,actor.y+1,actor.z));this.profileButton.hidden=hidden||!actorShown;
   this.element.querySelectorAll('[data-theme]').forEach(b=>{b.disabled=!!this.browsingTransition;
    const theme=themes.find(t=>t.id===b.dataset.theme),s=this.world.stations.find(s=>s.id===theme.hub);
+   const peek=theme.id==='km'&&this.mode==='overview';b.classList.toggle('archive-peek',peek);
+   b.setAttribute('aria-label',peek?'展开4. 古法手作 KM 头条好文':`浏览${theme.title}`);
+   if(peek){const r=this.archiveRect;b.hidden=hidden;b.style.left=r.x+'px';b.style.top=r.y+'px';b.style.width=r.width+'px';b.style.height=r.height+'px';return;}
+   b.style.width='';b.style.height='';
    const offset=(theme.labelOffsetU||0)/Math.SQRT2;const shown=project(b,new T.Vector3(s.x+offset,s.y+5.6,s.z-offset));b.hidden=hidden||!shown||this.mode!=='overview';
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=!!this.browsingTransition;
@@ -204,11 +236,11 @@ export class Exhibition {
    const shown=project(b,new T.Vector3(s.x+side*s.size/2,s.y+.3,s.z-side*s.size/2));
    const detailed=this.mode==='theme'&&(s.theme===this.theme||bridgeNeighbors.has(i));const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*ax+6,this.width-labelWidth*(1-ax)-6)}px`;
    // Desktop overview names stay visible; narrow screens reveal secondary names on demand.
-   b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed);
+   b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed)||(this.mode==='overview'&&!s.walkable);
    b.classList.toggle('quiet',this.mobile&&!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
    b.classList.toggle('is-hovered',this.hover===i);
   });
-  const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
+  const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&!b.classList.contains('archive-peek')&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
   const labels=signs.map(b=>{const ax=b.classList.contains('theme-label')?.5:b.dataset.labelSide==='right'?.25:.75,ay=b.classList.contains('theme-label')?1:.9;return {element:b,ax,ay,width:b.offsetWidth,height:b.offsetHeight,x:parseFloat(b.style.left)-b.offsetWidth*ax,y:parseFloat(b.style.top)-b.offsetHeight*ay};});
   for(const label of placeLabels(labels,{width:this.width,height:this.height,top:this.headerHeight+8,bottom:60})){
    label.element.style.left=`${label.x+label.width*label.ax}px`;label.element.style.top=`${label.y+label.height*label.ay}px`;
@@ -221,12 +253,12 @@ export class Exhibition {
   this.bridges.update(dt,this.journey,this.reduced());
   const arrived=holding||this.introActive?null:this.journey.update(dt,(edge,from,to)=>this.bridges.state.canTraverse(edge,from,to));
   this.bridges.render();
-  if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}if(this.introActive){this.introElapsed+=dt;if(this.introElapsed>=4.5)this.introActive=false;}this.skipButton.hidden=!this.introActive;this.element.dataset.intro=this.introActive?(this.introElapsed<1.2?'look':this.introElapsed<2.9?'scratch':'zoom'):'complete';this.cameraAt(false,dt);this.updateCharacter(dt);this.updateAmbience(dt);this.updateSpotlight(dt);
+  if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}if(this.introActive){this.introElapsed+=dt;if(this.introElapsed>=4.5)this.introActive=false;}this.skipButton.hidden=!this.introActive;this.element.dataset.intro=this.introActive?(this.introElapsed<1.2?'look':this.introElapsed<2.9?'scratch':'zoom'):'complete';this.cameraAt(false,dt);this.updateArchive(dt);this.updateCharacter(dt);this.updateAmbience(dt);this.updateSpotlight(dt);
   const canHover=!this.reduced()&&!this.introActive&&!document.querySelector('dialog[open]')&&!this.down?.drag;if(!canHover)this.hover=-1;const focused=this.element.querySelector('[data-card]:focus-visible');const hover=canHover?(this.hover>=0?this.hover:focused?+focused.dataset.card:-1):-1;this.islandMotion.update(dt,hover>=0?hover:-1,this.camera,this.width,this.height);this.meteors.update(dt,canHover&&this.journey.phase==='idle',this.width,this.height);
   this.exhaust.update(dt,hover>=0?this.world.stations[hover]:null,canHover);this.element.dataset.exhaustProject=hover>=0?this.world.stations[hover].id:'';this.element.dataset.exhaustCount=String(this.exhaust.activeCount);
   this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
   if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
-  const moving=this.bridges.state.moving||this.introActive||this.spotTransition||this.settling>0||this.ripples.length>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005;
+  const moving=this.archiveMoving||this.bridges.state.moving||this.introActive||this.spotTransition||this.settling>0||this.ripples.length>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005;
   this.element.dataset.cameraReady=String(!moving);
   const ambient=!this.reduced()&&!document.querySelector('dialog[open]');
   if(moving||ambient){this.pending=true;requestAnimationFrame(t=>this.draw(t));}else this.last=0;
