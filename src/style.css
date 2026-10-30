@@ -1282,4 +1282,5 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 .island-label,.island-label[aria-pressed=true]{color:#cbd1c4;border:1px solid transparent}
 .island-label.is-featured,.island-label.is-featured[aria-pressed=true]{color:#e4b35c}
 .island-label .pixel-icon{color:inherit}
+.island-label[data-label-side=right]{transform:translate(-25%,-90%)}
 .island-label:hover,.island-label.is-hovered,.island-label:focus-visible{border-color:currentColor;background:#222e32df;outline:none}

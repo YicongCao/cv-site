@@ -104,8 +104,9 @@ export class Exhibition {
   for(const theme of themes){
    const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='theme-label';b.dataset.theme=theme.id;b.textContent=theme.title;b.setAttribute('aria-label',`浏览${theme.title}`);b.setAttribute('aria-pressed',String(this.theme===theme.id));b.onclick=()=>this.onTheme(theme.id);layer.append(b);
   }
+  // Fixed world axis (screen-right is x - z) keeps sign sides stable while panning.
   this.world.stations.forEach((s,i)=>{
-   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
+   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
   });
  }
@@ -180,15 +181,16 @@ export class Exhibition {
    const shown=project(b,new T.Vector3(s.x,s.y+5.6,s.z));b.hidden=hidden||!shown||this.mode!=='overview';
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=!!this.browsingTransition;
-   const i=+b.dataset.card,s=this.world.stations[i];const shown=project(b,new T.Vector3(s.x-s.size/2,s.y+.3,s.z+s.size/2));
-   const detailed=this.mode==='theme'&&s.theme===this.theme;const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*.75+6,this.width-labelWidth*.25-6)}px`;
+   const i=+b.dataset.card,s=this.world.stations[i],onRight=b.dataset.labelSide==='right',side=onRight?1:-1,ax=onRight?.25:.75;
+   const shown=project(b,new T.Vector3(s.x+side*s.size/2,s.y+.3,s.z-side*s.size/2));
+   const detailed=this.mode==='theme'&&s.theme===this.theme;const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*ax+6,this.width-labelWidth*(1-ax)-6)}px`;
    // Desktop overview names stay visible; narrow screens reveal secondary names on demand.
    b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed);
    b.classList.toggle('quiet',this.mobile&&!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
    b.classList.toggle('is-hovered',this.hover===i);
   });
   const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
-  const labels=signs.map(b=>{const ax=b.classList.contains('theme-label')?.5:.75,ay=b.classList.contains('theme-label')?1:.9;return {element:b,ax,ay,width:b.offsetWidth,height:b.offsetHeight,x:parseFloat(b.style.left)-b.offsetWidth*ax,y:parseFloat(b.style.top)-b.offsetHeight*ay};});
+  const labels=signs.map(b=>{const ax=b.classList.contains('theme-label')?.5:b.dataset.labelSide==='right'?.25:.75,ay=b.classList.contains('theme-label')?1:.9;return {element:b,ax,ay,width:b.offsetWidth,height:b.offsetHeight,x:parseFloat(b.style.left)-b.offsetWidth*ax,y:parseFloat(b.style.top)-b.offsetHeight*ay};});
   for(const label of placeLabels(labels,{width:this.width,height:this.height,top:this.headerHeight+8,bottom:60})){
    label.element.style.left=`${label.x+label.width*label.ax}px`;label.element.style.top=`${label.y+label.height*label.ay}px`;
   }
