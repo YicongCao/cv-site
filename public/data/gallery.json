@@ -102,6 +102,14 @@
     "id": "pgos",
     "images": [
       "a173",
+      {
+        "id": "a256",
+        "src": "/media/originals/images/a256.png",
+        "original": "/media/originals/images/a256.png",
+        "width": 2094,
+        "height": 1178,
+        "chapter": "高质量 KM 技术分享"
+      },
       "a145",
       "a146",
       "a147",

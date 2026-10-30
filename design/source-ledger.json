@@ -5788,5 +5788,23 @@
     "original": "/media/originals/images/a255.png",
     "display": "/media/originals/images/a255.png",
     "preview": "/media/originals/images/a255.png"
+  },
+  {
+    "id": "a256",
+    "path": "/var/folders/tw/czcv9f0x2zj1mccw_41wj2m80000gn/T/codex-clipboard-39fe53ea-a9ef-46b6-bdd4-80c7f17f8f9d.png",
+    "bytes": 557455,
+    "sha256": "5c5384a0854f1da1998ff4d5fffb1d61ea1f8f9c0effafaa8b4a5b45d1ef4310",
+    "type": "png",
+    "width": 2094,
+    "height": 1178,
+    "project": "pgos",
+    "chapter": "高质量 KM 技术分享",
+    "status": "included",
+    "note": "用户于 2026-10-31 提供，指定放在 PGOS 照片流第二张；原样保存。",
+    "duplicateOf": null,
+    "imported": true,
+    "original": "/media/originals/images/a256.png",
+    "display": "/media/originals/images/a256.png",
+    "preview": "/media/originals/images/a256.png"
   }
 ]

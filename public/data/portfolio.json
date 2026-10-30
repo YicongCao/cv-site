@@ -194,7 +194,8 @@
         "a174",
         "a208",
         "a250",
-        "a251"
+        "a251",
+        "a256"
       ],
       "coverSrc": "/media/covers/pgos.webp",
       "workflow": [
@@ -227,6 +228,7 @@
       "mediaOrder": [
         "a208",
         "a173",
+        "a256",
         "a250",
         "a251",
         "a145",
@@ -3343,6 +3345,17 @@
       "src": "/media/originals/images/a255.png",
       "original": "/media/originals/images/a255.png",
       "preview": "/media/originals/images/a255.png"
+    },
+    {
+      "id": "a256",
+      "type": "png",
+      "width": 2094,
+      "height": 1178,
+      "chapter": "高质量 KM 技术分享",
+      "project": "pgos",
+      "src": "/media/originals/images/a256.png",
+      "original": "/media/originals/images/a256.png",
+      "preview": "/media/originals/images/a256.png"
     }
   ]
 }
