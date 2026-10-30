@@ -1,3 +1,4 @@
+import {hoverCue,makeHoverSamples} from './hover-sound.js';
 // Short shoe scuffs: two friction swells, with low rumble and sharp hiss removed.
 // Render once at context creation, then reuse buffers for every footfall.
 export function makeFootstepSamples(rate,variant=0){
@@ -43,6 +44,7 @@ export class GallerySound {
   Object.assign(this,{speech,Utterance,contextFactory,storage,onChange,loadMusic});
   try{this.enabled=storage.getItem('pixelcao:sound')!=='off';}catch{this.enabled=true;}
   this.hidden=false;this.detail=false;this.audibleVideo=false;this.cadence=new FootstepCadence();this.lastTap=-Infinity;this.lastStep=-Infinity;this.stepCount=0;this.tapCount=0;this.itemCount=0;this.lastPortalToken=null;
+  this.hoverBuffers=new Map();this.hoverVoices=new Set();this.hoverCount=0;this.hoverCounts={};this.lastHoverKey=null;
  }
  get running(){return this.enabled&&!this.hidden&&this.context?.state==='running';}
  get state(){return !this.enabled?'muted':this.failed?'unavailable':this.running?'playing':'waiting';}
@@ -74,7 +76,7 @@ export class GallerySound {
   if(turnOn)await this.activate();else this.mix();this.emit();
  }
  mix(){
-  if(!this.context)return;if(!this.enabled||this.hidden||this.audibleVideo){this.stopItem();}if(!this.enabled||this.hidden){this.stopEngine();this.stopRobot();}const t=this.context.currentTime;
+  if(!this.context)return;if(!this.enabled||this.hidden||this.audibleVideo){this.stopItem();}if(!this.enabled||this.hidden||this.detail||this.audibleVideo){this.stopEngine();this.stopRobot();this.stopHover();}const t=this.context.currentTime;
   this.master.gain.cancelScheduledValues(t);this.master.gain.setTargetAtTime(this.running?.85:0,t,.04);
   this.music.gain.cancelScheduledValues(t);this.music.gain.setTargetAtTime(this.audibleVideo?0:this.detail?.13:.42,t,.3);
  }
@@ -119,10 +121,29 @@ export class GallerySound {
   this.robotUtterance=utterance;this.robotSpeaking=true;const finish=()=>{if(this.robotUtterance===utterance){this.robotSpeaking=false;this.robotUtterance=null;}};utterance.onend=finish;utterance.onerror=finish;
   this.speech.speak(utterance);
  }
- island({id,phase,speed=0,pitch=0,text=''}){
-  if(!this.running||id!=='bot')this.stopRobot();
-  if(!this.running||id!=='brushline')this.stopEngine();
-  if(!this.running||!id){this.islandId=null;this.islandPhase=null;return;}
+ stopHover(){
+  if(!this.context)return;const t=this.context.currentTime;
+  for(const voice of this.hoverVoices){voice.gain.gain.cancelScheduledValues(t);voice.gain.gain.setTargetAtTime(0,t,.015);voice.src.stop(t+.07);}
+  this.hoverVoices.clear();
+ }
+ playHover(id,event){
+  const c=this.context,key=`${event.kind}:${event.frequency}`;
+  if(!this.hoverBuffers.has(key)){const samples=makeHoverSamples(c.sampleRate,event.kind,event.frequency),buffer=c.createBuffer(1,samples.length,c.sampleRate);buffer.getChannelData(0).set(samples);this.hoverBuffers.set(key,buffer);}
+  const src=c.createBufferSource(),gain=c.createGain(),panner=c.createStereoPanner();src.buffer=this.hoverBuffers.get(key);gain.gain.value=event.volume;panner.pan.value=event.pan;
+  src.connect(gain);gain.connect(panner);panner.connect(this.effects);const voice={src,gain,panner};this.hoverVoices.add(voice);
+  src.onended=()=>{src.disconnect();gain.disconnect();panner.disconnect();this.hoverVoices.delete(voice);};src.start();
+  this.hoverCount++;this.hoverCounts[id]=(this.hoverCounts[id]||0)+1;this.hoverProject=id;this.hoverKind=event.kind;this.emit();
+ }
+ island({id,phase,speed=0,pitch=0,text='',time=0}){
+  const allowed=this.running&&!this.detail&&!this.audibleVideo,event=hoverCue(id,time);
+  if(id!==this.islandId){this.stopHover();this.lastHoverKey=null;}
+  const fresh=event&&event.key!==this.lastHoverKey;
+  // Consume even inaudible cues, so unmuting never replays a missed action.
+  if(event)this.lastHoverKey=event.key;
+  if(!allowed||id!=='bot')this.stopRobot();
+  if(!allowed||id!=='brushline')this.stopEngine();
+  if(!allowed||!id){this.stopHover();this.islandId=id;this.islandPhase=phase;return;}
+  if(fresh&&event.age<.16)this.playHover(id,event);
   if(id==='brushline'){
    if(!this.engine){const c=this.context,osc=c.createOscillator(),filter=c.createBiquadFilter(),gain=c.createGain();osc.type='sawtooth';gain.gain.value=0;filter.type='lowpass';filter.frequency.value=500;osc.connect(filter);filter.connect(gain);gain.connect(this.effects);osc.start();this.engine={osc,filter,gain};this.emit();}
    const t=this.context.currentTime;this.engine.osc.frequency.setTargetAtTime(42+speed*65,t,.08);this.engine.gain.gain.setTargetAtTime(speed>0?.07:0,t,.05);
@@ -148,6 +169,7 @@ export function installSound(){
  const buttons=[...document.querySelectorAll('[data-sound-toggle]')];
  const sound=new GallerySound({onChange:s=>buttons.forEach(b=>{
   b.dataset.sound=s.state;b.dataset.music=s.musicFailed?'unavailable':s.source?'ready':'loading';b.dataset.steps=String(s.stepCount);b.dataset.taps=String(s.tapCount);b.dataset.items=String(s.itemCount);
+  b.dataset.hoverSounds=String(s.hoverCount);b.dataset.hoverProject=s.hoverProject||'';b.dataset.hoverKind=s.hoverKind||'';b.dataset.hoverCounts=JSON.stringify(s.hoverCounts);
   b.setAttribute('aria-pressed',String(!!s.running));b.setAttribute('aria-label',s.running?'关闭声音':'开启声音');b.title=s.running?'关闭声音':'开启声音';b.disabled=!!s.failed;
  })});
  buttons.forEach(b=>{b.innerHTML=`<svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges">${speaker}</svg>`;b.onclick=()=>sound.toggle();});sound.emit();

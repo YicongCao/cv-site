@@ -67,6 +67,7 @@ export class IslandMotion {
   else if(station.id==='win10'){ref.tiles.forEach((p,i)=>{const u=t%4,open=ease((u-i*.06)/.7)*(1-ease((u-2.6)/.7));p.scale.copy(p.userData.homeScale).multiplyScalar(Math.max(.001,open));p.position.y=1+Math.floor(i/3)*.28+open*.1;});}
   else if(station.id==='desktop'){const u=(t%2)/2;ref.sync.visible=true;ref.sync.position.set(-.4+u*1.4,1.25+Math.sin(u*Math.PI)*.65,.4);ref.sync.rotation.y=t*3;}
   else if(station.id==='nex'){ref.cursor.visible=true;ref.cursor.position.y=1.65-(t*.6%1)*.75;ref.cursor.scale.x=.5+(Math.sin(t*6)+1)*.3;}
+  if(station.id!=='brushline'&&station.id!=='bot')this.onSound?.({id:station.id,phase,time:t});
   this.element.dataset.hoverProject=station.id;this.element.dataset.hoverTime=t.toFixed(2);this.element.dataset.hoverPhase=phase;
  }
  reset(index){const ref=this.islands[index].group.userData.motion;if(!ref)return;ref.exhibit.position.y=ref.y;ref.exhibit.rotation.z=0;

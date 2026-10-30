@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {GallerySound,FootstepCadence,makeFootstepSamples,makeItemChimeSamples} from '../src/sound.js';
+import {hoverCue,hoverSoundProjects,makeHoverSamples} from '../src/hover-sound.js';
 function rig(preference=null){
  const stored=new Map([['pixelcao:sound',preference]]),storage={getItem:k=>stored.get(k),setItem:(k,v)=>stored.set(k,v)};
  const param=()=>({value:0,cancelScheduledValues(){},setTargetAtTime(v){this.value=v;},setValueAtTime(v){this.value=v;},linearRampToValueAtTime(v){this.value=v;},exponentialRampToValueAtTime(v){this.value=v;}});
@@ -90,4 +91,40 @@ test('item chime is short, deterministic, audible and free of clipped edges',()=
  const rms=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0)/a.length),peak=a.reduce((max,x)=>Math.max(max,Math.abs(x)),0);
  assert.equal(a.length,42240);assert.deepEqual(a,b);assert.ok(rms>.03&&rms<.2);assert.ok(peak>.1&&peak<.8);
  assert.equal(a[0],0);assert.ok(Math.abs(a.at(-1))<.0001);
+});
+test('every other island has audible, bounded cues without a per-frame audio flood',async()=>{
+ const {sound:s,context:c}=rig();await s.activate();await s.loading;
+ assert.equal(hoverSoundProjects.length,12);
+ for(const id of hoverSoundProjects){
+  s.island({id:null});const before=s.hoverCount;
+  for(let frame=0;frame<1200;frame++){const time=frame/60;c.currentTime=time;s.island({id,time});}
+  const count=s.hoverCount-before;assert.ok(count>=7&&count<75,`${id}: ${count}`);
+ }
+ // Buffers are cached across visits; only one voice per action, not per frame.
+ const size=s.hoverBuffers.size;s.island({id:null});s.island({id:'win10',time:0});const count=s.hoverCount;
+ for(let i=0;i<100;i++)s.island({id:'win10',time:0});
+ assert.equal(s.hoverCount,count);assert.equal(s.hoverBuffers.size,size);
+ for(const id of hoverSoundProjects)for(let t=0;t<12;t+=.1){
+  const cue=hoverCue(id,t);if(!cue)continue;const a=makeHoverSamples(8000,cue.kind,cue.frequency);
+  const peak=a.reduce((p,x)=>Math.max(p,Math.abs(x)),0),rms=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0)/a.length);
+  assert.ok(peak>.015&&peak<.8,`${id} ${cue.kind} peak ${peak}`);assert.ok(rms>.008);
+  assert.ok(a[0]===0);assert.ok(Math.abs(a.at(-1))<.003);
+ }
+});
+test('hover cues match pong collisions and map/window phases, skipping missed frames',async()=>{
+ assert.equal(hoverCue('cloudgame',1/1.1).key,'cloudgame:0:1');
+ assert.equal(hoverCue('xidian',3.5).kind,'paper');assert.equal(hoverCue('win10',2.6).kind,'close');
+ const {sound:s}=rig();await s.activate();await s.loading;
+ s.island({id:'nex',time:0});const count=s.hoverCount;
+ s.island({id:'nex',time:5});assert.ok(s.hoverCount<=count+1);const afterJump=s.hoverCount;
+ s.island({id:'museum',time:7.9});assert.equal(s.hoverCount,afterJump);
+});
+test('hover sounds release on exit, mute, detail, audible video and background without replay',async()=>{
+ const {sound:s}=rig();await s.activate();await s.loading;
+ const start=()=>s.island({id:'museum',time:0});
+ start();assert.equal(s.hoverVoices.size,1);s.island({id:null});assert.equal(s.hoverVoices.size,0);
+ start();s.setDetail(true);assert.equal(s.hoverVoices.size,0);s.island({id:'museum',time:1.1});const count=s.hoverCount;s.setDetail(false);s.island({id:'museum',time:1.1});assert.equal(s.hoverCount,count);
+ s.island({id:null});start();s.setAudibleVideo(true);assert.equal(s.hoverVoices.size,0);s.island({id:'museum',time:2.85});const videoCount=s.hoverCount;s.setAudibleVideo(false);s.island({id:'museum',time:2.85});assert.equal(s.hoverCount,videoCount);
+ s.island({id:null});start();await s.toggle();assert.equal(s.hoverVoices.size,0);s.island({id:'museum',time:4.6});const mutedCount=s.hoverCount;await s.toggle();s.island({id:'museum',time:4.6});assert.equal(s.hoverCount,mutedCount);
+ s.island({id:null});start();await s.setHidden(true);assert.equal(s.hoverVoices.size,0);s.island({id:'museum',time:6.35});const hiddenCount=s.hoverCount;await s.setHidden(false);s.island({id:'museum',time:6.35});assert.equal(s.hoverCount,hiddenCount);
 });
