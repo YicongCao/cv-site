@@ -901,10 +901,33 @@ body[data-reduced] * {
   height: auto;
   max-height: 64svh;
   min-height: 0;
-  overflow: auto;
-  padding: 5px 8px 8px 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px 12px 8px 4px;
   scrollbar-width: thin;
+  scrollbar-color: #b69658 #e4e2da;
   column-fill: balance;
+}
+#media.masonry::-webkit-scrollbar {
+  width: 10px;
+}
+#media.masonry::-webkit-scrollbar-track {
+  background: #e4e2da;
+}
+#media.masonry::-webkit-scrollbar-thumb {
+  background: #b69658;
+  border: 2px solid #e4e2da;
+  border-radius: 0;
+}
+#media.masonry::-webkit-scrollbar-thumb:hover {
+  background: #a87932;
+}
+/* Use a persistent square native rail even with macOS overlay scrollbars. */
+@supports selector(::-webkit-scrollbar) {
+  #media.masonry {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
 }
 #media.masonry figure {
   margin: 0 0 16px;
@@ -913,6 +936,13 @@ body[data-reduced] * {
   width: 100%;
   overflow: hidden;
   background: #ecece5;
+}
+#media.masonry figure:has(img) {
+  border: 2px solid #949a90;
+  border-radius: 0;
+  padding: 3px;
+  background: #e4e5dd;
+  box-shadow: 2px 2px 0 #bec3b7;
 }
 #media.masonry button[data-expand] {
   display: block;

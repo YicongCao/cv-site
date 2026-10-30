@@ -1,0 +1,33 @@
+{
+  "overflowing": {
+    "bar": "rgb(182, 150, 88)",
+    "frames": true,
+    "height": 841,
+    "images": 143,
+    "scrollHeight": 34203,
+    "scrollWidth": 663,
+    "top": 0,
+    "width": 663
+  },
+  "scrolled": {
+    "dialogTop": 0,
+    "height": 841,
+    "scrollHeight": 34203,
+    "top": 1314
+  },
+  "zoomOpened": true,
+  "shortCollection": {
+    "barWidth": 0,
+    "height": 525,
+    "layout": "main-media masonry",
+    "photos": 3,
+    "scrollHeight": 525
+  },
+  "singleImage": {
+    "barWidth": 0,
+    "frames": 0,
+    "images": 1,
+    "layout": "main-media"
+  },
+  "console": []
+}
