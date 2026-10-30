@@ -1038,3 +1038,41 @@ body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
 .theme-label{z-index:8}.island-label{z-index:4}.island-label.quiet{pointer-events:none}.island-label.quiet:focus-visible{pointer-events:auto}#stage canvas{touch-action:none}
 
 @media(max-width:850px){.island-label{font-size:12px}}
+
+/* Ark Pixel: UI and short headings only; long-form copy keeps the body face. */
+@font-face {
+  font-family: "Ark Pixel";
+  src: url("/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root { --pixel-font: "Ark Pixel", "PingFang SC", sans-serif; }
+#title, #title.latin, .detail-copy h2, .detail-copy h3,
+.theme-label, .island-label, .island-year, .flat-cluster h2, .flat-project span,
+header button, .resume-link, #explore, #detail-period, .years,
+#original-link, .document a, .media-toolbar, .large-nav, .browse, .close {
+  font-family: var(--pixel-font);
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: 0;
+}
+#title, #title.latin { font-size: 48px; line-height: 1.25; }
+#title.long-title { font-size: 36px; }
+.detail-copy h2 { font-size: 36px; line-height: 1.33; }
+.detail-copy h3, .flat-cluster h2 { font-size: 24px; line-height: 1.5; }
+.theme-label { font-size: 24px; line-height: 1.25; padding: 10px 12px; }
+.island-label, .island-year, #detail-period { font-size: 12px; line-height: 2; }
+.resume-link, #overview, #explore, #original-link, .document a, .flat-project span { font-size: 24px; line-height: 1.25; }
+#overview { padding: 6px 12px; }
+#explore { padding: 10px 16px; }
+@media(min-width:1600px){ #title, #title.latin { font-size:60px; } #title.long-title{font-size:48px;} }
+@media(max-width:850px){
+  #title, #title.latin { font-size:36px; }
+  #title.long-title, .detail-copy h2 { font-size:24px; }
+  .theme-label { font-size:12px; padding:8px; }
+  .resume-link, #overview { font-size:12px; }
+  #explore { font-size:24px; padding:8px 14px; }
+  .flat-project span { font-size:12px; }
+  #detail-period { line-height:1.5; }
+}

@@ -1,0 +1,30 @@
+{
+  "fonts": [
+    {
+      "font": "\"Ark Pixel\", \"PingFang SC\", sans-serif",
+      "selector": "#detail-title",
+      "size": "36px"
+    },
+    {
+      "font": "\"Ark Pixel\", \"PingFang SC\", sans-serif",
+      "selector": "#detail-period",
+      "size": "12px"
+    },
+    {
+      "font": "\"Ark Pixel\", \"PingFang SC\", sans-serif",
+      "selector": ".detail-copy h3",
+      "size": "24px"
+    },
+    {
+      "font": "-apple-system, \"system-ui\", \"Helvetica Neue\", \"PingFang SC\", sans-serif",
+      "selector": "#detail-summary",
+      "size": "19px"
+    },
+    {
+      "font": "-apple-system, \"system-ui\", \"Helvetica Neue\", \"PingFang SC\", sans-serif",
+      "selector": "#contributions",
+      "size": "13px"
+    }
+  ],
+  "errors": []
+}

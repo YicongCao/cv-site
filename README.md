@@ -68,3 +68,7 @@ npm test
 动画状态为 idle → walking → casting → opening → detail → closing → idle。旅程 token 在改选／取消时递增，唯一 RAF 驱动当前旅程，避免异步旧目标回调。页面隐藏时暂停，恢复时不补算离开期间的时间。低分辨率只作用于三维场景，中文与项目原始素材保持原清晰度。
 
 主题分组与摆放集中在 `src/world.js`。`node scripts/render-layout.mjs` 可从同一份配置重新生成设计拓扑图和全部 225 对项目的距离记录。新的概念图、原始提示词保存在 `design/islands/`，不进入访客资源。
+
+## 界面字体
+
+标题、主题、项目标牌、导航、按钮和年份使用方舟像素 Ark Pixel 12px 简体中文比例版（2026.10.25），以 12/24/36/48/60px 排版，不模拟粗体。段落与贡献列表保留系统无衬线字体，pixelcao 保留自绘字标。字体与 OFL 1.1 许可证位于 `public/fonts/ark-pixel/`，完整自托管，无 CDN。来源与 SHA-256、当前所有项目标题/年份/导航文字的无缺字核对见 `design/typography/`。

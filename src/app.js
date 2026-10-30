@@ -107,4 +107,6 @@ import {pixelSVG} from './pixel.js';
   $('.brand').innerHTML=pixelSVG('pixelcao');
   if(reduced())document.body.dataset.reduced='true';
   renderTimeline(true);syncHistory();
+  // Reflow projected label bounds after the local webfont replaces the fallback.
+  document.fonts?.ready.then(()=>exhibition?.wake());
 })().catch(error=>{document.querySelector('#title').textContent='作品暂时无法加载';document.querySelector('#summary').textContent='请刷新页面重试，或查看简历。';console.error(error);});

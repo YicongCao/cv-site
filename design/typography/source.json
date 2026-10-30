@@ -1,0 +1,10 @@
+{
+  "project": "https://github.com/TakWolf/ark-pixel-font",
+  "release": "2026.10.25",
+  "source": "https://github.com/TakWolf/ark-pixel-font/releases/download/2026.10.25/ark-pixel-font-12px-proportional-otf.woff2-v2026.10.25.zip",
+  "archiveSha256": "a1b26a1e505bf0b04f6f8faa0f796d6e0b32a1c2539fd1295db1013f8883314e",
+  "file": "public/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2",
+  "sha256": "0c6b9a6d8aa19150537e6ccba248909192258167a8bcc7a18d5dad1a2ee12632",
+  "bytes": 566768,
+  "license": "SIL OFL 1.1, unmodified upstream font; OFL.txt bundled beside font"
+}
