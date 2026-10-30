@@ -8,8 +8,8 @@ const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normaliz
 const direction=new T.Vector3(1,1,1).normalize();
 const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
- constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound}){
-  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound});
+ constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound,onOverview}){
+  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound,onOverview});
   this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
   this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
@@ -133,15 +133,16 @@ export class Exhibition {
   this.camera.position.copy(this.center).addScaledVector(direction,100);this.camera.up.set(0,1,0);this.camera.lookAt(this.center);this.camera.updateMatrixWorld();
  }
  pick(e){const r=this.element.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,1-(e.clientY-r.top)/r.height*2);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.islands.filter((_,i)=>this.mode==='overview'||this.world.stations[i].theme===this.theme).map(x=>x.group).concat(this.traveler.root),true)[0];if(!hit)return -1;this.lastHit=hit.point.clone();let o=hit.object;while(o.parent&&o.parent!==this.scene)o=o.parent;return o===this.traveler.root?-2:this.islands.findIndex(x=>x.group===o);}
+ isBlank(){return this.ray.intersectObjects([...this.islands.map(x=>x.group),this.walkway],true).length===0;}
  bindInput(){
   const el=this.renderer.domElement;
-  el.addEventListener('pointerdown',e=>{if(this.browsingTransition)return;if(this.introActive&&this.pick(e)!==-2){this.skipIntro();return;}if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,pan:this.pan.clone(),drag:false};el.setPointerCapture(e.pointerId);});
+  el.addEventListener('pointerdown',e=>{if(this.browsingTransition)return;if(this.introActive&&this.pick(e)!==-2){this.skipIntro();return;}if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,pan:this.pan.clone(),drag:false,background:this.mode==='theme'&&this.pick(e)===-1&&this.isBlank()};el.setPointerCapture(e.pointerId);});
   el.addEventListener('pointermove',e=>{
    if(this.down){const dx=e.clientX-this.down.x,dy=e.clientY-this.down.y;if(Math.hypot(dx,dy)>8)this.down.drag=true;
     if(this.down.drag){this.follow=false;this.pan.copy(this.down.pan).addScaledVector(right,-dx*this.viewHeight/this.height).addScaledVector(up,dy*this.viewHeight/this.height);this.pan.clampLength(0,20);this.wake();}
-   }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
+   }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':this.mode==='theme'&&this.isBlank()?'zoom-out':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
   });
-  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}}});
+  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}else if(d.background&&this.mode==='theme'&&this.isBlank()){this.onOverview?.();}}});
   el.addEventListener('pointercancel',()=>{this.down=null;this.hover=-1;this.wake();});
   el.addEventListener('pointerleave',()=>{this.hover=-1;this.wake();});
   el.addEventListener('wheel',e=>{if(this.introActive){this.skipIntro();}if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
