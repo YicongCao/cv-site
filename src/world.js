@@ -2,7 +2,7 @@
 export const themes = [
   {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
   {id:'games',title:'2. 游戏后台相关项目',hub:'pgos',members:['pgos','cloudgame','accelerator']},
-  {id:'clients',title:'3. 客户端与数字体验',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
+  {id:'clients',title:'3. 客户端相关项目',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
 ];
 const layout = {
   nex: [-10,-7,.72,'code'], museum: [-18,-14,1.08,'photos'],
