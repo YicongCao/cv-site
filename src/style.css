@@ -1026,6 +1026,12 @@ dialog#detail {
 
 @media(max-width:850px){.detail-copy{order:-1}}
 /* Three island clusters: a complete map first, then a focused workshop. */
+/* The canvas and spotlight share a full-viewport surface behind the header. */
+.webgl-ready header{position:absolute;inset:0 0 auto;z-index:20;background:transparent;pointer-events:none}
+.webgl-ready header>*{pointer-events:auto}
+.webgl-ready #timeline{height:100svh;min-height:100svh}
+.webgl-ready .intro{top:calc(10% + 77.4px)}
+@media(max-width:850px){.webgl-ready .intro{top:90px}}
 header{gap:24px}.brand{margin-right:auto}#overview{border:1px solid #9ba88e;color:#eee6cb;padding:8px 15px;font-size:14px}#overview:hover{background:#3a4942}
 body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
 #timeline{min-height:500px}#stage{touch-action:none}

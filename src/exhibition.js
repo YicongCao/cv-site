@@ -106,7 +106,7 @@ export class Exhibition {
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
   });
  }
- resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
+ resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.headerHeight=document.querySelector('header')?.getBoundingClientRect().height||0;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
  framing(){
   let stations=this.mode==='overview'?this.world.stations:this.world.stations.filter(s=>s.theme===this.theme);
   const points=[];for(const s of stations)for(const x of [-s.size/2,s.size/2])for(const z of [-s.size/2,s.size/2])for(const y of [-1.5,s.hub?4.9:2.3])points.push(new T.Vector3(s.x+x,s.y+y,s.z+z));
@@ -117,7 +117,7 @@ export class Exhibition {
   }
   const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
   const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-  const overview=this.mode==='overview',left=overview?35:this.mobile?22:this.width*.32,rightPad=overview?35:28,top=overview?35:this.mobile?220:40,bottom=overview?75:75;
+  const overview=this.mode==='overview',left=overview?35:this.mobile?22:this.width*.32,rightPad=overview?35:28,top=(this.headerHeight||0)+(overview?35:this.mobile?220:40),bottom=75;
   const availableW=Math.max(100,this.width-left-rightPad),availableH=Math.max(150,this.height-top-bottom);
   const h=Math.max((maxY-minY)*this.height/availableH,(maxX-minX)*this.height/availableW)*1.12/this.zoom;
   const screenX=(left+this.width-rightPad)/2,screenY=(top+this.height-bottom)/2;
