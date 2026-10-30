@@ -84,9 +84,17 @@ export class IslandMotion {
 }
 export class Meteors{
  constructor(element){this.element=element;this.wait=10+Math.random()*5;this.items=[];this.count=0;}
- update(dt,enabled,width){
+ update(dt,enabled,width,height=width*.625){
   if(!enabled){for(const item of this.items)item.el.remove();this.items=[];return;}
-  this.wait-=dt;if(this.wait<=0){this.wait=10+Math.random()*5;this.count++;for(let i=0;i<2;i++){const el=document.createElement('div');el.className='pixel-meteor';el.innerHTML='<i></i><i></i><i></i><i></i><i></i>';el.style.top=`${3+Math.random()*8}%`;this.element.append(el);this.items.push({el,t:-i*.2,x:width*(.1+Math.random()*.3)});}}
-  this.items=this.items.filter(item=>{item.t+=dt;if(item.t>1.35){item.el.remove();return false;}const t=Math.max(0,item.t);item.el.style.opacity=String(item.t<0?0:Math.sin(t/1.35*Math.PI)*.65);item.el.style.transform=`translate(${item.x+t*width*.5}px,${t*55}px) rotate(12deg)`;return true;});this.element.dataset.meteorPasses=String(this.count);
+  this.wait-=dt;if(this.wait<=0){this.wait=10+Math.random()*5;this.count++;for(let i=0;i<2;i++){
+   const el=document.createElement('div');el.className='pixel-meteor';el.setAttribute?.('aria-hidden','true');el.innerHTML='<span class="meteor-tail"><i></i><i></i><i></i><i></i><i></i></span><span class="meteor-core"></span>';this.element.append(el);
+   this.items.push({el,t:-i*.28,x:.86+Math.random()*.16,y:.015+Math.random()*.07,life:2.8+Math.random()*.5});
+  }}
+  this.items=this.items.filter(item=>{
+   item.t+=dt;if(item.t>=item.life){item.el.remove();return false;}const progress=Math.max(0,item.t/item.life);
+   item.el.style.opacity=String(item.t<0?0:.78*Math.pow(1-progress,1.25));
+   item.el.style.transform=`translate(${(item.x-progress*.88)*width}px,${(item.y+progress*.88)*height}px)`;
+   item.el.style.setProperty?.('--meteor-angle',`${-Math.atan2(height,width)*180/Math.PI}deg`);return true;
+  });this.element.dataset.meteorPasses=String(this.count);this.element.dataset.meteorNext=this.wait.toFixed(2);
  }
 }

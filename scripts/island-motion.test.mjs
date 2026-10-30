@@ -35,6 +35,7 @@ test('all fifteen model loops stay finite and reset without damaging static geom
 test('meteors appear in pairs at 10–15 second intervals and clear when disabled',()=>{
  globalThis.document={createElement:()=>({style:{},remove(){this.removed=true;}})};
  const nodes=[],element={dataset:{},append(el){nodes.push(el);}},meteors=new Meteors(element);
- assert.ok(meteors.wait>=10&&meteors.wait<=15);meteors.update(meteors.wait+.01,true,1440);assert.equal(nodes.length,2);assert.equal(element.dataset.meteorPasses,'1');assert.ok(meteors.wait>=10&&meteors.wait<=15);
+ assert.ok(meteors.wait>=10&&meteors.wait<=15);meteors.update(meteors.wait-.01,true,1440,900);meteors.update(.02,true,1440,900);assert.equal(nodes.length,2);assert.equal(element.dataset.meteorPasses,'1');assert.ok(meteors.wait>=10&&meteors.wait<=15);
+ const first=meteors.items[0],before=first.el.style.transform.match(/translate\(([-.\d]+)px,([-.\d]+)px/).slice(1).map(Number),alpha=Number(first.el.style.opacity);meteors.update(.3,true,1440,900);const after=first.el.style.transform.match(/translate\(([-.\d]+)px,([-.\d]+)px/).slice(1).map(Number);assert.ok(after[0]<before[0]&&after[1]>before[1]);assert.ok(Number(first.el.style.opacity)<alpha);
  meteors.update(.1,false,1440);assert.equal(meteors.items.length,0);assert.ok(nodes.every(n=>n.removed));delete globalThis.document;
 });
