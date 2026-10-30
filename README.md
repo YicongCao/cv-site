@@ -1,6 +1,6 @@
 # pixelcao · 像素白盒展厅
 
-独立的静态作品站。Node.js 只负责本机文件服务；Three.js 实现正交三维展架、像素台脚、阶梯投影和封面抽取／归位。15 个项目，230 份去重素材。
+独立的静态作品站。Node.js 只负责本机文件服务；Three.js 实现正交三维展架、像素台脚、阶梯投影和封面抽取／归位。15 个项目，229 份去重素材。
 
 ## 运行
 
@@ -46,7 +46,7 @@ npm run build
 npm test
 ```
 
-`check` 验证项目／素材数量、站内引用和 230 个原件 SHA-256。`test` 验证 HTTP 类型、HEAD、视频 Range、无效范围、404、源码不可访问和路径边界。
+`check` 验证项目／素材数量、站内引用和 229 个原件 SHA-256。`test` 验证 HTTP 类型、HEAD、视频 Range、无效范围、404、源码不可访问和路径边界。
 
 `import-assets.py /absolute/source/repo` 是一次性导入工具，不参与日常构建。只有重新导入旧视频时需要 FFmpeg；`inspect-media.py` 是可选媒体解码审计，需要 Pillow 和 ffprobe。已准备的兼容视频使用 H.264/AAC；原本兼容的视频保留，HEVC 转码最大边 1920。全部原件留存在站内目录。
 

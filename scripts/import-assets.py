@@ -12,8 +12,9 @@ def copy(src,dst):
 def probe(p):return json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(p)]))
 assets=[];ledger=[]
 for a in data['assets']:
- included=a['status']=='included' and not a['duplicateOf'] and a['type']!='zip' and bool(a.get('project'))
+ included=a['status']=='included' and not a['duplicateOf'] and a['type']!='zip' and bool(a.get('project')) and a['id']!='a184'
  entry=dict(a);entry['imported']=included;ledger.append(entry)
+ if a['id']=='a184':entry['exclusionReason']='用户要求移除 PGOS 7 分 16 秒迁移和升级演示；Gallery 原件保留。'
  if not included:continue
  src=source/a['path'];assert sha(src)==a['sha256'],str(src)
  kind='videos' if a['type'] in ['mov','flv','mp4'] else 'documents' if a['type']=='pdf' else 'images'

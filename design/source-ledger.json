@@ -3982,7 +3982,7 @@
     "status": "included",
     "note": "匹配迁移与升级演示，依据文件名和录屏内容归入 PGOS 工程资料；具体职责不作推断。",
     "duplicateOf": null,
-    "imported": true,
+    "imported": false,
     "video": {
       "streams": [
         {
@@ -4122,7 +4122,8 @@
       }
     },
     "original": "/media/originals/videos/a184.mov",
-    "display": "/media/videos/a184.mp4"
+    "display": "/media/videos/a184.mp4",
+    "exclusionReason": "2026-10-30 用户要求从 PGOS 展示移除 7 分 16 秒的迁移和升级演示；Gallery 原件保留。"
   },
   {
     "id": "a185",

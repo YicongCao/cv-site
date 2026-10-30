@@ -119,7 +119,6 @@
         "a152",
         "a173",
         "a174",
-        "a184",
         "a208"
       ],
       "coverSrc": "/media/covers/pgos.webp"
@@ -2426,17 +2425,6 @@
       "src": "/media/originals/images/a183.jpg",
       "original": "/media/originals/images/a183.jpg",
       "preview": "/media/previews/a183.jpg"
-    },
-    {
-      "id": "a184",
-      "type": "mov",
-      "width": 2148,
-      "height": 1080,
-      "chapter": "架构与工程化",
-      "project": "pgos",
-      "src": "/media/videos/a184.mp4",
-      "original": "/media/originals/videos/a184.mov",
-      "preview": "/media/previews/a184.jpg"
     },
     {
       "id": "a185",
