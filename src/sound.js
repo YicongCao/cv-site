@@ -23,10 +23,10 @@ export class FootstepCadence {
  }
 }
 export class GallerySound {
- constructor({contextFactory=()=>new (window.AudioContext||window.webkitAudioContext)(),storage=globalThis.localStorage,onChange=()=>{},loadMusic=async()=>{
+ constructor({speech=globalThis.speechSynthesis,Utterance=globalThis.SpeechSynthesisUtterance,contextFactory=()=>new (window.AudioContext||window.webkitAudioContext)(),storage=globalThis.localStorage,onChange=()=>{},loadMusic=async()=>{
   const response=await fetch('/audio/quiet-islands.mp3');if(!response.ok)throw new Error('Music unavailable');return response.arrayBuffer();
  }}={}){
-  Object.assign(this,{contextFactory,storage,onChange,loadMusic});
+  Object.assign(this,{speech,Utterance,contextFactory,storage,onChange,loadMusic});
   try{this.enabled=storage.getItem('pixelcao:sound')!=='off';}catch{this.enabled=true;}
   this.hidden=false;this.detail=false;this.audibleVideo=false;this.cadence=new FootstepCadence();this.lastTap=-Infinity;this.lastStep=-Infinity;this.stepCount=0;this.tapCount=0;
  }
@@ -59,7 +59,7 @@ export class GallerySound {
   if(turnOn)await this.activate();else this.mix();this.emit();
  }
  mix(){
-  if(!this.context)return;const t=this.context.currentTime;
+  if(!this.context)return;if(!this.enabled||this.hidden){this.stopEngine();this.stopRobot();}const t=this.context.currentTime;
   this.master.gain.cancelScheduledValues(t);this.master.gain.setTargetAtTime(this.running?.85:0,t,.04);
   this.music.gain.cancelScheduledValues(t);this.music.gain.setTargetAtTime(this.audibleVideo?0:this.detail?.13:.42,t,.3);
  }
@@ -81,6 +81,32 @@ export class GallerySound {
   const requested=Date.now();if(!await this.activate()||Date.now()-requested>350)return;
   const t=this.context.currentTime;if(t-this.lastTap<.09)return;this.lastTap=t;this.tapCount++;
   this.tone(880,.09,.24,'sine',-.08);this.tone(1320,.027,.34,'sine',.08);this.emit();
+ }
+ stopEngine(){
+  if(!this.engine)return;const e=this.engine;this.engine=null;const t=this.context.currentTime;e.gain.gain.setTargetAtTime(0,t,.025);e.osc.stop(t+.12);e.osc.onended=()=>{e.osc.disconnect();e.filter.disconnect();e.gain.disconnect();};this.emit();
+ }
+ stopRobot(){if(this.robotUtterance){this.speech?.cancel();this.robotUtterance=null;}this.robotSpeaking=false;}
+ speakRobot(text){
+  this.stopRobot();const voice=this.speech?.getVoices().find(v=>v.localService&&/^zh(?:-|_)/i.test(v.lang));
+  if(!voice||!this.Utterance)return;
+  const utterance=new this.Utterance(text);utterance.voice=voice;utterance.lang=voice.lang;utterance.pitch=1.65;utterance.rate=1.65;utterance.volume=.38;
+  this.robotUtterance=utterance;this.robotSpeaking=true;const finish=()=>{if(this.robotUtterance===utterance){this.robotSpeaking=false;this.robotUtterance=null;}};utterance.onend=finish;utterance.onerror=finish;
+  this.speech.speak(utterance);
+ }
+ island({id,phase,speed=0,pitch=0,text=''}){
+  if(!this.running||id!=='bot')this.stopRobot();
+  if(!this.running||id!=='brushline')this.stopEngine();
+  if(!this.running||!id){this.islandId=null;this.islandPhase=null;return;}
+  if(id==='brushline'){
+   if(!this.engine){const c=this.context,osc=c.createOscillator(),filter=c.createBiquadFilter(),gain=c.createGain();osc.type='sawtooth';gain.gain.value=0;filter.type='lowpass';filter.frequency.value=500;osc.connect(filter);filter.connect(gain);gain.connect(this.effects);osc.start();this.engine={osc,filter,gain};this.emit();}
+   const t=this.context.currentTime;this.engine.osc.frequency.setTargetAtTime(42+speed*65,t,.08);this.engine.gain.gain.setTargetAtTime(speed>0?.07:0,t,.05);
+   if(phase==='horn'&&this.islandPhase!=='horn'){this.tone(440,.065,.35,'sine');this.tone(554,.035,.35,'sine');}
+   if(phase==='drift'&&this.islandPhase!=='drift'){const src=this.context.createBufferSource(),gain=this.context.createGain();src.buffer=this.footsteps[0];gain.gain.value=.16;src.connect(gain);gain.connect(this.effects);src.start();src.onended=()=>{src.disconnect();gain.disconnect();};}
+  }else if(id==='bot'&&phase==='line'){this.speakRobot(text);
+  }else if(id==='bot'&&phase==='syllable'&&!this.robotSpeaking){
+   this.tone(340+(pitch%4)*85,.055,.12,'triangle',-.08);this.tone(680+(pitch%3)*110,.022,.09,'sine',.08);
+  }
+  this.islandId=id;this.islandPhase=phase;
  }
  walk(distance,walking){
   if(!this.cadence.update(distance,walking)||!this.running)return;

@@ -1,0 +1,40 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {botFrame,botLines,rallyFrame,pongFrame,IslandMotion,Meteors} from '../src/island-motion.js';
+import {makeExhibit,batchBoxes,box} from '../src/models.js';
+import * as T from 'three';
+test('bot types each sentence, holds exactly 300ms, blanks, and repeats',()=>{
+ let offset=0;
+ for(const text of botLines){const typed=(text.length-1)*.14;assert.equal(botFrame(offset+.01).text,text[0]);assert.equal(botFrame(offset+typed+.299).text,text);assert.equal(botFrame(offset+typed+.301).text,'');offset+=typed+.46;}
+ assert.equal(botFrame(offset+.01).text,'你');
+});
+test('rally returns continuously after drive, drift, horn and rest',()=>{
+ assert.equal(rallyFrame(1).phase,'drive');assert.equal(rallyFrame(4.5).phase,'drift');assert.equal(rallyFrame(5.3).speed,0);assert.equal(rallyFrame(5.7).phase,'horn');
+ const a=rallyFrame(7.99999),b=rallyFrame(8);assert.ok(Math.hypot(a.x-b.x,a.z-b.z)<.001);
+ for(let t=0;t<8;t+=.001){const p=rallyFrame(t),q=rallyFrame(t+.001);assert.ok(Math.hypot(p.x-q.x,p.z-q.z)<.01);}
+});
+test('pong meets the paddle at each collision and stays within the display',()=>{
+ for(let leg=0;leg<10;leg++){const f=pongFrame(leg/1.1);assert.ok(Math.abs(f.y-(leg%2?f.right:f.left))<1e-8);}
+ for(let t=0;t<30;t+=.01){const f=pongFrame(t);assert.ok(Math.abs(f.x)<=.92&&Math.abs(f.y)<.3);}
+});
+test('batching keeps animated descendants independent and merges static boxes',()=>{
+ const group=new T.Group(),animated=new T.Group();animated.userData.dynamic=true;group.add(animated);const moving=box(animated,0,0,0,1,1,1),fixed=box(group,1,0,0,1,1,1);batchBoxes(group);assert.equal(moving.parent,animated);assert.equal(fixed.parent,null);assert.ok(group.children.some(o=>o.isInstancedMesh));
+});
+test('all fifteen model loops stay finite and reset without damaging static geometry',async()=>{
+ const {makeIsland}=await import('../src/models.js'),{makeWorld}=await import('../src/world.js'),{readFileSync}=await import('node:fs');
+ globalThis.document={createElement:tag=>({style:{},dataset:{},setAttribute(){},offsetWidth:240,getContext:()=>({fillRect(){},drawImage(){},save(){},restore(){},beginPath(){},rect(){},clip(){}}),remove(){}})};
+ const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',import.meta.url))),world=makeWorld(data.projects),islands=world.stations.map(s=>({group:makeIsland(s)})),element={dataset:{},append(){}};
+ const controller=new IslandMotion({element,islands,world,onSound(){}}),camera=new T.OrthographicCamera(-40,40,30,-30,.1,300);camera.position.set(50,70,50);camera.lookAt(0,0,0);camera.updateMatrixWorld();
+ for(let i=0;i<15;i++){
+  for(let frame=0;frame<700;frame++)controller.update(.02,i,camera,1440,900);
+  islands[i].group.traverse(o=>{for(const v of [...o.position,...o.scale])assert.ok(Number.isFinite(v),world.stations[i].id);if(o.geometry?.attributes.position){for(const v of o.geometry.attributes.position.array)assert.ok(Number.isFinite(v));}});
+  controller.update(.02,-1,camera,1440,900);assert.equal(islands[i].group.userData.motion.exhibit.rotation.z,0);
+ }
+ delete globalThis.document;
+});
+test('meteors appear in pairs at 10–15 second intervals and clear when disabled',()=>{
+ globalThis.document={createElement:()=>({style:{},remove(){this.removed=true;}})};
+ const nodes=[],element={dataset:{},append(el){nodes.push(el);}},meteors=new Meteors(element);
+ assert.ok(meteors.wait>=10&&meteors.wait<=15);meteors.update(meteors.wait+.01,true,1440);assert.equal(nodes.length,2);assert.equal(element.dataset.meteorPasses,'1');assert.ok(meteors.wait>=10&&meteors.wait<=15);
+ meteors.update(.1,false,1440);assert.equal(meteors.items.length,0);assert.ok(nodes.every(n=>n.removed));delete globalThis.document;
+});

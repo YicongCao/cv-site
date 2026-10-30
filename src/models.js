@@ -1,28 +1,32 @@
 import * as T from 'three';
+import {makePhotoPanels,makeFlowScreen} from './island-motion.js';
 import {makeFlag,makeGlobe} from './ambience.js';
 function shadedGeometry(w,h,d){const g=new T.BoxGeometry(w,h,d),tones=[.77,.64,1,.5,.86,.66],colors=[];for(const tone of tones)for(let i=0;i<4;i++)colors.push(tone,tone,tone);g.setAttribute('color',new T.Float32BufferAttribute(colors,3));return g;}
 const cube=shadedGeometry(1,1,1), palettes=new Map();
 export const color={stone:0xa5ae96,dark:0x36494b,ink:0x202f35,cream:0xeee6cb,gold:0xe4b35c,green:0x708858,red:0xb96d54};
 function mats(c){if(!palettes.has(c)){palettes.set(c,new T.MeshBasicMaterial({color:c,vertexColors:true}));}return palettes.get(c);}
 export function box(g,x,y,z,w,h,d,c=color.stone){const m=new T.Mesh(cube,mats(c));m.position.set(x,y,z);m.scale.set(w,h,d);g.add(m);return m;}
+function movable(o){o.userData.dynamic=true;return o;}
 function screen(g,x,y,z,w,h,kind='code'){
  box(g,x,y,z,w+.12,h+.12,.16,color.stone);box(g,x,y,z+.09,w,h,.025,color.ink);
- if(kind==='pong'){box(g,x-.45*w,y,z+.12,.04,h*.55,.02,color.cream);box(g,x+.45*w,y,z+.12,.04,h*.4,.02,color.cream);box(g,x+.14,y+.1,z+.12,.055,.055,.02,color.gold);}
+ if(kind==='pong'){const ref=g.userData.motion;ref.paddles=[movable(box(g,x-.45*w,y,z+.12,.06,.30,.02,color.cream)),movable(box(g,x+.45*w,y,z+.12,.06,.30,.02,color.cream))];ref.ball=movable(box(g,x+.14,y+.1,z+.12,.075,.075,.03,color.gold));}
  else if(kind==='windows'){for(let i=0;i<3;i++)for(let j=0;j<3;j++)box(g,x-w*.28+i*w*.28,y-h*.3+j*h*.3,z+.12,w*.23,h*.22,.02,[0x608aa2,color.gold,color.green][(i+j)%3]);}
  else for(let j=0;j<7;j++){box(g,x-w*.34,y+h*.36-j*h*.11,z+.12,.06,.025,.02,color.gold);box(g,x+.04,y+h*.36-j*h*.11,z+.12,w*(.28+(j%3)*.12),.025,.02,j%3?0x6c9c9f:color.gold);}
  box(g,x,y-h/2-.18,z,.15,.32,.18,color.dark);box(g,x,y-h/2-.35,z,.6,.05,.4,color.dark);
 }
 function plant(g,x,z){box(g,x,.15,z,.36,.3,.36,color.dark);box(g,x,.5,z,.09,.55,.09,0x80704f);for(let i=0;i<3;i++)box(g,x+(i%2)*.12,.65+i*.16,z,.42-i*.08,.25,.38-i*.07,color.green);}
-export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35,0,-.45);
+export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35,0,-.45);const ref=g.userData.motion={};
  switch(type){
  case 'race':
   box(g,0,.04,0,2.7,.08,2.2,color.dark);box(g,0,.09,0,1.4,.04,1.05,color.green);
   for(let i=0;i<7;i++){box(g,-1.2+i*.4,.10,.9,.15,.015,.035,color.cream);box(g,-1.2+i*.4,.10,-.9,.15,.015,.035,color.cream);}
-  box(g,.25,.23,.83,.9,.25,.4,color.red);box(g,.22,.42,.83,.42,.18,.34,color.cream);box(g,.22,.44,1.01,.25,.10,.018,color.dark);
-  for(const x of [-.06,.57])for(const z of [.61,1.04])box(g,x,.18,z,.18,.2,.08,color.ink);
+  ref.car=movable(new T.Group());g.add(ref.car);ref.car.position.set(.25,0,.83);
+  box(ref.car,0,.23,0,.76,.25,.36,color.red);box(ref.car,-.03,.42,0,.38,.18,.30,color.cream);box(ref.car,-.03,.44,.17,.25,.10,.018,color.dark);
+  for(const x of [-.27,.27])for(const z of [-.2,.2])box(ref.car,x,.18,z,.16,.2,.08,color.ink);
+  ref.dust=movable(new T.Group());g.add(ref.dust);ref.dust.visible=false;for(let i=0;i<5;i++)box(ref.dust,0,0,0,.1,.1,.1,0xc1b99a);
   box(g,-1.22,.8,-.5,.07,1.6,.07,color.cream);for(let x=0;x<4;x++)for(let y=0;y<3;y++)box(g,-1.15+x*.13,1.4-y*.13,-.5,.13,.13,.035,(x+y)%2?color.cream:color.ink);break;
  case 'photos':
-  box(g,0,.95,-.55,2.65,1.9,.13,color.dark);for(let i=0;i<3;i++){box(g,-.87+i*.86,1.05,-.44,.7,1.0,.06,color.gold);box(g,-.87+i*.86,1.05,-.39,.57,.86,.03,[0x718781,0x756c62,0x9b8b69][i]);box(g,-.87+i*.86,.86,-.36,.5,.28,.02,color.green);box(g,-.99+i*.86,1.28,-.36,.13,.13,.02,color.cream);}
+  ref.wall=movable(box(g,0,.95,-.55,2.65,1.9,.13,color.dark));ref.photos=makePhotoPanels();g.add(ref.photos.group);ref.photos.update(0);
   box(g,0,.36,.65,1.8,.13,.45,0x89765b);for(const x of [-.7,.7])box(g,x,.17,.65,.1,.3,.25,color.dark);break;
  case 'code':case 'desktop':case 'windows':
   box(g,0,.6,.1,2.25,.12,1.35,color.stone);for(const x of [-.9,.9])box(g,x,.28,.1,.12,.55,.8,color.dark);
@@ -43,13 +47,27 @@ export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35
   if(type==='books'){box(g,0,.95,-.3,2.1,1.9,.5,color.dark);for(let r=0;r<3;r++){box(g,0,.1+r*.6,0,2.2,.09,.65,color.stone);for(let i=0;i<7;i++)box(g,-.88+i*.28,.36+r*.6,-.05,.19,.40+(i%2)*.1,.38,[color.red,color.gold,color.green][i%3]);}}
   else {for(let i=0;i<3;i++){box(g,-.8+i*.8,.9,-i*.15,.65,1.65,.12,color.cream);for(let j=0;j<3;j++){box(g,-.8+i*.8,1.43-j*.44,-i*.15+.07,.52,.24,.02,[color.green,color.dark,color.gold][j]);}}}break;
  case 'bike':
-  for(const x of [-.75,.75]){const wheel=new T.Mesh(new T.TorusGeometry(.42,.075,4,12),new T.MeshBasicMaterial({color:color.dark}));wheel.position.set(x,.48,0);g.add(wheel);}
+  for(const x of [-.75,.75]){const wheel=new T.Mesh(new T.TorusGeometry(.42,.075,4,12),new T.MeshBasicMaterial({color:color.dark}));wheel.position.set(x,.48,0);g.add(wheel);wheel.userData.dynamic=true;for(const angle of [0,Math.PI/2]){const spoke=box(wheel,0,0,0,.76,.035,.035,color.stone);spoke.rotation.z=angle;}(ref.wheels??=[]).push(wheel);}
   box(g,0,.65,0,1.5,.09,.1,color.red);box(g,0,.7,0,.09,1.0,.1,color.red);box(g,-.25,1.17,0,.6,.1,.3,color.ink);box(g,.7,1.05,0,.08,.85,.1,color.stone);box(g,.7,1.5,0,.45,.08,.1,color.ink);box(g,0,1.8,-.8,.65,.1,.15,color.dark);box(g,0,.9,-.8,.06,1.8,.06,color.stone);break;
  case 'printer':
   box(g,0,.65,0,1.7,.9,1.1,color.stone);box(g,0,1.14,-.2,1.4,.13,.6,color.dark);box(g,0,.5,.7,1.15,.04,.7,color.cream);box(g,0,.53,.75,.9,.02,.45,color.green);screen(g,-.65,1.6,-.55,.55,.6,'windows');break;
  case 'campus':
   box(g,0,.05,0,2.7,.1,2.1,color.green);for(let i=0;i<5;i++){const x=-.9+(i%3)*.85,z=-.5+Math.floor(i/3)*1.1;box(g,x,.35,z,.55,.6,.6,color.cream);box(g,x,.69,z,.65,.09,.7,color.red);}
   box(g,0,.12,.2,2.5,.03,.15,color.stone);break;
+ }
+ if(type==='code'){ref.cursor=movable(box(g,-.12,1.65,-.12,.48,.045,.03,color.gold));ref.cursor.visible=false;}
+ if(type==='desktop'){ref.sync=movable(box(g,0,1.4,.4,.20,.20,.20,color.gold));ref.sync.visible=false;}
+ if(type==='windows'){ref.tiles=[];for(let i=0;i<9;i++){const tile=movable(box(g,-.65+(i%3)*.28,1+Math.floor(i/3)*.28,.03,.24,.24,.04,[0x0078d7,0x31a7da,color.gold][i%3]));tile.userData.home=tile.position.clone();tile.userData.homeScale=tile.scale.clone();tile.scale.setScalar(.001);ref.tiles.push(tile);}}
+ if(type==='servers'){ref.nodes=[];for(let i=0;i<3;i++){const node=movable(box(g,(i-1)*.8,.3,.95,.20,.20,.20,color.gold));node.userData.home=node.position.clone();node.userData.homeScale=node.scale.clone();ref.nodes.push(node);}}
+ if(type==='cleaner'){ref.bits=[];for(let i=0;i<6;i++){const bit=movable(box(g,(i%3-1)*.8,.2,.8,.14,.14,.14,[color.gold,color.cream,color.red][i%3]));bit.userData.home=bit.position.clone();bit.userData.homeScale=bit.scale.clone();ref.bits.push(bit);}}
+ if(type==='feed'||type==='printer'){ref.flow=makeFlowScreen();g.add(ref.flow.group);ref.flow.update(0);ref.flow.group.visible=false;}
+ if(type==='books'){ref.page=movable(new T.Group());g.add(ref.page);ref.page.position.set(-.7,1.15,.5);box(ref.page,.35,0,0,.7,.85,.035,color.cream);for(let i=0;i<5;i++)box(ref.page,.35,.25-i*.12,.03,.5,.025,.02,color.dark);}
+ if(type==='bike'){ref.pedal=movable(new T.Group());g.add(ref.pedal);ref.pedal.position.set(0,.65,.15);box(ref.pedal,0,0,0,.6,.06,.08,color.gold);box(ref.pedal,.3,0,0,.15,.12,.18,color.dark);ref.sensor=movable(box(g,0,1.9,-.8,.15,.15,.15,color.gold));}
+ if(type==='campus'){
+  box(g,.6,1.05,-.5,.45,2.1,.45,color.cream);box(g,.6,2.15,-.5,.65,.16,.65,color.red);box(g,.6,2.35,-.5,.25,.25,.25,color.gold);
+  box(g,.6,1.75,-.25,.3,.3,.02,color.dark);box(g,.6,1.78,-.23,.035,.15,.02,color.cream);box(g,.66,1.72,-.23,.14,.035,.02,color.cream);
+  ref.map=movable(new T.Group());g.add(ref.map);ref.map.position.set(0,1.15,.8);ref.map.visible=false;
+  for(let i=0;i<3;i++){const panel=new T.Group();ref.map.add(panel);panel.position.x=(i-1)*.65;box(panel,0,0,0,.65,1.05,.035,color.cream);box(panel,0,0,.025,.09,.95,.025,color.green);box(panel,0,.12,.04,.6,.07,.025,color.red);}
  }
  plant(g,1.35,-1.0);if(index%3===0)plant(g,1.35,1.2);return g;
 }
@@ -93,11 +111,11 @@ export function makeIsland(station){
 
 
  }
- if(station.id==='accelerator'){const globe=makeGlobe();g.add(globe);g.userData.globe=globe;box(g,0,1.1,.35,.12,2.2,.12,color.dark);}
- batchBoxes(g);return g;
+ if(station.id==='accelerator'){const globe=makeGlobe();g.add(globe);g.userData.globe=globe;const packet=new T.Mesh(new T.BoxGeometry(.22,.16,.16),new T.MeshBasicMaterial({color:0xffedaa}));globe.add(packet);packet.visible=false;exhibit.userData.motion.packet=packet;box(g,0,1.1,.35,.12,2.2,.12,color.dark);}
+ batchBoxes(exhibit);exhibit.userData.dynamic=true;g.userData.motion={...exhibit.userData.motion,exhibit,y:exhibit.position.y};batchBoxes(g);return g;
 }
 
 export function batchBoxes(group){
- group.updateMatrixWorld(true);const inv=group.matrixWorld.clone().invert(),meshes=[];group.traverse(o=>{if(o.isMesh&&!o.isInstancedMesh&&o.geometry===cube)meshes.push(o);});if(!meshes.length)return;
+ group.updateMatrixWorld(true);const inv=group.matrixWorld.clone().invert(),meshes=[];group.traverse(o=>{if(o.isMesh&&!o.isInstancedMesh&&o.geometry===cube){let p=o;while(p!==group){if(p.userData.dynamic)return;p=p.parent;}meshes.push(o);}});if(!meshes.length)return;
  const instanced=new T.InstancedMesh(cube,mats(0xffffff),meshes.length);meshes.forEach((m,i)=>{instanced.setMatrixAt(i,new T.Matrix4().multiplyMatrices(inv,m.matrixWorld));instanced.setColorAt(i,m.material.color);m.removeFromParent();});group.add(instanced);
 }

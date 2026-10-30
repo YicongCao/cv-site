@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {IslandMotion,Meteors} from './island-motion.js';
 import {waveFlag} from './ambience.js';
 import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
@@ -7,8 +8,8 @@ const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normaliz
 const direction=new T.Vector3(1,1,1).normalize();
 const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
- constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout}){
-  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout});
+ constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound}){
+  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout,onIslandSound});
   this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
   this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
@@ -38,6 +39,7 @@ export class Exhibition {
   this.traveler=makeTraveler();this.scene.add(this.traveler.root);this.traveler.root.scale.setScalar(1.15);
   const actorHit=new T.Mesh(new T.BoxGeometry(.9,1.9,.8),new T.MeshBasicMaterial({visible:false}));actorHit.position.y=.95;this.traveler.root.add(actorHit);
   this.profileButton=document.createElement('button');this.profileButton.className='traveler-profile-target';this.profileButton.setAttribute('aria-label','关于 pixelcao，白帽旅人');this.profileButton.setAttribute('aria-haspopup','dialog');this.profileButton.onclick=()=>this.onAbout?.();element.append(this.profileButton);
+  this.islandMotion=new IslandMotion({element,islands:this.islands,world:this.world,onSound:onIslandSound});this.meteors=new Meteors(element);
   this.createSpotlight();
   this.magic=new T.Group();this.scene.add(this.magic);this.sparks=[];for(let i=0;i<10;i++)this.sparks.push(box(this.magic,0,0,0,.07,.07,.07,color.gold));
   this.portal=new T.Group();this.scene.add(this.portal);for(const side of [-1,1]){box(this.portal,side,0,0,.035,2,.035,color.gold);box(this.portal,0,side,0,2,.035,.035,color.gold);}
@@ -45,8 +47,8 @@ export class Exhibition {
   this.skipButton=document.createElement('button');this.skipButton.className='skip-intro';this.skipButton.textContent='跳过';this.skipButton.onclick=()=>this.skipIntro();element.append(this.skipButton);
   mq.addEventListener('change',()=>{if(this.reduced())this.skipIntro();this.wake();});
   this.bindInput();this.syncLabels();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.wake();
-  document.addEventListener('visibilitychange',()=>{this.last=0;if(!document.hidden)this.wake();});
-  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
+  document.addEventListener('visibilitychange',()=>{this.last=0;this.hover=-1;this.focused=-1;this.onIslandSound?.({id:null});if(!document.hidden)this.wake();});
+  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.islandMotion.bubble.remove();this.onIslandSound?.({id:null});this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.browsingTransition=true;this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
@@ -101,7 +103,7 @@ export class Exhibition {
   }
   this.world.stations.forEach((s,i)=>{
    const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.textContent=shortNames[s.id];
-   b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
+   b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
   });
  }
  resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.cameraAt(true);this.wake();}
@@ -140,7 +142,8 @@ export class Exhibition {
    }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
   });
   el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}}});
-  el.addEventListener('pointercancel',()=>this.down=null);
+  el.addEventListener('pointercancel',()=>{this.down=null;this.hover=-1;this.wake();});
+  el.addEventListener('pointerleave',()=>{this.hover=-1;this.wake();});
   el.addEventListener('wheel',e=>{if(this.introActive){this.skipIntro();}if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
  }
  updateCharacter(dt){const j=this.journey,p=j.position,walking=j.phase==='walking',target=this.world.stations[j.target];let angle=walking?(j.direction??this.heading):Math.atan2(target.x+.35-p.x,target.z-.45-p.z);const delta=T.MathUtils.euclideanModulo(angle-this.heading+Math.PI,Math.PI*2)-Math.PI;this.heading+=delta*Math.min(1,dt*15||1);
@@ -182,7 +185,9 @@ export class Exhibition {
  wake(){this.element.dataset.cameraReady='false';if(!this.pending&&this.active&&!document.hidden){this.pending=true;requestAnimationFrame(t=>this.draw(t));}}
  draw(now){
   this.pending=false;if(!this.active||document.hidden)return;const dt=Math.min(.05,this.last?(now-this.last)/1000:.016);this.last=now;this.time+=dt;this.settling=Math.max(0,(this.settling||0)-dt);
-  const holding=this.departureDelay>0;this.departureDelay=Math.max(0,(this.departureDelay||0)-dt);const arrived=holding||this.introActive?null:this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}if(this.introActive){this.introElapsed+=dt;if(this.introElapsed>=4.5)this.introActive=false;}this.skipButton.hidden=!this.introActive;this.element.dataset.intro=this.introActive?(this.introElapsed<1.2?'look':this.introElapsed<2.9?'scratch':'zoom'):'complete';this.cameraAt(false,dt);this.updateCharacter(dt);this.updateAmbience(dt);this.updateSpotlight(dt);this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
+  const holding=this.departureDelay>0;this.departureDelay=Math.max(0,(this.departureDelay||0)-dt);const arrived=holding||this.introActive?null:this.journey.update(dt);if(arrived){this.selected=arrived.index;this.theme=this.world.stations[arrived.index].theme;this.mode='theme';this.pan.set(0,0,0);this.zoom=1;this.syncLabels();}if(this.introActive){this.introElapsed+=dt;if(this.introElapsed>=4.5)this.introActive=false;}this.skipButton.hidden=!this.introActive;this.element.dataset.intro=this.introActive?(this.introElapsed<1.2?'look':this.introElapsed<2.9?'scratch':'zoom'):'complete';this.cameraAt(false,dt);this.updateCharacter(dt);this.updateAmbience(dt);this.updateSpotlight(dt);
+  const canHover=!this.reduced()&&!this.introActive&&!document.querySelector('dialog[open]')&&!this.down?.drag;if(!canHover)this.hover=-1;const focused=this.element.querySelector('[data-card]:focus-visible');const hover=canHover?(this.hover>=0?this.hover:focused?+focused.dataset.card:-1):-1;this.islandMotion.update(dt,hover>=0?hover:-1,this.camera,this.width,this.height);this.meteors.update(dt,canHover&&this.journey.phase==='idle',this.width);
+  this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
   if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
   const moving=this.introActive||this.spotTransition||this.settling>0||this.ripples.length>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005;
   this.element.dataset.cameraReady=String(!moving);

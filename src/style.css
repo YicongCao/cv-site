@@ -1144,3 +1144,11 @@ dialog .sound-toggle[data-sound=playing]{color:#9c712c}
 .traveler-profile-target{position:absolute;width:32px;height:44px;transform:translate(-50%,-50%);opacity:0;pointer-events:none;z-index:7;padding:0}
 .traveler-profile-target:focus-visible{opacity:1;pointer-events:auto;outline:2px solid #e4b35c;outline-offset:4px;background:#e4b35c18}
 @media(max-width:850px){header{gap:9px}.brand{width:108px}#overview{padding:7px 8px}}
+
+.bot-bubble{position:absolute;z-index:9;transform:translate(-50%,-100%);font:24px/1.4 var(--pixel-font);white-space:nowrap;color:#263535;background:#eee6cb;padding:10px 18px;pointer-events:none;box-shadow:4px 0 #eee6cb,-4px 0 #eee6cb,0 4px #eee6cb,0 -4px #eee6cb}
+.bot-bubble::after{content:"";position:absolute;left:45%;bottom:-12px;width:8px;height:12px;background:#eee6cb;box-shadow:8px -5px #eee6cb}
+.pixel-meteor{position:absolute;left:0;z-index:1;pointer-events:none;display:flex;align-items:center;gap:4px;transform-origin:right center}
+.pixel-meteor i{display:block;background:#c9cdb9;width:7px;height:3px;opacity:.18}.pixel-meteor i:nth-child(2){opacity:.28;width:10px}.pixel-meteor i:nth-child(3){opacity:.45;width:13px}.pixel-meteor i:nth-child(4){opacity:.65;width:10px}.pixel-meteor i:last-child{width:5px;height:5px;opacity:1;background:#fff0bd}
+@media(max-width:850px){.bot-bubble{font-size:12px;padding:8px 12px}}
+@media(prefers-reduced-motion:reduce){.pixel-meteor,.bot-bubble{display:none}}
+header,#timeline{user-select:none;-webkit-user-select:none}

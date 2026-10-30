@@ -50,3 +50,19 @@ test('shoe friction has audible energy, quiet boundaries, headroom and different
  assert.ok(rms>.10&&rms<.25,`friction RMS ${rms}`);assert.ok(Math.max(...a.map(Math.abs))<.66);
  assert.equal(a[0],0);assert.ok(Math.abs(a.at(-1))<.001);assert.notDeepEqual(a,b);
 });
+test('hover engine has one voice, horns once per stop and stops on mute or exit',async()=>{
+ const {sound:s}=rig();await s.activate();await s.loading;
+ let notes=0;s.tone=()=>notes++;
+ s.island({id:'brushline',phase:'drive',speed:1});const engine=s.engine;
+ for(let i=0;i<30;i++)s.island({id:'brushline',phase:'drive',speed:.6});assert.equal(s.engine,engine);
+ s.island({id:'brushline',phase:'horn'});s.island({id:'brushline',phase:'horn'});assert.equal(notes,2);
+ s.island({id:null});assert.equal(s.engine,null);
+ s.island({id:'brushline',phase:'drive',speed:1});await s.toggle();assert.equal(s.engine,null);
+ s.island({id:'bot',phase:'syllable',pitch:2});assert.equal(notes,2);
+});
+test('robot prefers local Chinese speech and cancels its utterance on mute',async()=>{
+ const {sound:s}=rig();await s.activate();await s.loading;let queued,cancelled=0,bleeps=0;
+ s.speech={getVoices:()=>[{lang:'zh-CN',localService:false},{lang:'zh-CN',localService:true}],speak:u=>queued=u,cancel:()=>cancelled++};s.Utterance=class{constructor(text){this.text=text;}};s.tone=()=>bleeps++;
+ s.island({id:'bot',phase:'line',text:'你好'});assert.equal(queued.text,'你好');assert.equal(queued.voice.localService,true);assert.ok(queued.pitch>1);
+ s.island({id:'bot',phase:'syllable'});assert.equal(bleeps,0);await s.toggle();assert.equal(cancelled,1);assert.equal(s.robotSpeaking,false);
+});
