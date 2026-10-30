@@ -37,5 +37,10 @@ test('meteors appear in pairs at 10–15 second intervals and clear when disable
  const nodes=[],element={dataset:{},append(el){nodes.push(el);}},meteors=new Meteors(element);
  assert.ok(meteors.wait>=10&&meteors.wait<=15);meteors.update(meteors.wait-.01,true,1440,900);meteors.update(.02,true,1440,900);assert.equal(nodes.length,2);assert.equal(element.dataset.meteorPasses,'1');assert.ok(meteors.wait>=10&&meteors.wait<=15);
  const first=meteors.items[0],before=first.el.style.transform.match(/translate\(([-.\d]+)px,([-.\d]+)px/).slice(1).map(Number),alpha=Number(first.el.style.opacity);meteors.update(.3,true,1440,900);const after=first.el.style.transform.match(/translate\(([-.\d]+)px,([-.\d]+)px/).slice(1).map(Number);assert.ok(after[0]<before[0]&&after[1]>before[1]);assert.ok(Number(first.el.style.opacity)<alpha);
+ // Check both cores along the whole flight, switching to mobile halfway through.
+ for(let frame=0;frame<180;frame++){
+  const [w,h]=frame<60?[1440,900]:[390,844];meteors.update(.02,true,w,h);
+  for(const item of meteors.items){const [x,y]=item.el.style.transform.match(/translate\(([-.\d]+)px,([-.\d]+)px/).slice(1).map(Number);assert.ok(x>=0&&x+16<=w+1e-8);assert.ok(y>=0&&y+16<=h*.25+1e-8);assert.ok(Math.abs(x/(w-16)+y/(h*.25-16)-1)<1e-8);}
+ }
  meteors.update(.1,false,1440);assert.equal(meteors.items.length,0);assert.ok(nodes.every(n=>n.removed));delete globalThis.document;
 });
