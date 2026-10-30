@@ -1,0 +1,17 @@
+[
+  {
+    "file": "a-rising-stones.png",
+    "source": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-e28592b9-41a7-4f11-9378-ec401d4dfc69.png",
+    "sha256": "ca99f14412ca4ae1f205a5654f5723e46db5c0e067c0907aa78fc797bc18791b"
+  },
+  {
+    "file": "b-turning-slabs.png",
+    "source": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-421258c2-c266-4546-a216-1bfc5edb2280.png",
+    "sha256": "6252d988fae04ec6c5f03d623476cda4f268612b471f52634ddffa216476bcb0"
+  },
+  {
+    "file": "c-pixel-weave.png",
+    "source": "/Users/cong/.codex/generated_images/01a17b55-c1da-7be3-8b28-81b8bac01d87/exec-c44cba37-a686-4b98-8b9f-67e1f044d51d.png",
+    "sha256": "02295906aeeb64763f68a26c1ffb67aeaebef0ebe1fefad81240873080151737"
+  }
+]
