@@ -1,7 +1,7 @@
 import {installSound} from './sound.js';
 import {Exhibition} from './exhibition.js';
 import {themes} from './world.js';
-import {icon} from './icons.js';
+import {icon,projectIcon} from './icons.js';
 import {pixelSVG} from './pixel.js';
 import {installBrandIdle} from './brand-idle.js';
 (async () => {
@@ -31,7 +31,7 @@ import {installBrandIdle} from './brand-idle.js';
     const members=projectTheme(p.id).members,current=members.indexOf(p.id);
     $('#previous').disabled=current===0;$('#next').disabled=current===members.length-1;
     if(exhibition){exhibition.select(selected,{focus:!preserveCamera});}else{
-      $('#cards').innerHTML=themes.filter(t=>!activeTheme||t.id===activeTheme).map(t=>`<section class="flat-cluster"><h2><button data-theme-action="${t.id}">${esc(t.title)}</button></h2><div>${t.members.map(id=>{const i=projects.findIndex(q=>q.id===id),q=projects[i];return `<button class="flat-project ${i===selected?'active':''}" data-card="${i}" aria-label="访问 ${esc(q.title)}">${q.coverSrc?`<img src="${q.coverSrc}" alt="">`:''}<span>${esc(q.title)}</span></button>`;}).join('')}</div></section>`).join('');
+      $('#cards').innerHTML=themes.filter(t=>!activeTheme||t.id===activeTheme).map(t=>`<section class="flat-cluster"><h2><button data-theme-action="${t.id}">${esc(t.title)}</button></h2><div>${t.members.map(id=>{const i=projects.findIndex(q=>q.id===id),q=projects[i];return `<button class="flat-project ${i===selected?'active':''}" data-card="${i}" aria-label="访问 ${esc(q.title)}">${q.coverSrc?`<img src="${q.coverSrc}" alt="">`:''}<span class="flat-project-title">${projectIcon(q.id)}<span>${esc(q.title)}</span></span></button>`;}).join('')}</div></section>`).join('');
       all('[data-card]').forEach(b=>b.onclick=()=>visitProject(+b.dataset.card));
       all('[data-theme-action]').forEach(b=>b.onclick=()=>focusTheme(b.dataset.themeAction));
     }

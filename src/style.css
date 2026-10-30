@@ -1045,7 +1045,7 @@ body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
 
 @media(max-width:850px){.island-label{font-size:12px}}
 
-/* Ark Pixel: UI and short headings only; long-form copy keeps the body face. */
+/* Ark Pixel: one local pixel typeface across the complete portfolio UI. */
 @font-face {
   font-family: "Ark Pixel";
   src: url("/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2") format("woff2");
@@ -1175,3 +1175,21 @@ dialog .sound-toggle[data-sound=playing]{color:#9c712c}
 @media(max-width:850px){.bot-bubble{font-size:12px;padding:8px 12px}}
 @media(prefers-reduced-motion:reduce){.pixel-meteor,.bot-bubble{display:none}}
 header,#timeline{user-select:none;-webkit-user-select:none}
+
+/* Pixel typography: readable copy and larger project signposts. */
+body{font-family:var(--pixel-font);font-size:16px;font-synthesis:none}
+body *{font-family:var(--pixel-font);font-synthesis:none}
+#summary{font-size:18px;line-height:1.7}
+#detail-summary,#detail:has(#workflow:not([hidden])) #detail-summary{font-size:20px;line-height:1.8}
+.detail-copy ul,#ownership,#workflow p,.about-heading p,.about-skills p,.about-school,.about-links,.document{font-size:16px;line-height:1.85}
+.about-school span{font-size:14px}
+.island-label{flex-direction:row;align-items:center;gap:6px;font-size:18px;line-height:1.35;padding:6px 8px 9px;min-height:36px;font-weight:400}
+.island-label>.pixel-icon{width:24px;height:24px;flex:none}
+.flat-project-title{display:flex;align-items:center;gap:10px}
+.flat-project-title>.pixel-icon{width:32px;height:32px;flex:none}
+@media(max-width:850px){
+  #summary{font-size:16px;line-height:1.65}
+  .island-label{font-size:18px;gap:5px;padding:5px 7px 8px;min-height:34px}
+  .island-label>.pixel-icon{width:16px;height:16px}
+  .flat-project span{font-size:20px}
+}

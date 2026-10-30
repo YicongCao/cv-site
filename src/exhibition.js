@@ -1,6 +1,8 @@
 import * as T from 'three';
 import {IslandMotion,Meteors} from './island-motion.js';
 import {waveFlag} from './ambience.js';
+import {projectIcon} from './icons.js';
+import {placeLabels} from './label-layout.js';
 import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
@@ -102,7 +104,7 @@ export class Exhibition {
    const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='theme-label';b.dataset.theme=theme.id;b.textContent=theme.title;b.setAttribute('aria-label',`浏览${theme.title}`);b.setAttribute('aria-pressed',String(this.theme===theme.id));b.onclick=()=>this.onTheme(theme.id);layer.append(b);
   }
   this.world.stations.forEach((s,i)=>{
-   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.textContent=shortNames[s.id];
+   const b=document.createElement('button');b.disabled=!!this.browsingTransition;b.className='island-label';b.dataset.card=i;b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.onSelect(i,{visit:true});layer.append(b);
   });
  }
@@ -182,6 +184,11 @@ export class Exhibition {
    b.hidden=hidden||!shown||(this.mode==='theme'&&!detailed);
    b.classList.toggle('quiet',!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
   });
+  const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
+  const labels=signs.map(b=>{const ax=b.classList.contains('theme-label')?.5:.75,ay=b.classList.contains('theme-label')?1:.9;return {element:b,ax,ay,width:b.offsetWidth,height:b.offsetHeight,x:parseFloat(b.style.left)-b.offsetWidth*ax,y:parseFloat(b.style.top)-b.offsetHeight*ay};});
+  for(const label of placeLabels(labels,{width:this.width,height:this.height,top:this.headerHeight+8,bottom:60})){
+   label.element.style.left=`${label.x+label.width*label.ax}px`;label.element.style.top=`${label.y+label.height*label.ay}px`;
+  }
  }
  wake(){this.element.dataset.cameraReady='false';if(!this.pending&&this.active&&!document.hidden){this.pending=true;requestAnimationFrame(t=>this.draw(t));}}
  draw(now){
