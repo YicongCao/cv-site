@@ -4,7 +4,7 @@ import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 process.chdir(fileURLToPath(new URL('..',import.meta.url)));
 await mkdir('public/media/gallery',{recursive:true});const sources=[];
-for(const [project,asset,seconds] of [['brushline','a144',[3,15,27,39,51,65]],['museum','a175',[2,10,18,27,36,45]]]){
+for(const [project,asset,seconds] of [['brushline','a144',[3,15,27,39,51,65]],['museum','a175',[1,10,18,27,36,45]]]){
  for(const [i,second] of seconds.entries()){
   const src=`public/media/originals/videos/${asset}.mp4`,file=`${project}-${i+1}.jpg`;
   execFileSync('ffmpeg',['-v','error','-y','-ss',String(second),'-i',src,'-frames:v','1','-vf','scale=1280:-2','-q:v','3',`public/media/gallery/${file}`]);

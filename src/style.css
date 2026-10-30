@@ -1227,7 +1227,7 @@ body *{font-family:var(--pixel-font);font-synthesis:none}
 }
 
 /* Curated full-screen timeline; each project's pictures stay in one filmstrip. */
-#open-gallery{display:flex;align-items:center;gap:10px;font-size:18px;color:#dddcca;padding:8px 0}
+#open-gallery{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;color:#dddcca;padding:8px}
 #open-gallery svg{width:20px;height:20px}
 #open-gallery:hover{color:#edbd69}
 body.gallery-open{overflow:hidden}
@@ -1267,7 +1267,7 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 #gallery-preview [data-preview-prev]{left:1%}#gallery-preview [data-preview-next]{right:1%}
 #gallery-preview a{position:absolute;bottom:20px;right:5%;font-size:18px}
 @media(max-width:850px){
- #open-gallery{padding:6px;width:32px;height:32px;flex:none}#open-gallery span{display:none}
+ #open-gallery{padding:6px;width:32px;height:32px}
  .gallery-header{padding:18px 5%;gap:12px}.gallery-header h1{font-size:26px}.gallery-header button{font-size:16px;padding:7px 10px}
  .gallery-timeline{--date-width:0px;--timeline-gap:20px;padding:30px 5% 50px}
  .gallery-project{display:block;padding:0 0 36px 26px}
