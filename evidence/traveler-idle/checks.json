@@ -1,0 +1,23 @@
+{
+  "before": "hat",
+  "interrupted": {
+    "action": "",
+    "bubbleDisplay": "none",
+    "bubbleHidden": true,
+    "phase": "walking"
+  },
+  "dialogState": "",
+  "reducedCheck": {
+    "action": "",
+    "bubbleDisplay": "none",
+    "bubbleHidden": true,
+    "next": "10.00"
+  },
+  "mobile": {
+    "bubbleHeight": "45px",
+    "bubbleWidth": "64px",
+    "documentWidth": 390,
+    "width": 390
+  },
+  "logs": []
+}

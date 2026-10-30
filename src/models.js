@@ -72,7 +72,7 @@ export function makeTraveler(){const root=new T.Group(),body=new T.Group();root.
  // Stacked tapered cloth and hat create a deliberate pixel silhouette.
  for(let i=0;i<4;i++)box(body,0,.27+i*.12,0,.65-i*.07,.13,.46-i*.035,color.cream);
  const head=new T.Group();head.position.y=.83;body.add(head);box(head,0,0,.015,.38,.27,.34,color.ink);box(head,-.09,.01,.19,.04,.06,.015,color.gold);box(head,.09,.01,.19,.04,.06,.015,color.gold);
- const hat=new T.Group();head.add(hat);hat.position.y=-.83;box(hat,0,1.00,0,.79,.075,.62,color.cream);for(let i=0;i<6;i++)box(hat,0,1.08+i*.10,-i*.012,.46-i*.055,.105,.42-i*.045,color.cream);
+ const hat=new T.Group();head.add(hat);hat.position.y=.17;box(hat,0,0,0,.79,.075,.62,color.cream);for(let i=0;i<6;i++)box(hat,0,.08+i*.10,-i*.012,.46-i*.055,.105,.42-i*.045,color.cream);
  box(body,0,.42,.24,.055,.40,.02,color.gold);
  const arms=[new T.Group(),new T.Group()];arms.forEach((a,i)=>{a.position.set(i?.32:-.32,.65,0);body.add(a);box(a,0,-.15,0,.15,.3,.19,color.cream);box(a,0,-.33,0,.10,.10,.12,color.ink);});
  const shadow=box(root,0,.015,0,.65,.018,.5,0x334245);

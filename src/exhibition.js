@@ -5,6 +5,7 @@ import {projectIcon} from './icons.js';
 import {placeLabels} from './label-layout.js';
 import {HoverExhaust} from './hover-exhaust.js';
 import {RisingBridges} from './rising-bridges.js';
+import {TravelerIdle} from './traveler-idle.js';
 import {makeWorld,Journey,themes} from './world.js';
 import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
@@ -46,6 +47,7 @@ export class Exhibition {
   this.traveler=makeTraveler();this.scene.add(this.traveler.root);this.traveler.root.scale.setScalar(1.15);
   const actorHit=new T.Mesh(new T.BoxGeometry(.9,1.9,.8),new T.MeshBasicMaterial({visible:false}));actorHit.position.y=.95;this.traveler.root.add(actorHit);
   this.profileButton=document.createElement('button');this.profileButton.className='traveler-profile-target';this.profileButton.setAttribute('aria-label','关于 pixelcao，白帽旅人');this.profileButton.setAttribute('aria-haspopup','dialog');this.profileButton.onclick=()=>this.onAbout?.();element.append(this.profileButton);
+  this.idle=new TravelerIdle(element);
   this.islandMotion=new IslandMotion({element,islands:this.islands,world:this.world,onSound:onIslandSound});this.meteors=new Meteors(element);
   this.exhaust=new HoverExhaust();this.scene.add(this.exhaust.group);
   this.createSpotlight();
@@ -55,8 +57,8 @@ export class Exhibition {
   this.skipButton=document.createElement('button');this.skipButton.className='skip-intro';this.skipButton.textContent='跳过';this.skipButton.onclick=()=>this.skipIntro();element.append(this.skipButton);
   mq.addEventListener('change',()=>{if(this.reduced()){this.skipIntro();if(['walking','casting','opening'].includes(this.journey.phase))this.visit(this.journey.target,{immediate:true});}this.wake();});
   this.bindInput();this.syncLabels();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.wake();
-  document.addEventListener('visibilitychange',()=>{this.last=0;this.hover=-1;this.focused=-1;this.onIslandSound?.({id:null});if(!document.hidden)this.wake();});
-  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.islandMotion.bubble.remove();this.onIslandSound?.({id:null});this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
+  document.addEventListener('visibilitychange',()=>{this.last=0;this.hover=-1;this.focused=-1;this.idle.reset();this.onIslandSound?.({id:null});if(!document.hidden)this.wake();});
+  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.islandMotion.bubble.remove();this.idle.dispose();this.onIslandSound?.({id:null});this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.browsingTransition=true;this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
@@ -162,13 +164,16 @@ export class Exhibition {
   el.addEventListener('wheel',e=>{if(this.introActive){this.skipIntro();}if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
  }
  updateCharacter(dt){const j=this.journey,p=j.position,traveling=j.phase==='walking',walking=traveling&&!j.waiting&&!(this.departureDelay>0),target=this.world.stations[j.target];let angle=traveling?(j.direction??this.heading):Math.atan2(target.x+.35-p.x,target.z-.45-p.z);const delta=T.MathUtils.euclideanModulo(angle-this.heading+Math.PI,Math.PI*2)-Math.PI;this.heading+=delta*Math.min(1,dt*15||1);
-  const t=this.traveler;t.root.position.set(p.x,p.y+.025,p.z);t.root.rotation.y=this.heading;const desiredStep=walking?Math.sin(j.walked*1.25):0;this.step=walking?desiredStep:T.MathUtils.lerp(this.step||0,0,Math.min(1,dt*22));const step=this.step;t.feet.forEach((f,i)=>{f.position.z=(i?1:-1)*step*.15;f.position.y=.08+Math.max(0,(i?1:-1)*step)*.12;});t.body.position.y=walking?Math.abs(step)*.035:0;t.hat.rotation.z=walking?step*.035:0;
+  const t=this.traveler;t.root.position.set(p.x,p.y+.025,p.z);t.root.rotation.y=this.heading;const desiredStep=walking?Math.sin(j.walked*1.25):0;this.step=walking?desiredStep:T.MathUtils.lerp(this.step||0,0,Math.min(1,dt*22));const step=this.step;t.feet.forEach((f,i)=>{f.position.z=(i?1:-1)*step*.15;f.position.y=.08+Math.max(0,(i?1:-1)*step)*.12;});t.body.position.y=walking?Math.abs(step)*.035:0;t.body.rotation.set(0,0,0);t.hat.position.set(0,.17,0);t.hat.rotation.set(0,0,walking?step*.035:0);t.arms.forEach(a=>a.rotation.z=0);
   const casting=['casting','opening','detail','closing'].includes(j.phase);const armTarget=casting?-clamp(j.phase==='casting'?j.elapsed/.3:j.phase==='closing'?1-j.elapsed/.32:1,0,1)*2.3:step*.28;t.arms[1].rotation.x=T.MathUtils.lerp(t.arms[1].rotation.x,armTarget,Math.min(1,dt*25||1));t.arms[0].rotation.x=-step*.28;
   this.onWalk?.(j.walked,walking&&!(this.departureDelay>0));
   this.onPortal?.(j.phase,j.token);
   t.head.rotation.set(0,0,0);t.arms[1].rotation.z=0;
   if(this.introActive){const time=this.introElapsed;t.root.rotation.y=Math.PI/4;t.head.rotation.y=time<1.5?Math.sin(time*4)*.45:Math.sin(time*2)*.08;
    const lift=clamp((time-1.2)/.35,0,1)*(1-clamp((time-2.65)/.25,0,1));t.head.rotation.z=-lift*.14;t.arms[1].rotation.z=-lift*2.65;t.arms[1].rotation.x=-lift*(.45+Math.sin(time*15)*.15);}
+  const onScreen=new T.Vector3(p.x,p.y+1,p.z).project(this.camera);
+  const canIdle=j.phase==='idle'&&!this.introActive&&!this.reduced()&&!document.querySelector('dialog[open]')&&!this.down&&!this.browsingTransition&&Math.abs(onScreen.x)<.95&&Math.abs(onScreen.y)<.9;
+  this.idle.update(dt,canIdle,t,this.heading,this.camera,this.width,this.height,this.headerHeight);
   this.magic.visible=['casting','opening'].includes(j.phase);this.magic.position.copy(t.root.position);this.sparks.forEach((s,i)=>{const a=this.time*2+i*2.4;s.position.set(Math.cos(a)*(.25+i*.04),.8+((this.time+i*.08)%.8)*1.4,Math.sin(a)*(.25+i*.04));});
   this.portal.visible=['opening','closing'].includes(j.phase);if(this.portal.visible){const raw=clamp(j.phase==='opening'?j.elapsed/.42:1-j.elapsed/.32,0,1),progress=raw*raw*(3-2*raw);const destination=this.center.clone().addScaledVector(new T.Vector3(0,1,0).applyQuaternion(this.camera.quaternion),43/this.height*this.viewHeight);this.portal.position.set(p.x,p.y+1.3,p.z).lerp(destination,progress);this.portal.quaternion.copy(this.camera.quaternion);this.portal.scale.set(T.MathUtils.lerp(.4,(this.camera.right-this.camera.left)*.46,progress),T.MathUtils.lerp(.4,this.viewHeight*.38,progress),1);}
   this.element.dataset.animation=j.phase;this.element.dataset.position=[p.x,p.y,p.z].map(v=>v.toFixed(3)).join(',');this.element.dataset.travelerProject=this.projects[j.target].id;this.element.dataset.follow=String(this.follow);this.element.dataset.remaining=j.remaining.toFixed(2);this.element.dataset.view=this.mode;this.element.dataset.theme=this.theme||'';this.element.dataset.walked=j.walked.toFixed(2);

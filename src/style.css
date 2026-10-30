@@ -1287,4 +1287,8 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 #project-topics{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:7px;color:#c0c9b9;font-size:18px;line-height:1.5;max-width:360px}
 #project-topics li{margin:0;display:flex;align-items:center;gap:10px}
 #project-topics .pixel-icon{width:18px;height:18px;flex:none;color:#b39358}
+#stage .traveler-thought{position:absolute;z-index:9;pointer-events:none;width:80px;height:56px;transform:translate(-50%,-100%);image-rendering:pixelated;image-rendering:crisp-edges}
+#stage .traveler-thought[hidden]{display:none}
+@media(max-width:850px){#stage .traveler-thought{width:64px;height:45px}}
+@media(prefers-reduced-motion:reduce){#stage .traveler-thought{display:none}}
 @media(max-width:850px){#project-topics{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;margin-top:16px;font-size:14px;max-width:100%}#project-topics li{gap:8px}#project-topics .pixel-icon{width:16px;height:16px}}
