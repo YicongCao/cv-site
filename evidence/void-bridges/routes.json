@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-31",
+  "notes": "Simulated at 60 Hz; timings exclude initial spotlight delay and casting/detail animation.",
+  "routes": [
+    {
+      "from": "bot",
+      "to": "desktop",
+      "oldDistance": 48.19,
+      "newDistance": 15.75,
+      "distanceReductionPercent": 67.3,
+      "walkAndBridgeWaitSeconds": 1.77,
+      "waitingSeconds": 0.18,
+      "shortcuts": [
+        "bot--desktop"
+      ]
+    },
+    {
+      "from": "desktop",
+      "to": "bot",
+      "oldDistance": 48.19,
+      "newDistance": 15.75,
+      "distanceReductionPercent": 67.3,
+      "walkAndBridgeWaitSeconds": 2.05,
+      "waitingSeconds": 0.47,
+      "shortcuts": [
+        "bot--desktop"
+      ]
+    },
+    {
+      "from": "brushline",
+      "to": "cloudgame",
+      "oldDistance": 58.33,
+      "newDistance": 25.48,
+      "distanceReductionPercent": 56.3,
+      "walkAndBridgeWaitSeconds": 2.73,
+      "waitingSeconds": 0.18,
+      "shortcuts": [
+        "brushline--cloudgame"
+      ]
+    },
+    {
+      "from": "cloudgame",
+      "to": "brushline",
+      "oldDistance": 58.33,
+      "newDistance": 25.48,
+      "distanceReductionPercent": 56.3,
+      "walkAndBridgeWaitSeconds": 2.73,
+      "waitingSeconds": 0.18,
+      "shortcuts": [
+        "brushline--cloudgame"
+      ]
+    },
+    {
+      "from": "accelerator",
+      "to": "ishowfx",
+      "oldDistance": 52.73,
+      "newDistance": 17.89,
+      "distanceReductionPercent": 66.1,
+      "walkAndBridgeWaitSeconds": 1.98,
+      "waitingSeconds": 0.18,
+      "shortcuts": [
+        "accelerator--ishowfx"
+      ]
+    },
+    {
+      "from": "ishowfx",
+      "to": "accelerator",
+      "oldDistance": 52.73,
+      "newDistance": 17.89,
+      "distanceReductionPercent": 66.1,
+      "walkAndBridgeWaitSeconds": 1.98,
+      "waitingSeconds": 0.18,
+      "shortcuts": [
+        "accelerator--ishowfx"
+      ]
+    }
+  ]
+}

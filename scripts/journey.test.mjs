@@ -8,7 +8,8 @@ function finish(j){let event;for(let i=0;i<2000&&!event;i++)event=j.update(1/60)
 test('three themes cover all fourteen projects once, preserving dates and assets',()=>{
  const members=themes.flatMap(t=>t.members);assert.equal(members.length,14);assert.equal(new Set(members).size,14);
  assert.deepEqual([...members].sort(),data.projects.map(p=>p.id).sort());assert.equal(world.stations.filter(s=>s.hub).length,3);
- assert.equal(world.edges.filter(e=>e.bridge).length,14); // eleven spokes and a triangle
+ assert.equal(world.edges.filter(e=>e.bridge&&!e.shortcut).length,14); // eleven spokes and a triangle
+ assert.equal(world.edges.filter(e=>e.shortcut).length,3);
  assert.match(data.projects.find(p=>p.id==='cloudgame').period,/2019/);assert.match(data.projects.find(p=>p.id==='xidian').period,/毕业/);
  assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,228);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
 });

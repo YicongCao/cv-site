@@ -4,6 +4,7 @@ export const themes = [
   {id:'games',title:'2. 游戏后台相关项目',hub:'pgos',members:['pgos','cloudgame','accelerator']},
   {id:'clients',title:'3. 客户端相关项目',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
 ];
+export const shortcuts=[['bot','desktop'],['brushline','cloudgame'],['accelerator','ishowfx']];
 const layout = {
   nex: [-10,-7,.72,'code'], museum: [-18,-14,1.08,'photos'],
   brushline: [-19,1,.36,'race'], bot: [-7,-20,1.44,'bot'],
@@ -22,8 +23,8 @@ export function makeWorld(projects) {
       x:(u+v)/Math.SQRT2,y,z:(v-u)/Math.SQRT2,type};
   });
   const nodes=[],edges=[],adj=[];
-  const connect=(a,b,bridge=false)=>{
-    const edge={id:edges.length,a,b,bridge,length:distance(nodes[a],nodes[b])};
+  const connect=(a,b,bridge=false,shortcut=null)=>{
+    const edge={id:edges.length,a,b,bridge,shortcut,length:distance(nodes[a],nodes[b])};
     edges.push(edge);adj[a].push(edge.id);adj[b].push(edge.id);return edge;
   };
   stations.forEach(s=>{
@@ -33,14 +34,15 @@ export function makeWorld(projects) {
     }
     s.stop=s.nodes[0];for(let i=0;i<4;i++)connect(s.nodes[i],s.nodes[(i+1)%4]);
   });
-  const link=(aId,bId)=>{
+  const link=(aId,bId,temporary=false)=>{
     const a=stations.find(s=>s.id===aId),b=stations.find(s=>s.id===bId);
     let pair,cost=Infinity;
     for(const na of a.nodes)for(const nb of b.nodes){const d=distance(nodes[na],nodes[nb]);if(d<cost){cost=d;pair=[na,nb];}}
-    connect(...pair,true);
+    connect(...pair,true,temporary?`${aId}--${bId}`:null);
   };
   for(const t of themes)for(const id of t.members)if(id!==t.hub)link(t.hub,id);
   link('nex','pgos');link('pgos','win10');link('win10','nex');
+  for(const [a,b] of shortcuts)link(a,b,true);
   return {stations,nodes,edges,adj,themes};
 }
 export function positionAt(world,location) {
@@ -73,19 +75,21 @@ export class Journey {
   get remaining(){return this.segments.reduce((sum,s)=>sum+Math.abs(s.to-s.from)*this.world.edges[s.edge].length,0);}
   get direction(){const s=this.segments[0];if(!s)return null;const e=this.world.edges[s.edge],a=this.world.nodes[s.to===1?e.a:e.b],b=this.world.nodes[s.to===1?e.b:e.a];return Math.atan2(b.x-a.x,b.z-a.z);}
   visit(index,immediate=false){
-    if(this.target===index&&['walking','casting','opening'].includes(this.phase))return false;
+    if(!immediate&&this.target===index&&['walking','casting','opening'].includes(this.phase))return false;
     this.target=index;this.token++;this.elapsed=0;const goal=this.world.stations[index].stop;
     if(immediate){this.location={node:goal};this.segments=[];this.phase='detail';return true;}
     const route=shortestRoute(this.world,this.location,goal);this.segments=route.segments;this.phase=route.cost<.00001?'casting':'walking';return true;
   }
   cancel(){this.token++;this.phase='idle';this.elapsed=0;this.segments=[];}
-  update(dt){
-    this.elapsed+=dt;
+  update(dt,canTraverse=()=>true){
+    this.elapsed+=dt;this.waiting=false;
     if(this.phase==='walking'){
       let budget=this.speed*dt;
       while(budget>0&&this.segments.length){
         const s=this.segments[0],e=this.world.edges[s.edge],left=Math.abs(s.to-s.from)*e.length,step=Math.min(left,budget);
-        s.from+=Math.sign(s.to-s.from)*step/e.length;budget-=step;this.walked+=step;this.location={edge:s.edge,t:s.from};
+        const next=s.from+Math.sign(s.to-s.from)*step/e.length;
+        if(!canTraverse(e,s.from,next)){this.waiting=true;break;}
+        s.from=next;budget-=step;this.walked+=step;this.location={edge:s.edge,t:s.from};
         if(left-step<.000001){this.location={node:s.to===1?e.b:e.a};this.segments.shift();}
       }
       if(!this.segments.length){this.phase='casting';this.elapsed=0;}

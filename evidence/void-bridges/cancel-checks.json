@@ -1,0 +1,76 @@
+{
+  "cancelled": {
+    "bridges": [
+      {
+        "falling": 8,
+        "id": "bot--desktop",
+        "occupied": true,
+        "ready": 2,
+        "rising": 0,
+        "supported": true,
+        "total": 10,
+        "visible": 10
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ],
+    "phase": "idle",
+    "position": "-16.554,1.415,-11.537"
+  },
+  "settled": {
+    "bridges": [
+      {
+        "falling": 0,
+        "id": "bot--desktop",
+        "occupied": true,
+        "ready": 2,
+        "rising": 0,
+        "supported": true,
+        "total": 10,
+        "visible": 2
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ],
+    "detail": false,
+    "phase": "idle",
+    "position": "-16.554,1.415,-11.537"
+  },
+  "resumed": "Bot 开发者平台"
+}

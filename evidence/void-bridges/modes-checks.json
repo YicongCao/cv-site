@@ -1,0 +1,79 @@
+{
+  "mobile": {
+    "bridges": [
+      {
+        "falling": 0,
+        "id": "bot--desktop",
+        "occupied": true,
+        "ready": 2,
+        "rising": 8,
+        "supported": true,
+        "total": 10,
+        "visible": 10
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ],
+    "documentWidth": 390,
+    "width": 390
+  },
+  "reducedCheck": {
+    "bridges": [
+      {
+        "falling": 0,
+        "id": "bot--desktop",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 10,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ],
+    "detail": true,
+    "phase": "detail",
+    "title": "桌面玩机"
+  },
+  "fallbackCheck": {
+    "projects": 14,
+    "renderer": "fallback"
+  }
+}

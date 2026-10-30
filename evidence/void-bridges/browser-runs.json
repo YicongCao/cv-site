@@ -1,0 +1,1566 @@
+[
+  {
+    "from": "bot",
+    "to": "desktop",
+    "frames": [
+      {
+        "ms": 777,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-21.192,1.440,-7.092",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 937,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-21.192,1.440,-7.092",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 1136,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-21.192,1.440,-7.092",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2056,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 3,
+            "supported": true,
+            "total": 10,
+            "visible": 3
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-18.556,1.440,-11.292",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2354,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 3,
+            "rising": 7,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-16.120,1.391,-11.779",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2487,
+        "bridges": [
+          {
+            "falling": 1,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 6,
+            "rising": 4,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-14.954,1.325,-12.431",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2585,
+        "bridges": [
+          {
+            "falling": 2,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 8,
+            "rising": 2,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-14.232,1.285,-12.834",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2675,
+        "bridges": [
+          {
+            "falling": 4,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 8,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-13.355,1.236,-13.324",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2789,
+        "bridges": [
+          {
+            "falling": 5,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 7,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-12.482,1.187,-13.811",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2893,
+        "bridges": [
+          {
+            "falling": 7,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 6,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-11.469,1.130,-14.377",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 2988,
+        "bridges": [
+          {
+            "falling": 8,
+            "id": "bot--desktop",
+            "occupied": true,
+            "ready": 4,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-10.599,1.081,-14.863",
+        "route": "bot--desktop",
+        "waiting": "false"
+      },
+      {
+        "ms": 3093,
+        "bridges": [
+          {
+            "falling": 10,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 3,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 10
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "casting",
+        "position": "-10.585,1.080,-14.871",
+        "route": "",
+        "waiting": "false"
+      }
+    ]
+  },
+  {
+    "from": "brushline",
+    "to": "cloudgame",
+    "frames": [
+      {
+        "ms": 1209,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-14.828,0.360,16.242",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 1689,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-13.667,0.360,16.242",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 1919,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 6,
+            "supported": true,
+            "total": 22,
+            "visible": 6
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-10.993,0.360,16.242",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2072,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 9,
+            "supported": true,
+            "total": 22,
+            "visible": 9
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-10.628,0.360,16.242",
+        "route": "brushline--cloudgame",
+        "waiting": "true"
+      },
+      {
+        "ms": 2249,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 3,
+            "rising": 10,
+            "supported": true,
+            "total": 22,
+            "visible": 13
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-9.474,0.336,16.341",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2356,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 1,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 6,
+            "rising": 10,
+            "supported": true,
+            "total": 22,
+            "visible": 16
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-8.307,0.311,16.441",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2522,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 3,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 8,
+            "rising": 11,
+            "supported": true,
+            "total": 22,
+            "visible": 20
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-6.651,0.276,16.583",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2658,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 5,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 9,
+            "rising": 10,
+            "supported": true,
+            "total": 22,
+            "visible": 22
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-5.313,0.248,16.697",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2817,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 7,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 11,
+            "rising": 6,
+            "supported": true,
+            "total": 22,
+            "visible": 22
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-3.818,0.216,16.825",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 2940,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 9,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 12,
+            "rising": 4,
+            "supported": true,
+            "total": 22,
+            "visible": 22
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-2.655,0.191,16.925",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 3102,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 10,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 13,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 21
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "-1.004,0.156,17.066",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 3271,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 10,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 11,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 19
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "0.661,0.121,17.209",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 3439,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 10,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 9,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 17
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "2.327,0.086,17.351",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 3624,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 9,
+            "id": "brushline--cloudgame",
+            "occupied": true,
+            "ready": 7,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 14
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "4.155,0.047,17.508",
+        "route": "brushline--cloudgame",
+        "waiting": "false"
+      },
+      {
+        "ms": 3885,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 11,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 3,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 11
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "6.385,0.000,18.123",
+        "route": "",
+        "waiting": "false"
+      },
+      {
+        "ms": 4041,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 9,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 1,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 9
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "6.385,0.000,19.629",
+        "route": "",
+        "waiting": "false"
+      },
+      {
+        "ms": 4173,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 7,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 7
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "walking",
+        "position": "6.385,0.000,20.962",
+        "route": "",
+        "waiting": "false"
+      },
+      {
+        "ms": 4306,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 6,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 6
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 0
+          }
+        ],
+        "phase": "casting",
+        "position": "6.385,0.000,21.899",
+        "route": "",
+        "waiting": "false"
+      }
+    ],
+    "final": [
+      {
+        "falling": 0,
+        "id": "bot--desktop",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 10,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "from": "accelerator",
+    "to": "ishowfx",
+    "frames": [
+      {
+        "ms": 2350,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "accelerator--ishowfx",
+            "occupied": true,
+            "ready": 2,
+            "rising": 10,
+            "supported": true,
+            "total": 12,
+            "visible": 12
+          }
+        ],
+        "phase": "walking",
+        "position": "17.881,0.657,5.577",
+        "route": "accelerator--ishowfx",
+        "waiting": "false"
+      },
+      {
+        "ms": 2489,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 1,
+            "id": "accelerator--ishowfx",
+            "occupied": true,
+            "ready": 5,
+            "rising": 7,
+            "supported": true,
+            "total": 12,
+            "visible": 12
+          }
+        ],
+        "phase": "walking",
+        "position": "18.174,0.556,4.276",
+        "route": "accelerator--ishowfx",
+        "waiting": "false"
+      },
+      {
+        "ms": 2604,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 2,
+            "id": "accelerator--ishowfx",
+            "occupied": true,
+            "ready": 8,
+            "rising": 4,
+            "supported": true,
+            "total": 12,
+            "visible": 12
+          }
+        ],
+        "phase": "walking",
+        "position": "18.427,0.468,3.150",
+        "route": "accelerator--ishowfx",
+        "waiting": "false"
+      },
+      {
+        "ms": 2747,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 4,
+            "id": "accelerator--ishowfx",
+            "occupied": true,
+            "ready": 9,
+            "rising": 1,
+            "supported": true,
+            "total": 12,
+            "visible": 12
+          }
+        ],
+        "phase": "walking",
+        "position": "18.758,0.353,1.682",
+        "route": "accelerator--ishowfx",
+        "waiting": "false"
+      },
+      {
+        "ms": 2974,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 7,
+            "id": "accelerator--ishowfx",
+            "occupied": true,
+            "ready": 7,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 12
+          }
+        ],
+        "phase": "walking",
+        "position": "19.269,0.176,-0.590",
+        "route": "accelerator--ishowfx",
+        "waiting": "false"
+      },
+      {
+        "ms": 3254,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 9,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 4,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 11
+          }
+        ],
+        "phase": "walking",
+        "position": "19.767,0.000,-2.850",
+        "route": "",
+        "waiting": "false"
+      },
+      {
+        "ms": 3543,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 7,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 7
+          }
+        ],
+        "phase": "walking",
+        "position": "16.441,0.000,-2.850",
+        "route": "",
+        "waiting": "false"
+      },
+      {
+        "ms": 3892,
+        "bridges": [
+          {
+            "falling": 0,
+            "id": "bot--desktop",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 10,
+            "visible": 0
+          },
+          {
+            "falling": 0,
+            "id": "brushline--cloudgame",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 22,
+            "visible": 0
+          },
+          {
+            "falling": 3,
+            "id": "accelerator--ishowfx",
+            "occupied": false,
+            "ready": 0,
+            "rising": 0,
+            "supported": true,
+            "total": 12,
+            "visible": 3
+          }
+        ],
+        "phase": "casting",
+        "position": "15.578,0.000,-2.850",
+        "route": "",
+        "waiting": "false"
+      }
+    ],
+    "final": [
+      {
+        "falling": 0,
+        "id": "bot--desktop",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 10,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "brushline--cloudgame",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 22,
+        "visible": 0
+      },
+      {
+        "falling": 0,
+        "id": "accelerator--ishowfx",
+        "occupied": false,
+        "ready": 0,
+        "rising": 0,
+        "supported": true,
+        "total": 12,
+        "visible": 0
+      }
+    ]
+  }
+]
