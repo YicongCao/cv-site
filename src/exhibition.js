@@ -7,8 +7,8 @@ const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normaliz
 const direction=new T.Vector3(1,1,1).normalize();
 const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',kinect:'动感单车',ishowfx:'iShowFX',xidian:'西电导航'};
 export class Exhibition {
- constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk}){
-  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk});
+ constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout}){
+  Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onAbout});
   this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
   this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
@@ -36,6 +36,8 @@ export class Exhibition {
    batchBoxes(section);section.traverse(o=>{if(o.material)o.material=o.material.clone();});this.sections.push({group:section,a:this.world.stations[a.station].theme,b:this.world.stations[b.station].theme});
   }
   this.traveler=makeTraveler();this.scene.add(this.traveler.root);this.traveler.root.scale.setScalar(1.15);
+  const actorHit=new T.Mesh(new T.BoxGeometry(.9,1.9,.8),new T.MeshBasicMaterial({visible:false}));actorHit.position.y=.95;this.traveler.root.add(actorHit);
+  this.profileButton=document.createElement('button');this.profileButton.className='traveler-profile-target';this.profileButton.setAttribute('aria-label','关于 pixelcao，白帽旅人');this.profileButton.setAttribute('aria-haspopup','dialog');this.profileButton.onclick=()=>this.onAbout?.();element.append(this.profileButton);
   this.createSpotlight();
   this.magic=new T.Group();this.scene.add(this.magic);this.sparks=[];for(let i=0;i<10;i++)this.sparks.push(box(this.magic,0,0,0,.07,.07,.07,color.gold));
   this.portal=new T.Group();this.scene.add(this.portal);for(const side of [-1,1]){box(this.portal,side,0,0,.035,2,.035,color.gold);box(this.portal,0,side,0,2,.035,.035,color.gold);}
@@ -44,7 +46,7 @@ export class Exhibition {
   mq.addEventListener('change',()=>{if(this.reduced())this.skipIntro();this.wake();});
   this.bindInput();this.syncLabels();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(element);this.resize();this.wake();
   document.addEventListener('visibilitychange',()=>{this.last=0;if(!document.hidden)this.wake();});
-  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
+  this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.focusShade.remove();this.profileButton.remove();this.journey.cancel();this.closeResolve?.();this.closeResolve=null;this.onFailure?.();});
  }
  select(index,{focus=false}={}){this.selected=clamp(index,0,this.projects.length-1);if(focus)this.focusTheme(this.world.stations[this.selected].theme);this.syncLabels();this.wake();}
  focusTheme(id){this.cancel();this.browsingTransition=true;this.mode='theme';this.theme=id;this.follow=false;this.pan.set(0,0,0);this.zoom=1;this.syncLabels();this.wake();}
@@ -128,16 +130,16 @@ export class Exhibition {
   const w=this.viewHeight*this.width/this.height;Object.assign(this.camera,{left:-w/2,right:w/2,top:this.viewHeight/2,bottom:-this.viewHeight/2});this.camera.updateProjectionMatrix();
   this.camera.position.copy(this.center).addScaledVector(direction,100);this.camera.up.set(0,1,0);this.camera.lookAt(this.center);this.camera.updateMatrixWorld();
  }
- pick(e){const r=this.element.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,1-(e.clientY-r.top)/r.height*2);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.islands.filter((_,i)=>this.mode==='overview'||this.world.stations[i].theme===this.theme).map(x=>x.group),true)[0];if(!hit)return -1;this.lastHit=hit.point.clone();let o=hit.object;while(o.parent&&o.parent!==this.scene)o=o.parent;return this.islands.findIndex(x=>x.group===o);}
+ pick(e){const r=this.element.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,1-(e.clientY-r.top)/r.height*2);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.islands.filter((_,i)=>this.mode==='overview'||this.world.stations[i].theme===this.theme).map(x=>x.group).concat(this.traveler.root),true)[0];if(!hit)return -1;this.lastHit=hit.point.clone();let o=hit.object;while(o.parent&&o.parent!==this.scene)o=o.parent;return o===this.traveler.root?-2:this.islands.findIndex(x=>x.group===o);}
  bindInput(){
   const el=this.renderer.domElement;
-  el.addEventListener('pointerdown',e=>{if(this.browsingTransition)return;if(this.introActive){this.skipIntro();return;}if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,pan:this.pan.clone(),drag:false};el.setPointerCapture(e.pointerId);});
+  el.addEventListener('pointerdown',e=>{if(this.browsingTransition)return;if(this.introActive&&this.pick(e)!==-2){this.skipIntro();return;}if(['detail','closing'].includes(this.journey.phase))return;this.down={x:e.clientX,y:e.clientY,pan:this.pan.clone(),drag:false};el.setPointerCapture(e.pointerId);});
   el.addEventListener('pointermove',e=>{
    if(this.down){const dx=e.clientX-this.down.x,dy=e.clientY-this.down.y;if(Math.hypot(dx,dy)>8)this.down.drag=true;
     if(this.down.drag){this.follow=false;this.pan.copy(this.down.pan).addScaledVector(right,-dx*this.viewHeight/this.height).addScaledVector(up,dy*this.viewHeight/this.height);this.pan.clampLength(0,20);this.wake();}
-   }else{const hit=this.pick(e);el.style.cursor=hit>=0?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
+   }else{const hit=this.pick(e);el.style.cursor=hit!==-1?'pointer':'grab';if(hit!==this.hover){this.hover=hit;this.wake();}}
   });
-  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}}});
+  el.addEventListener('pointerup',e=>{if(!this.down)return;const d=this.down;this.down=null;if(!d.drag){const hit=this.pick(e);if(hit===-2){this.onAbout?.();}else if(hit>=0){this.clickPoint=this.lastHit;this.onSelect(hit,{visit:true});}}});
   el.addEventListener('pointercancel',()=>this.down=null);
   el.addEventListener('wheel',e=>{if(this.introActive){this.skipIntro();}if(['detail','closing'].includes(this.journey.phase))return;e.preventDefault();this.follow=false;this.zoom=clamp(this.zoom*Math.exp(-e.deltaY*.001),.8,1.6);this.wake();},{passive:false});
  }
@@ -164,6 +166,7 @@ export class Exhibition {
    edge.visible=highlighted||i===this.hover||(['casting','opening'].includes(this.journey.phase)&&i===this.journey.target);edge.material.color.set(highlighted?color.gold:0xd8ddc7);
   });
   const project=(el,p)=>{p.project(this.camera);el.style.left=`${(p.x*.5+.5)*this.width}px`;el.style.top=`${(.5-p.y*.5)*this.height}px`;return Math.abs(p.x)<.98&&Math.abs(p.y)<.94;};
+  const actor=this.journey.position;const actorShown=project(this.profileButton,new T.Vector3(actor.x,actor.y+1,actor.z));this.profileButton.hidden=hidden||!actorShown;
   this.element.querySelectorAll('[data-theme]').forEach(b=>{b.disabled=!!this.browsingTransition;
    const theme=themes.find(t=>t.id===b.dataset.theme),s=this.world.stations.find(s=>s.id===theme.hub);
    const shown=project(b,new T.Vector3(s.x,s.y+5.6,s.z));b.hidden=hidden||!shown||this.mode!=='overview';

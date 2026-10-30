@@ -108,7 +108,7 @@ import {pixelSVG} from './pixel.js';
   $('#large-prev').onclick=()=>{mediaIndex--;showLarge();};$('#large-next').onclick=()=>{mediaIndex++;showLarge();};
   document.addEventListener('keydown',e=>{if($('#about').open)return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
-  try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onWalk:(distance,moving)=>sound.walk(distance,moving),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
+  try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onAbout:()=>{void sound.tap();openAbout(exhibition.profileButton);},onWalk:(distance,moving)=>sound.walk(distance,moving),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');
   $('#about-content').innerHTML=`<div class="about-heading"><div class="portrait" aria-hidden="true"><svg viewBox="0 0 32 40" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2zM15 28h2v8h-2z"/></svg></div><div><h2 id="about-title">曹一聪 <span>pixelcao</span></h2><p>T10 工程师 · 2016 年加入腾讯</p></div></div>
   <p class="about-lead">让想法成为可运行、可验证的产品。</p>
@@ -120,8 +120,10 @@ import {pixelSVG} from './pixel.js';
   ].map(([key,title,text])=>`<section>${icon(key)}<h3>${title}</h3><p>${text}</p></section>`).join('')}</div>
   <div class="about-school">${icon('school')}<div>西安电子科技大学<span>智能科学与技术</span></div></div>
   <div class="about-links"><a href="https://github.com/yicongcao" target="_blank" rel="noopener">${icon('github')}GitHub ↗</a><a href="tel:18126045570">${icon('phone')}181 2604 5570</a><a href="/resume/" target="_blank" rel="noopener">完整简历 ↗</a></div>`;
-  function closeAbout(){$('#about').close();$('.brand').focus({preventScroll:true});exhibition?.wake();}
-  $('.brand').onclick=()=>{if(motionBusy||$('#detail').open)return;exhibition?.cancel();$('#about').showModal();$('#close-about').focus({preventScroll:true});};
+  let aboutReturnFocus=null;
+  function closeAbout(){$('#about').close();(aboutReturnFocus?.isConnected?aboutReturnFocus:$('.brand')).focus({preventScroll:true});exhibition?.wake();}
+  function openAbout(origin=$('.brand')){if(motionBusy||$('#detail').open||$('#about').open)return;aboutReturnFocus=origin;exhibition?.cancel();$('#about').showModal();$('#close-about').focus({preventScroll:true});}
+  $('.brand').onclick=()=>openAbout();
   $('#close-about').onclick=closeAbout;$('#about').addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
   if(reduced())document.body.dataset.reduced='true';
   renderTimeline(true);syncHistory({initial:true});

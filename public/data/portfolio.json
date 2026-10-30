@@ -267,10 +267,6 @@
         "a057",
         "a058",
         "a059",
-        "a060",
-        "a061",
-        "a062",
-        "a063",
         "a064",
         "a066",
         "a067",
@@ -1228,50 +1224,6 @@
       "src": "/media/originals/images/a059.png",
       "original": "/media/originals/images/a059.png",
       "preview": "/media/previews/a059.jpg"
-    },
-    {
-      "id": "a060",
-      "type": "png",
-      "width": 1668,
-      "height": 2388,
-      "chapter": "对话与游戏知识演示",
-      "project": "bot",
-      "src": "/media/originals/images/a060.png",
-      "original": "/media/originals/images/a060.png",
-      "preview": "/media/previews/a060.jpg"
-    },
-    {
-      "id": "a061",
-      "type": "png",
-      "width": 1668,
-      "height": 2388,
-      "chapter": "对话与游戏知识演示",
-      "project": "bot",
-      "src": "/media/originals/images/a061.png",
-      "original": "/media/originals/images/a061.png",
-      "preview": "/media/previews/a061.jpg"
-    },
-    {
-      "id": "a062",
-      "type": "png",
-      "width": 1668,
-      "height": 2388,
-      "chapter": "对话与游戏知识演示",
-      "project": "bot",
-      "src": "/media/originals/images/a062.png",
-      "original": "/media/originals/images/a062.png",
-      "preview": "/media/previews/a062.jpg"
-    },
-    {
-      "id": "a063",
-      "type": "png",
-      "width": 1668,
-      "height": 2388,
-      "chapter": "对话与游戏知识演示",
-      "project": "bot",
-      "src": "/media/originals/images/a063.png",
-      "original": "/media/originals/images/a063.png",
-      "preview": "/media/previews/a063.jpg"
     },
     {
       "id": "a064",

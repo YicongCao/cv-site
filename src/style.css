@@ -1136,3 +1136,11 @@ dialog#about{width:min(790px,calc(100vw - 40px));max-height:calc(100svh - 40px);
 dialog .sound-toggle{position:absolute;right:74px;top:21px;z-index:5;color:#7f6b41;border-color:#b5bba9;width:36px;height:36px;background:#f4f0e4}
 dialog .sound-toggle[data-sound=playing]{color:#9c712c}
 @media(max-width:850px){header{gap:12px}.brand{width:118px}.sound-toggle{width:32px;height:32px;padding:7px}dialog .sound-toggle{right:63px;top:16px;width:32px;height:32px}}
+
+.brand{transition:color .16s,filter .16s;position:relative}
+.brand::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:#e4b35c;opacity:0;transform:scaleX(.7);transition:opacity .16s,transform .16s}
+.brand:hover,.brand:focus-visible{color:#e4b35c;filter:drop-shadow(0 0 7px #e4b35c30)}
+.brand:hover::after,.brand:focus-visible::after{opacity:1;transform:scaleX(1)}
+.traveler-profile-target{position:absolute;width:32px;height:44px;transform:translate(-50%,-50%);opacity:0;pointer-events:none;z-index:7;padding:0}
+.traveler-profile-target:focus-visible{opacity:1;pointer-events:auto;outline:2px solid #e4b35c;outline-offset:4px;background:#e4b35c18}
+@media(max-width:850px){header{gap:9px}.brand{width:108px}#overview{padding:7px 8px}}
