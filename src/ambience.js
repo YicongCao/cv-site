@@ -1,8 +1,8 @@
 import * as T from 'three';
 const alphabet={N:['10001','11001','10101','10011','10001','10001','10001'],E:['11111','10000','10000','11110','10000','10000','11111'],X:['10001','10001','01010','00100','01010','10001','10001'],P:['11110','10001','10001','11110','10000','10000','10000'],G:['01111','10000','10000','10111','10001','10001','01111'],O:['01110','10001','10001','10001','10001','10001','01110'],S:['01111','10000','10000','01110','00001','00001','11110']};
 export function makeFlag(id){
- const c=document.createElement('canvas');c.width=96;c.height=40;const ctx=c.getContext('2d');ctx.fillStyle=id==='win10'?'#e8e4ce':'#294044';ctx.fillRect(0,0,96,40);
- if(id==='win10'){ctx.fillStyle='#0078d7';for(const x of [32,50])for(const y of [5,23])ctx.fillRect(x,y,14,14);}
+ const c=document.createElement('canvas');c.width=96;c.height=40;const ctx=c.getContext('2d');ctx.fillStyle='#294044';ctx.fillRect(0,0,96,40);
+ if(id==='win10'){ctx.fillStyle='#ffffff';for(const x of [32,50])for(const y of [5,23])ctx.fillRect(x,y,14,14);}
  else {const text=id==='nex'?'NEX':'PGOS',size=3,start=(96-(text.length*6-1)*size)/2;ctx.fillStyle=id==='pgos'?'#edbd69':'#eee6cb';[...text].forEach((l,i)=>alphabet[l].forEach((row,r)=>[...row].forEach((v,x)=>{if(v==='1')ctx.fillRect(start+(i*6+x)*size,9+r*size,size,size);})));}
  const texture=new T.CanvasTexture(c);texture.colorSpace=T.SRGBColorSpace;texture.magFilter=texture.minFilter=T.NearestFilter;
  const geometry=new T.PlaneGeometry(4.4,1.84,24,10);const mesh=new T.Mesh(geometry,new T.MeshBasicMaterial({map:texture,side:T.DoubleSide}));mesh.position.set(0,3.8,0);mesh.userData.base=new Float32Array(geometry.attributes.position.array);return mesh;
