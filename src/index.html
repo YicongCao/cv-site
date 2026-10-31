@@ -5,11 +5,10 @@
   <div class="load-card">
     <svg class="load-traveler" viewBox="0 0 32 40" aria-hidden="true" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2z"/></svg>
     <p class="load-brand">pixelcao</p>
-    <div class="load-heading"><p id="load-status" role="status" aria-live="polite">正在加载展馆资源</p><span id="load-percent" aria-hidden="true">0%</span></div>
+    <p id="load-status" class="load-sr-only" role="status" aria-live="polite">正在加载展馆资源</p>
     <div id="load-progress" role="progressbar" aria-label="展馆加载进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
-    <p id="load-note">稍等片刻，即将进入。</p>
-    <div class="load-actions"><button id="load-retry" type="button" hidden>重新加载</button><a href="/resume/">先看简历 ↗</a></div>
-    <noscript><p>请启用 JavaScript 进入展馆，或直接查看简历。</p></noscript>
+    <div class="load-actions"><button id="load-retry" type="button" aria-label="重新加载" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 6A5 5 0 1 0 13 10M13 2v4H9"/></svg></button><a id="load-resume" href="/resume/" aria-label="查看简历" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1h7l3 3v11H3zM10 1v4h3M5 8h6M5 11h6"/></svg></a></div>
+    <noscript><a href="/resume/" aria-label="查看简历"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1h7l3 3v11H3zM10 1v4h3M5 8h6M5 11h6"/></svg></a></noscript>
   </div>
 </section>
 <div id="app-shell" inert aria-busy="true">

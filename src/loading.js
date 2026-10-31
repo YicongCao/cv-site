@@ -17,18 +17,17 @@ export function startBoot(manifest){
   let done=false,failed=false,percent=0;
   const progress=(next,label)=>{
     percent=Math.max(percent,Math.min(100,Math.floor(next)));
-    $('load-percent').textContent=`${percent}%`;
     $('load-progress').setAttribute('aria-valuenow',String(percent));
     $('load-progress').firstElementChild.style.width=`${percent}%`;
     if(label)$('load-status').textContent=label;
   };
-  const slow=setTimeout(()=>{if(!done&&!failed)$('load-note').textContent='资源仍在加载，网络可能较慢。'},12000);
+  const slow=setTimeout(()=>{if(!done&&!failed)$('load-status').textContent='资源仍在加载，网络可能较慢。'},12000);
   const deadline=setTimeout(()=>fail(new Error('Startup timed out')),45000);
   function clear(){clearTimeout(slow);clearTimeout(deadline);removeEventListener('error',scriptError);}
   function fail(error){
     if(done||failed)return;failed=true;controller.abort();clear();loader.dataset.phase='error';
-    $('load-status').textContent='加载暂时中断';$('load-note').textContent='请重试，或先查看简历。';
-    $('load-retry').hidden=false;console.error('Portfolio startup:',error);
+    $('load-status').textContent='加载暂时中断，请重试或查看简历。';
+    $('load-retry').hidden=false;$('load-resume').hidden=false;console.error('Portfolio startup:',error);
   }
   function scriptError(event){if(event.error)fail(event.error);}
   addEventListener('error',scriptError);
