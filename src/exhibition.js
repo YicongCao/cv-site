@@ -149,7 +149,18 @@ export class Exhibition {
   });
  }
  measureMap(){this.mapTop=this.mobile?Math.max(this.headerHeight+12,this.mode==='theme'?(document.querySelector('.intro')?.getBoundingClientRect().bottom||0)+14:0):0;this.element.style.setProperty('--map-top',this.mapTop+'px');this.element.style.setProperty('--map-bottom',this.mobile?'78px':'0px');}
- resize(){const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;this.width=r.width;this.height=r.height;this.headerHeight=document.querySelector('header')?.getBoundingClientRect().height||0;this.mobile=r.width<=850;this.renderer.setSize(Math.ceil(r.width/2),Math.ceil(r.height/2),false);this.measureMap();this.cameraAt(true);this.wake();}
+ resize(){
+  const r=this.element.getBoundingClientRect();if(!r.width||!r.height)return;
+  this.width=r.width;this.height=r.height;this.headerHeight=document.querySelector('header')?.getBoundingClientRect().height||0;this.mobile=r.width<=850;
+  // Keep pixel geometry crisp on phones instead of enlarging a half-size bitmap.
+  // Cap density and total pixels so tall phones/tablets do not allocate an unbounded buffer.
+  const density=Math.min(2,Math.max(1,window.devicePixelRatio||1));
+  const scale=this.mobile?Math.min(density,Math.sqrt(1500000/(r.width*r.height))):.5;
+  const width=this.mobile?Math.max(1,Math.floor(r.width*scale)):Math.ceil(r.width/2);
+  const height=this.mobile?Math.max(1,Math.floor(r.height*scale)):Math.ceil(r.height/2);
+  this.renderer.setSize(width,height,false);this.element.dataset.renderBuffer=`${width}x${height}`;this.element.dataset.renderDensity=String(density);
+  this.measureMap();this.cameraAt(true);this.wake();
+ }
  framing(){
   if(this.manualView)return {center:this.manualView.center.clone(),height:this.manualView.height};
   let stations=framedStations(this.world.stations,this.mode,this.theme);
