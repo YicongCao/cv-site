@@ -1,3 +1,4 @@
+import {installDemoLinks} from './demo-links.js';
 import {articleCards} from './articles.js';
 import {installSound} from './sound.js';
 import {Exhibition} from './exhibition.js';
@@ -16,6 +17,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   const projects=data.projects, assets=new Map(data.assets.map(a=>[a.id,a]));
   const $=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const demoLinks=installDemoLinks($('#demo-link'),$('#demo-device-notice'));
   const href=a=>a.src;
   const isImage=a=>a&&['png','jpg','jpeg','gif'].includes(a.type), isVideo=a=>a&&['mp4','mov','flv'].includes(a.type);
   const usable=a=>!!a;
@@ -81,6 +83,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   async function openProject(p,{fromHistory=false}={}){
     if(motionBusy)return;motionBusy=true;if(fromHistory||!returnFocus?.isConnected)returnFocus=$('#major-gallery').open?(gallery.projectButton(p.id)||$('[data-gallery-close]')):$('#explore');
     selected=projects.indexOf(p);activeTheme=projectTheme(p.id).id;renderTimeline(true);if(fromHistory&&exhibition)exhibition.locate(selected);
+    demoLinks.setProject(p);
     $('#detail-period').textContent=p.period;$('#detail-title').textContent=p.title;$('#detail-summary').textContent=p.summary;
     $('#detail').classList.toggle('article-detail',!!p.articleOnly);
     $('#detail-summary').hidden=p.articleOnly||p.workflow?.length===1;
@@ -101,7 +104,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   }
   async function closeDetail({fromHistory=false}={}){
     if(motionBusy||!$('#detail').open)return;motionBusy=true;$('#detail').dataset.ready='false';
-    if($('#lightbox').open)closeLarge(false);videoObserver?.disconnect();stopMedia($('#detail'));
+    demoLinks.close();if($('#lightbox').open)closeLarge(false);videoObserver?.disconnect();stopMedia($('#detail'));
     $('#detail').classList.remove('detail-reveal');$('#detail').classList.add('detail-leave');document.body.classList.add('is-returning');
     await delay(160);$('#detail').close();if(detailSpatial&&exhibition)await exhibition.close();
     $('#detail').classList.remove('detail-leave');document.body.classList.remove('detail-open','is-returning');$('#media').innerHTML='';
@@ -121,7 +124,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   installBlankDismiss($('#detail'),()=>{if(!$('#lightbox').open)void closeDetail();});
   installBlankDismiss($('#lightbox'),()=>closeLarge());
   $('#large-prev').onclick=()=>{mediaIndex--;showLarge();};$('#large-next').onclick=()=>{mediaIndex++;showLarge();};
-  document.addEventListener('keydown',e=>{if($('#about').open||($('#major-gallery').open&&!$('#detail').open))return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
+  document.addEventListener('keydown',e=>{if($('#demo-device-notice').open)return;if($('#about').open||($('#major-gallery').open&&!$('#detail').open))return;if(e.key==='Escape'&&!$('#detail').open){if(exhibition?.introActive||['walking','casting','opening'].includes(exhibition?.journey.phase))exhibition.cancel();else if(activeTheme)overview();return;}if(motionBusy||!['ArrowLeft','ArrowRight'].includes(e.key)||document.activeElement.tagName==='VIDEO')return;const d=e.key==='ArrowRight'?1:-1;if($('#lightbox').open){e.preventDefault();mediaIndex=Math.max(0,Math.min(mediaList.length-1,mediaIndex+d));showLarge();}else if(!$('#detail').open){e.preventDefault();browse(d);}});
   addEventListener('resize',()=>{if(!exhibition&&!$('#detail').open)renderTimeline();});
   try{if(new URLSearchParams(location.search).get('renderer')==='flat')throw new Error('Flat gallery');exhibition=new Exhibition({element:$('#stage'),projects,assets,onOverview:()=>{void sound.tap();overview();},onIslandSound:event=>sound.island(event),onAbout:()=>{void sound.tap();openAbout(exhibition.profileButton);},onWalk:(distance,moving)=>sound.walk(distance,moving),onPortal:(phase,token)=>sound.portal(phase,token),onSelect:(i,opts)=>opts?.visit?visitProject(i):select(i),onOpen:i=>openProject(projects[i]),onTheme:focusTheme,onFailure:()=>{$('.map-controls').hidden=true;exhibition=null;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';document.body.classList.remove('webgl-ready');renderTimeline();}});document.body.classList.add('webgl-ready');$('#stage').dataset.animation='idle';}catch(error){$('.map-controls').hidden=true;$('#stage canvas')?.remove();$('#stage').dataset.renderer='fallback';}
   $('.brand').innerHTML=pixelSVG('pixelcao');

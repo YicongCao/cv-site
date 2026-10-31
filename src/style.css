@@ -1379,3 +1379,28 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
  .map-controls{right:12px}
  .skip-intro{right:12px}
 }
+
+/* Public demo shortcuts: hard pixel edges, existing project art and real links. */
+.demo-shortcut{display:flex;align-items:center;gap:18px;min-height:124px;margin:24px 0 28px;padding:12px 18px 12px 12px;background:#e8dfc9;border:3px solid #35463c;border-radius:0;box-shadow:4px 4px 0 #35463c;color:#26312c;text-decoration:none;transition:background .12s,transform .12s,box-shadow .12s}
+.demo-shortcut[hidden]{display:none}
+.demo-shortcut:hover{background:#f4e4b8;transform:translate(-1px,-1px);box-shadow:5px 5px 0 #35463c}
+.demo-shortcut:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #35463c}
+.demo-shortcut:focus-visible{outline:3px solid #ad7130;outline-offset:7px}
+.demo-thumb{position:relative;display:block;flex:0 0 112px;border:2px solid #35463c;background:#263337}
+.demo-thumb img{display:block;width:112px;height:84px;object-fit:cover;image-rendering:pixelated}
+.demo-shortcut-badge{position:absolute;left:-6px;bottom:-6px;width:26px;height:26px;padding:3px;background:#f7f0dd;border:2px solid #35463c;color:#35463c}
+.demo-shortcut-copy{display:grid;gap:9px;min-width:0}
+.demo-shortcut-copy strong{font-size:22px;font-weight:400;line-height:1.3}
+.demo-shortcut-copy [data-demo-host]{font-size:12px;line-height:1.4;color:#5a6657;overflow-wrap:anywhere}
+.demo-launch-arrow{flex:0 0 21px;width:21px;height:21px;margin-left:auto;color:#9a6228}
+#demo-device-notice{width:min(420px,calc(100vw - 40px));max-height:calc(100svh - 40px);padding:28px;background:#f4f0e4;color:#26312c;border:3px solid #35463c;border-radius:0;box-shadow:6px 6px 0 #162526;overflow:auto}
+#demo-device-notice::backdrop{background:#101d25b8}
+#demo-device-notice [data-demo-name]{margin:0 0 16px;color:#687260;font-size:14px}
+#demo-notice-title{font-size:25px;line-height:1.3;margin:0 0 16px}
+#demo-notice-description{font-size:15px;line-height:1.8;margin:0 0 26px}
+.demo-notice-actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
+.demo-notice-actions button,.demo-notice-actions a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border:2px solid #35463c;border-radius:0;font:inherit;font-size:15px;color:#26312c;background:#f4f0e4;text-decoration:none}
+.demo-notice-actions a{background:#35463c;color:#f7f0dd;gap:8px;box-shadow:3px 3px 0 #b59c6b}
+.demo-notice-actions :focus-visible{outline:3px solid #ad7130;outline-offset:3px}
+@media(max-width:850px){.demo-shortcut{gap:14px;min-height:112px;margin:22px 4px 26px 0;padding:10px 12px 10px 10px}.demo-thumb{flex-basis:96px}.demo-thumb img{width:96px;height:76px}.demo-shortcut-copy strong{font-size:20px}.demo-launch-arrow{flex-basis:18px;width:18px;height:18px}}
+@media(prefers-reduced-motion:reduce){.demo-shortcut{transition:none}}
