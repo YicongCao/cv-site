@@ -1,6 +1,18 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>pixelcao · 作品</title><link rel="preload" href="/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/style.css"></head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#222e32"><title>pixelcao · 作品</title><style>/* BOOT_STYLE */</style></head>
 <body>
+<section id="site-loader" aria-label="正在加载作品展馆" data-phase="download">
+  <div class="load-card">
+    <svg class="load-traveler" viewBox="0 0 32 40" aria-hidden="true" shape-rendering="crispEdges"><path fill="#eee6cb" d="M14 1h4v4h2v6h3v7H9v-7h3V5h2zM5 18h22v3H5zM10 27h12v4h3v5H7v-5h3z"/><path fill="#35474c" d="M10 21h12v6H10zM10 36h5v4h-5zm7 0h5v4h-5z"/><path fill="#e4b35c" d="M12 23h2v2h-2zm6 0h2v2h-2z"/></svg>
+    <p class="load-brand">pixelcao</p>
+    <div class="load-heading"><p id="load-status" role="status" aria-live="polite">正在加载展馆资源</p><span id="load-percent" aria-hidden="true">0%</span></div>
+    <div id="load-progress" role="progressbar" aria-label="展馆加载进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+    <p id="load-note">稍等片刻，即将进入。</p>
+    <div class="load-actions"><button id="load-retry" type="button" hidden>重新加载</button><a href="/resume/">先看简历 ↗</a></div>
+    <noscript><p>请启用 JavaScript 进入展馆，或直接查看简历。</p></noscript>
+  </div>
+</section>
+<div id="app-shell" inert aria-busy="true">
 <header><button class="brand" type="button" aria-label="关于 pixelcao" aria-haspopup="dialog">pixelcao</button><button id="overview" hidden aria-label="返回全景">返回全景</button><button id="open-gallery" aria-label="项目画廊" aria-haspopup="dialog"><svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M0 0h7v7H0zm9 0h7v7H9zM0 9h7v7H0zm9 0h7v7H9z"/></svg></button><button class="sound-toggle" data-sound-toggle type="button" aria-label="关闭声音" aria-pressed="true"></button><a class="resume-link" href="/resume/" target="_blank" rel="noopener">简历 <span aria-hidden="true">↗</span></a></header>
 <main><section id="timeline" aria-label="作品展厅">
 <div class="intro"><h1 id="title" tabindex="0" role="button" aria-label="访问当前项目"></h1><p id="summary"></p><button class="dark" id="explore">查看项目 <span aria-hidden="true">↗</span></button><ul id="project-topics" aria-label="项目小节"></ul></div>
@@ -15,5 +27,6 @@
 <dialog id="lightbox" aria-label="素材大图"><button class="sound-toggle" data-sound-toggle type="button" aria-label="关闭声音" aria-pressed="true"></button><button id="close-lightbox" class="close" aria-label="关闭素材大图">×</button><div id="large-media"></div><div class="large-nav"><button id="large-prev" aria-label="上一份素材">←</button><button id="large-next" aria-label="下一份素材">→</button></div><a id="original-link" target="_blank" rel="noopener">打开原图 ↗</a></dialog>
 <dialog id="about" aria-labelledby="about-title"><button class="sound-toggle" data-sound-toggle type="button" aria-label="关闭声音" aria-pressed="true"></button><button id="close-about" class="close" aria-label="关闭个人简介">×</button><div id="about-content"></div></dialog>
 <noscript><p>请启用 JavaScript 浏览作品展厅，或<a href="/resume/">查看完整简历</a>。</p></noscript>
-<script src="/app.js" defer></script>
+</div>
+<script>/* BOOT_SCRIPT */</script>
 </body></html>

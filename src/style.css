@@ -1081,13 +1081,7 @@ body:not(.theme-focused) .intro,body:not(.theme-focused) .browse{display:none}
 @media(max-width:850px){.island-label{font-size:12px}}
 
 /* Ark Pixel: one local pixel typeface across the complete portfolio UI. */
-@font-face {
-  font-family: "Ark Pixel";
-  src: url("/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* The inline bootstrap installs this face from its tracked download, avoiding a second request. */
 :root { --pixel-font: "Ark Pixel", "PingFang SC", sans-serif; }
 #title, #title.latin, .detail-copy h2, .detail-copy h3,
 .theme-label, .island-label, .island-year, .flat-cluster h2, .flat-project span,

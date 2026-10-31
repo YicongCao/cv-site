@@ -10,7 +10,9 @@ import {installBlankDismiss} from './dialog-dismiss.js';
 (async () => {
   'use strict';
   const sound=installSound();
-  const [response,galleryResponse]=await Promise.all([fetch('/data/portfolio.json'),fetch('/data/gallery.json')]);if(!response.ok||!galleryResponse.ok)throw new Error('作品数据加载失败');const data=await response.json(),galleryConfig=await galleryResponse.json();
+  const boot=window.portfolioBoot;
+  const data=boot?.data,galleryConfig=boot?.gallery;
+  if(!data||!galleryConfig)throw new Error('作品数据加载失败');
   const projects=data.projects, assets=new Map(data.assets.map(a=>[a.id,a]));
   const $=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -144,7 +146,10 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function closeGallery({fromHistory=false}={}){gallery.close();document.body.classList.remove('gallery-open');sound.setDetail(false);exhibition?.wake();if(!fromHistory){if(history.state?.portfolioGallery&&location.hash==='#gallery')history.back();else history.replaceState(null,'',location.pathname+location.search);}(galleryReturnFocus?.isConnected?galleryReturnFocus:$('#open-gallery')).focus({preventScroll:true});}
   $('#open-gallery').onclick=()=>openGallery();
   if(reduced())document.body.dataset.reduced='true';
-  renderTimeline(true);syncHistory({initial:true});
+  renderTimeline(true);
+  if(exhibition)await exhibition.ready;
+  if(!await boot.complete())return;
+  syncHistory({initial:true});
   // Reflow projected label bounds after the local webfont replaces the fallback.
   document.fonts?.ready.then(()=>exhibition?.wake());
-})().catch(error=>{document.querySelector('#title').textContent='作品暂时无法加载';document.querySelector('#summary').textContent='请刷新页面重试，或查看简历。';console.error(error);});
+})().catch(error=>{window.portfolioBoot?.fail(error);document.querySelector('#title').textContent='作品暂时无法加载';document.querySelector('#summary').textContent='请刷新页面重试，或查看简历。';console.error(error);});

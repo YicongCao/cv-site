@@ -18,6 +18,7 @@ const featuredLabels=new Set(['nex','pgos','bot','brushline','museum']);
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview}){
   Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview});
+  this.ready=new Promise(resolve=>{this.resolveReady=resolve;});
   this.world=makeWorld(projects);this.journey=new Journey(this.world);this.selected=this.journey.target;
   this.mode='overview';this.theme=null;this.follow=false;this.active=true;this.last=0;this.time=0;this.heading=0;this.zoom=1;this.pan=new T.Vector3();
   const mq=matchMedia('(prefers-reduced-motion: reduce)');this.reduced=()=>mq.matches||new URLSearchParams(location.search).get('motion')==='reduce';
@@ -289,6 +290,7 @@ export class Exhibition {
   const canHover=!this.reduced()&&!this.introActive&&!document.querySelector('dialog[open]')&&!this.down?.drag;if(!canHover)this.hover=-1;const focused=this.element.querySelector('[data-card]:focus-visible');const hover=canHover?(this.hover>=0?this.hover:focused?+focused.dataset.card:-1):-1;this.islandMotion.update(dt,hover>=0?hover:-1,this.camera,this.width,this.height);this.meteors.update(dt,canHover&&this.journey.phase==='idle',this.width,this.height);
   this.exhaust.update(dt,hover>=0?this.world.stations[hover]:null,canHover);this.element.dataset.exhaustProject=hover>=0?this.world.stations[hover].id:'';this.element.dataset.exhaustCount=String(this.exhaust.activeCount);
   this.layout();this.scene.updateMatrixWorld();this.renderer.render(this.scene,this.camera);this.element.dataset.drawCalls=String(this.renderer.info.render.calls);
+  this.resolveReady?.();this.resolveReady=null;
   if(arrived)this.onOpen(arrived.index);if(this.closeResolve&&this.journey.phase==='idle'){this.closeResolve();this.closeResolve=null;}
   const moving=this.archiveMoving||this.bridges.state.moving||this.introActive||this.spotTransition||this.settling>0||this.ripples.length>0||['walking','casting','opening','closing'].includes(this.journey.phase)||this.center.distanceTo(this.goalCenter)>.005||Math.abs(this.viewHeight-this.goalHeight)>.005;
   this.element.dataset.cameraReady=String(!moving);

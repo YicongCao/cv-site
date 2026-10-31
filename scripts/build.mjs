@@ -1,9 +1,15 @@
 import {build} from 'esbuild';
 import {cp,rm,mkdir,readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 process.chdir(fileURLToPath(new URL('..',import.meta.url)));
 await rm('dist',{recursive:true,force:true});await mkdir('dist',{recursive:true});
 await cp('public','dist',{recursive:true});
-await cp('src/index.html','dist/index.html');await cp('src/style.css','dist/style.css');
+await cp('src/style.css','dist/style.css');
 await build({entryPoints:['src/app.js'],bundle:true,minify:true,format:'iife',outfile:'dist/app.js'});
+const entries=[['app','/app.js'],['style','/style.css'],['data','/data/portfolio.json'],['gallery','/data/gallery.json'],['font','/fonts/ark-pixel/ark-pixel-12px-proportional-zh_hans.otf.woff2']];
+const manifest=await Promise.all(entries.map(async([id,url])=>{const bytes=await readFile('dist'+url);return {id,url:url+'?v='+createHash('sha256').update(bytes).digest('hex').slice(0,12),size:bytes.length};}));
+const loader=await build({entryPoints:['src/loading.js'],bundle:true,minify:true,format:'iife',globalName:'PixelBoot',write:false,footer:{js:`PixelBoot.startBoot(${JSON.stringify(manifest)});`}});
+const html=(await readFile('src/index.html','utf8')).replace('/* BOOT_STYLE */',await readFile('src/loading.css','utf8')).replace('/* BOOT_SCRIPT */',loader.outputFiles[0].text.replace(/<\/script/gi,'<\\/script'));
+await writeFile('dist/index.html',html);
 console.log('Built independent dist/');

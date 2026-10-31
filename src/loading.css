@@ -1,0 +1,23 @@
+/* Inline in the HTML: no font, stylesheet or JS download is needed to paint this screen. */
+html,body{margin:0;background:#222e32}
+#app-shell[inert]{visibility:hidden}
+#site-loader{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;box-sizing:border-box;min-height:100svh;padding:32px 24px;background:#222e32;color:#eee6cb;font:16px/1.6 "Ark Pixel",ui-monospace,"PingFang SC",monospace;opacity:1;transition:opacity .16s linear}
+#site-loader[hidden]{display:none}
+#site-loader.leaving{opacity:0;pointer-events:none}
+#site-loader .load-card{width:min(100%,400px)}
+#site-loader .load-traveler{display:block;width:40px;height:50px;margin:0 0 20px;image-rendering:pixelated}
+#site-loader .load-brand{margin:0 0 40px;font:24px/1.2 ui-monospace,monospace;letter-spacing:2px}
+#site-loader .load-heading{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:12px}
+#site-loader #load-status{margin:0;font-size:16px}
+#site-loader #load-percent{color:#e4b35c;font-variant-numeric:tabular-nums;min-width:4ch;text-align:right}
+#site-loader #load-progress{height:12px;border:1px solid #78857d;padding:3px;box-sizing:content-box}
+#site-loader #load-progress>span{display:block;width:0;height:100%;background:#e4b35c}
+#site-loader #load-note{font-size:14px;color:#acb6ac;margin:16px 0 20px;min-height:23px}
+#site-loader .load-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+#site-loader a,#site-loader button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;color:#eee6cb;font:inherit;text-underline-offset:5px}
+#site-loader button{padding:8px 16px;border:1px solid #e4b35c;background:transparent;cursor:pointer}
+#site-loader button[hidden]{display:none}
+#site-loader :focus-visible{outline:2px solid #e4b35c;outline-offset:5px}
+@media(max-width:600px){#site-loader{padding:24px max(24px,env(safe-area-inset-right)) 24px max(24px,env(safe-area-inset-left))}#site-loader .load-card{max-width:340px}#site-loader .load-brand{margin-bottom:32px}}
+@media(max-height:500px){#site-loader .load-brand{margin-bottom:16px}#site-loader .load-traveler{display:none}}
+@media(prefers-reduced-motion:reduce){#site-loader{transition:none}}
