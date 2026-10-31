@@ -1320,6 +1320,9 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 .map-controls button{width:44px;height:44px;background:#263337;color:#eee6cb;border:1px solid #94a28c;font:24px/1 var(--pixel-font);padding:0;touch-action:manipulation}
 .map-controls button:hover{background:#3c4b46}
 .detail-open .map-controls,.gallery-open .map-controls{visibility:hidden}
+/* Intro has one action in the footer. Map controls return when it finishes. */
+.webgl-ready:has(.skip-intro:not([hidden])) .map-controls,
+.webgl-ready:has(.skip-intro:not([hidden])) .browse{visibility:hidden}
 @media(max-width:850px){
  .webgl-ready header{height:64px;padding:8px 16px;gap:8px;align-items:center}
  .webgl-ready .brand{width:104px;min-width:104px;flex:none}
@@ -1339,9 +1342,14 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
  .webgl-ready .browse,.theme-focused .browse{position:fixed;left:124px;bottom:calc(16px + env(safe-area-inset-bottom));gap:8px;z-index:20}
  .browse button{width:44px;height:44px;min-width:44px}
  .map-controls{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:20}
+ .skip-intro{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));min-height:44px;min-width:72px;font-size:16px;padding:8px 14px;z-index:20}
  dialog .close,#close-detail,#close-lightbox,#close-about{width:44px;height:44px;min-width:44px;min-height:44px;font-size:24px;padding:0;top:14px;right:14px}
  #detail>.sound-toggle,#lightbox>.sound-toggle,#about>.sound-toggle{width:44px;height:44px;top:14px;right:66px;padding:12px}
  #gallery-preview [data-preview-close],#major-gallery [data-gallery-close],.large-nav button{min-width:44px;min-height:44px}
+ #gallery-preview [data-preview-prev],#gallery-preview [data-preview-next]{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+ #lightbox{padding-top:72px;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+ #large-media{height:calc(100% - 60px)}
+ #original-link{min-height:44px;display:inline-flex;align-items:center;margin-top:8px}
  #stage[data-renderer=fallback]{padding-top:76px}
  .theme-focused #stage[data-renderer=fallback]{top:210px}
 }
@@ -1351,4 +1359,5 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
  header #overview{left:12px;width:84px;font-size:14px}
  .webgl-ready .browse,.theme-focused .browse{left:104px}
  .map-controls{right:12px}
+ .skip-intro{right:12px}
 }
