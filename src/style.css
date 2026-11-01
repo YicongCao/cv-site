@@ -1404,3 +1404,11 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 .demo-notice-actions :focus-visible{outline:3px solid #ad7130;outline-offset:3px}
 @media(max-width:850px){.demo-shortcut{gap:14px;min-height:112px;margin:22px 4px 26px 0;padding:10px 12px 10px 10px}.demo-thumb{flex-basis:96px}.demo-thumb img{width:96px;height:76px}.demo-shortcut-copy strong{font-size:20px}.demo-launch-arrow{flex-basis:18px;width:18px;height:18px}}
 @media(prefers-reduced-motion:reduce){.demo-shortcut{transition:none}}
+
+.rally-download[hidden]{display:none}
+.rally-client{min-height:76px;padding:16px 18px;margin-bottom:14px}
+.rally-client strong{font-size:20px;font-weight:400;line-height:1.4}
+.rally-download-icon{width:28px;height:28px;flex:0 0 28px}
+.detail-copy .rally-download p{margin:0;font-size:14px;line-height:1.65;color:#536052}
+.rally-download:not([hidden])+.demo-shortcut{margin-top:18px}
+@media(max-width:850px){.rally-client{min-height:72px;padding:14px;margin-bottom:12px}.rally-client strong{font-size:18px}}

@@ -17,7 +17,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   const projects=data.projects, assets=new Map(data.assets.map(a=>[a.id,a]));
   const $=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const demoLinks=installDemoLinks($('#demo-link'),$('#demo-device-notice'));
+  const demoLinks=installDemoLinks($('#demo-link'),$('#demo-device-notice'),$('#rally-download'));
   const href=a=>a.src;
   const isImage=a=>a&&['png','jpg','jpeg','gif'].includes(a.type), isVideo=a=>a&&['mp4','mov','flv'].includes(a.type);
   const usable=a=>!!a;

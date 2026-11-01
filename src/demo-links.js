@@ -3,7 +3,7 @@ const demos = {
   brushline: {url:'https://rally.yicong.me/', label:'打开 Brushline Rally', action:'在线试玩'},
 };
 
-export function installDemoLinks(link, dialog) {
+export function installDemoLinks(link, dialog, nativePanel = null) {
   const image=link.querySelector('img'), action=link.querySelector('[data-demo-action]');
   const host=link.querySelector('[data-demo-host]'), proceed=dialog.querySelector('[data-demo-continue]');
   let origin=null;
@@ -28,6 +28,9 @@ export function installDemoLinks(link, dialog) {
     close,
     setProject(project){
       const demo=demos[project.id];link.hidden=!demo;
+      if(nativePanel)nativePanel.hidden=project.id!=='brushline';
+      if(project.id==='brushline')link.setAttribute('aria-describedby','rally-experience-note');
+      else link.removeAttribute('aria-describedby');
       if(!demo){link.removeAttribute('href');image.removeAttribute('src');return;}
       link.href=demo.url;link.setAttribute('aria-label',demo.label+'（新标签页）');
       image.src=project.coverSrc;action.textContent=demo.action;
