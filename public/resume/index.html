@@ -184,13 +184,14 @@
       .vibe-card .work-shot { margin-bottom: 10px; }
     }
     @media print {
-      .vibe-section { padding: 10px; break-inside: avoid; background: #faf9fe; }
-      .vibe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .vibe-card { display: block; padding: 10px; }
+      .vibe-section { padding: 8px; break-inside: avoid; background: #faf9fe; }
+      .vibe-section h2 { margin-bottom: 8px; }
+      .vibe-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+      .vibe-card { grid-template-columns: minmax(0, 1fr) 112px; gap: 3px 12px; padding: 8px 10px; }
       .vibe-card h3 { font-size: 11pt; }
       .vibe-summary, .vibe-points, .vibe-card .period { font-size: 8pt; }
-      .vibe-card .work-shot { margin: 6px 0 8px; }
-      .vibe-points li { margin-bottom: 5px; }
+      .vibe-card .work-shot { margin: 0; }
+      .vibe-points li { margin-bottom: 3px; }
     }
 
     .experience-heading {
@@ -422,11 +423,18 @@
         margin-top: 12px;
       }
 
-      .project { grid-template-columns: minmax(0, 1fr) 190px; gap: 30px; padding-bottom: 16px; }
-      .experience-heading { grid-template-columns: minmax(0, 1fr) 190px; gap: 30px; }
+      .project { grid-template-columns: minmax(0, 1fr) 190px; gap: 30px; padding-bottom: 12px; }
+      .project-summary { margin-bottom: 8px; }
+      .experience-heading { grid-template-columns: minmax(0, 1fr) 190px; gap: 30px; break-after: avoid; }
+      .timeline { break-before: avoid; }
       .timeline::before { right: 204px; }
       .project-visual::before { left: -20px; }
-      .work-shot.portrait img { height: 160px; }
+      .project .work-shot img { max-height: 128px; object-fit: contain; }
+      .work-shot.portrait img { height: 128px; }
+      .work-shot figcaption { margin-bottom: 8px; }
+      h2 { break-after: avoid; }
+      .cert-list { break-inside: avoid; }
+      .footer { margin-top: 18px; padding-top: 10px; }
       .gallery-heading, .image-viewer { display: none; }
 
       .card {
