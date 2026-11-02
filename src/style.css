@@ -1412,3 +1412,7 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 .detail-copy .rally-download p{margin:0;font-size:14px;line-height:1.65;color:#536052}
 .rally-download:not([hidden])+.demo-shortcut{margin-top:18px}
 @media(max-width:850px){.rally-client{min-height:72px;padding:14px;margin-bottom:12px}.rally-client strong{font-size:18px}}
+
+/* A small availability marker belongs to the project name, including overview. */
+.online-demo-tag{display:block;width:max-content;font-size:10px;line-height:1.6;color:#f3d99b;letter-spacing:0;border:1px solid #b89a5b;padding:0 4px;margin-top:4px;text-shadow:none;background:#263337}
+@media(max-width:850px){body:not(.theme-focused) .island-label:has(.online-demo-tag){font-size:12px;min-height:0}body:not(.theme-focused) .island-label:has(.online-demo-tag)>.pixel-icon{width:16px;height:16px}.online-demo-tag{font-size:9px}}

@@ -144,7 +144,7 @@ export class Exhibition {
   }
   // Fixed world axis (screen-right is x - z) keeps sign sides stable while panning.
   this.world.stations.forEach((s,i)=>{
-   const b=document.createElement('button');b.disabled=false;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}</span>`;
+   const b=document.createElement('button');b.disabled=false;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}${['brushline','museum'].includes(s.id)?'<small class="online-demo-tag">可在线体验</small>':''}</span>`;
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.mode==='overview'&&!s.walkable?this.onTheme('km'):this.onSelect(i,{visit:true});layer.append(b);
   });
  }
@@ -276,14 +276,14 @@ export class Exhibition {
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=false;
    // The phone overview reserves label space for the four theme entrances only.
-   if(this.mobile&&this.mode==='overview'){b.hidden=true;b.classList.remove('quiet');return;}
+   if(this.mobile&&this.mode==='overview'&&!['brushline','museum'].includes(b.dataset.projectId)){b.hidden=true;b.classList.remove('quiet');return;}
    const i=+b.dataset.card,s=this.world.stations[i],onRight=b.dataset.labelSide==='right',side=onRight?1:-1,ax=onRight?.25:.75;
    const shown=project(b,new T.Vector3(s.x+side*s.size/2,s.y+.3,s.z-side*s.size/2));
    const anchorY=parseFloat(b.style.top),safe=!this.mobile||(anchorY>this.mapTop+22&&anchorY<this.height-this.mapBottom-4);
    const detailed=this.mode==='theme'&&(s.theme===this.theme||bridgeNeighbors.has(i)||this.hover===i||this.focused===i||(s.walkable&&s.size*this.height/this.viewHeight>65));const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*ax+6,this.width-labelWidth*(1-ax)-6)}px`;
    // Desktop overview names stay visible; phone project names belong to the focused view.
    b.hidden=hidden||!shown||!safe||(this.mode==='theme'&&!detailed)||(this.mode==='overview'&&!s.walkable);
-   b.classList.toggle('quiet',this.mobile&&!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
+   b.classList.toggle('quiet',this.mobile&&this.mode!=='overview'&&!detailed&&!s.hub&&this.hover!==i&&this.focused!==i);
    b.classList.toggle('is-hovered',this.hover===i);
   });
   const signs=[...this.element.querySelectorAll('.theme-label,.island-label')].filter(b=>!b.hidden&&!b.classList.contains('archive-peek')&&(!b.classList.contains('quiet')||b.matches(':focus-visible')));
