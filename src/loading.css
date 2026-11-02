@@ -21,3 +21,8 @@ html,body{margin:0;background:#222e32}
 @media(max-width:600px){#site-loader{padding:24px max(24px,env(safe-area-inset-right)) 24px max(24px,env(safe-area-inset-left))}#site-loader .load-card{max-width:340px}#site-loader .load-brand{margin-bottom:32px}}
 @media(max-height:500px){#site-loader .load-brand{margin-bottom:16px}#site-loader .load-traveler{display:none}}
 @media(prefers-reduced-motion:reduce){#site-loader{transition:none}}
+
+/* Startup recovery remains usable before JavaScript or fonts finish. */
+#site-loader .load-actions{margin-top:20px}
+#site-loader .load-actions a{width:auto;padding:4px 12px;gap:8px;text-decoration:none;font-size:14px}
+#site-loader[data-slow="true"] #load-status,#site-loader[data-phase="error"] #load-status{position:static;width:auto;height:auto;margin:16px 0;overflow:visible;clip-path:none;white-space:normal;font-size:14px}

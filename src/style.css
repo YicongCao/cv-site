@@ -1416,3 +1416,14 @@ dialog#gallery-preview{position:fixed;inset:0;width:100%;max-width:none;height:1
 /* A small availability marker belongs to the project name, including overview. */
 .online-demo-tag{display:block;width:max-content;font-size:10px;line-height:1.6;color:#f3d99b;letter-spacing:0;border:1px solid #b89a5b;padding:0 4px;margin-top:4px;text-shadow:none;background:#263337}
 @media(max-width:850px){body:not(.theme-focused) .island-label:has(.online-demo-tag){font-size:12px;min-height:0}body:not(.theme-focused) .island-label:has(.online-demo-tag)>.pixel-icon{width:16px;height:16px}.online-demo-tag{font-size:9px}}
+
+/* Longer English copy keeps the existing pixel layout, with readable line breaks. */
+html[lang=en] #title{overflow-wrap:anywhere}
+html[lang=en] .detail-copy h2{font-size:32px;line-height:1.25}
+html[lang=en] #about h2{letter-spacing:0}
+@media(max-width:480px){
+ .webgl-ready header .brand{width:auto;min-width:0;flex:1;font-size:22px}
+ .webgl-ready header #open-gallery,.webgl-ready header .sound-toggle{width:36px;min-width:36px;padding:9px}
+ .webgl-ready header .resume-link{min-width:0}
+ html[lang=en] .detail-copy h2{font-size:26px}
+}
