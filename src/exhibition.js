@@ -275,10 +275,11 @@ export class Exhibition {
    const offset=(theme.labelOffsetU||0)/Math.SQRT2;const shown=project(b,new T.Vector3(s.x+offset,s.y+5.6,s.z-offset));b.hidden=hidden||!shown||this.mode!=='overview';
   });
   this.element.querySelectorAll('[data-card]').forEach(b=>{b.disabled=false;
-   // The phone overview reserves label space for the four theme entrances only.
+   // Keep the two playable projects discoverable even when their edge anchors clip.
    if(this.mobile&&this.mode==='overview'&&!['brushline','museum'].includes(b.dataset.projectId)){b.hidden=true;b.classList.remove('quiet');return;}
    const i=+b.dataset.card,s=this.world.stations[i],onRight=b.dataset.labelSide==='right',side=onRight?1:-1,ax=onRight?.25:.75;
-   const shown=project(b,new T.Vector3(s.x+side*s.size/2,s.y+.3,s.z-side*s.size/2));
+   const mobileDemo=this.mobile&&this.mode==='overview'&&['brushline','museum'].includes(s.id);
+   const shown=project(b,new T.Vector3(s.x+side*s.size/2,s.y+.3,s.z-side*s.size/2))||mobileDemo;
    const anchorY=parseFloat(b.style.top),safe=!this.mobile||(anchorY>this.mapTop+22&&anchorY<this.height-this.mapBottom-4);
    const detailed=this.mode==='theme'&&(s.theme===this.theme||bridgeNeighbors.has(i)||this.hover===i||this.focused===i||(s.walkable&&s.size*this.height/this.viewHeight>65));const labelWidth=b.offsetWidth;const left=parseFloat(b.style.left);b.style.left=`${clamp(left,labelWidth*ax+6,this.width-labelWidth*(1-ax)-6)}px`;
    // Desktop overview names stay visible; phone project names belong to the focused view.
