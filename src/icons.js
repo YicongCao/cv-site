@@ -1,5 +1,6 @@
 // Original 16 × 16 silhouettes; geometry stays crisp at integer scales.
 const paths={
+ noartfps:'M6 0h4v3H6zM0 6h3v4H0zm13 0h3v4h-3zM6 13h4v3H6zM4 3h8v1h1v8h-1v1H4v-1H3V4h1zm1 2v6h6V5zm2 2h2v2H7z',
  'km-compiler':'M1 1h10v2h3v12H1zm2 2v10h9V5h-3V3zm1 3h4v1H4zm0 3h6v1H4zm0 3h3v1H4z',
  'km-bot':'M1 2h5v1h4V2h5v12h-5v1H6v-1H1zm2 2v8h3v1h1V5H6V4zm6 1v8h1v-1h3V4h-3zM11 0h2v1h2v2h-2v2h-2V3H9V1h2z',
  'km-network':'M6 0h4v4H6zm1 5h2v2h5v3h-2V9H4v1H2V7h5zM0 11h6v5H0zm2 2v1h2v-1zm8-2h6v5h-6zm2 2v1h2v-1z',

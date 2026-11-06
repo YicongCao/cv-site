@@ -1,4 +1,5 @@
 const demos = {
+  noartfps: {url:'https://fps.yicong.me/', label:'打开 No-Art-FPS', action:'在线试玩'},
   museum: {url:'https://photo.yicong.me/', label:'打开 PhotoMuseum', action:'在线观展'},
   brushline: {url:'https://rally.yicong.me/', label:'打开 Brushline Rally', action:'在线试玩'},
 };

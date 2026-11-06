@@ -6,15 +6,15 @@ const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',impor
 const world=makeWorld(data.projects);
 const walkable=world.stations.filter(s=>s.walkable);
 function finish(j){let event;for(let i=0;i<2000&&!event;i++)event=j.update(1/60);return event;}
-test('four themes cover fourteen projects and three article islands once, preserving dates and assets',()=>{
- const members=themes.flatMap(t=>t.members);assert.equal(members.length,17);assert.equal(new Set(members).size,17);
+test('four themes cover fifteen projects and three article islands once, preserving dates and assets',()=>{
+ const members=themes.flatMap(t=>t.members);assert.equal(members.length,18);assert.equal(new Set(members).size,18);
  assert.deepEqual([...members].sort(),data.projects.map(p=>p.id).sort());assert.equal(world.stations.filter(s=>s.hub).length,4);
- assert.equal(world.edges.filter(e=>e.bridge&&!e.shortcut).length,16); // original fourteen bridges, plus two within the isolated KM group
+ assert.equal(world.edges.filter(e=>e.bridge&&!e.shortcut).length,17); // fifteen main-world bridges, plus two within the isolated KM group
  assert.equal(world.edges.filter(e=>e.shortcut).length,3);
  assert.match(data.projects.find(p=>p.id==='cloudgame').period,/2019/);assert.match(data.projects.find(p=>p.id==='xidian').period,/毕业/);
- assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,238);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
+ assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,242);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
 });
-test('all 196 walkable station pairs follow shortest paths and stay continuous',()=>{
+test('all 225 walkable station pairs follow shortest paths and stay continuous',()=>{
  const n=world.nodes.length,costs=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?0:Infinity));
  for(const e of world.edges)costs[e.a][e.b]=costs[e.b][e.a]=e.length;
  for(let k=0;k<n;k++)for(let i=0;i<n;i++)for(let j=0;j<n;j++)costs[i][j]=Math.min(costs[i][j],costs[i][k]+costs[k][j]);
@@ -25,7 +25,7 @@ test('all 196 walkable station pairs follow shortest paths and stay continuous',
   while(journey.phase==='walking'){journey.update(.025);const now=journey.position;assert.ok(distance(prev,now)<=journey.speed*.025+1e-8);prev=now;}
   assert.ok(distance(journey.position,world.nodes[b.stop])<1e-8);assert.equal(finish(journey).index,b.index);
  }
- assert.ok(max/10<7,'the original fourteen-project walking distances must stay unchanged');
+ assert.ok(max/10<7,'all routes remain below seven seconds at the standard walking speed');
 });
 test('bridges do not cross unrelated island footprints',()=>{
  for(const e of world.edges.filter(e=>e.bridge)){const a=world.nodes[e.a],b=world.nodes[e.b];

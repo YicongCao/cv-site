@@ -20,7 +20,7 @@ test('pong meets the paddle at each collision and stays within the display',()=>
 test('batching keeps animated descendants independent and merges static boxes',()=>{
  const group=new T.Group(),animated=new T.Group();animated.userData.dynamic=true;group.add(animated);const moving=box(animated,0,0,0,1,1,1),fixed=box(group,1,0,0,1,1,1);batchBoxes(group);assert.equal(moving.parent,animated);assert.equal(fixed.parent,null);assert.ok(group.children.some(o=>o.isInstancedMesh));
 });
-test('all seventeen project and article model loops stay finite and reset without damaging static geometry',async()=>{
+test('all eighteen project and article model loops stay finite and reset without damaging static geometry',async()=>{
  const {makeIsland}=await import('../src/models.js'),{makeWorld}=await import('../src/world.js'),{readFileSync}=await import('node:fs');
  globalThis.document={createElement:tag=>({style:{},dataset:{},setAttribute(){},offsetWidth:240,getContext:()=>({fillRect(){},drawImage(){},save(){},restore(){},beginPath(){},rect(){},clip(){}}),remove(){}})};
  const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',import.meta.url))),world=makeWorld(data.projects),islands=world.stations.map(s=>({group:makeIsland(s)})),element={dataset:{},append(){}};

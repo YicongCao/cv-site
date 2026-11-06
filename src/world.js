@@ -1,12 +1,13 @@
 // The same graph supplies bridge geometry, island lanes, and traveler navigation.
 export const themes = [
-  {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot']},
+  {id:'ai',title:'1. AI 与开发者工具',hub:'nex',members:['nex','museum','brushline','bot','noartfps']},
   {id:'games',title:'2. 游戏后台相关项目',hub:'pgos',members:['pgos','cloudgame','accelerator']},
   {id:'clients',title:'3. 客户端相关项目',hub:'win10',members:['win10','desktop','cleaner','uwp','reader','ishowfx','xidian']},
   {id:'km',labelOffsetU:2.5,title:'4. 古法手作 KM 头条好文',hub:'km-compiler',members:['km-compiler','km-bot','km-network']},
 ];
 export const shortcuts=[['bot','desktop'],['brushline','cloudgame'],['accelerator','ishowfx']];
 const layout = {
+  noartfps: [-24,-6,.72,'arena'],
   nex: [-10,-7,.72,'code'], museum: [-18,-14,1.08,'photos'],
   brushline: [-19,1,.36,'race'], bot: [-7,-20,1.44,'bot'],
   pgos: [0,10,.36,'servers'], cloudgame: [-8,20,0,'pong'],

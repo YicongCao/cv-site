@@ -1,6 +1,56 @@
 {
   "projects": [
     {
+      "id": "noartfps",
+      "title": "No-Art-FPS",
+      "period": "2026/11 — 至今",
+      "summary": "60 秒一局的明亮低多边形 FPS：用鲜明色块、漫画轮廓和层层升温的反馈，做一个短平快的爽快体验。",
+      "contributions": [
+        "让美学服务手感：以沙色、奶油白和钴蓝构成明亮低多边形场景，把原创涂鸦、漫画轮廓、武器和极简 HUD 统一起来；用可见弹匣表达余弹，让注意力留在场景里。",
+        "把爽快压进 60 秒：用三阶段递增敌人、连杀反馈与快速重开组织短局节奏；最后 15 秒进入 DESTROY 阶段，最后一秒以场景爆裂收束，让一局有清晰的起伏与终点。",
+        "围绕体验做取舍：围绕装弹到开局的衔接、逐发反馈、敌人绕障和楼梯连通持续迭代。采用 Godot / GDScript 与可编辑 Blender 模块资产，以 Codex 协作把玩法、美术和浏览器交付串成闭环。"
+      ],
+      "kind": "个人项目",
+      "keywords": [
+        "美学设计",
+        "短局节奏",
+        "玩法反馈",
+        "AI 协作与迭代"
+      ],
+      "cover": "a262",
+      "assets": [
+        "a262",
+        "a263",
+        "a264",
+        "a265"
+      ],
+      "mediaOrder": [
+        "a262",
+        "a263",
+        "a264",
+        "a265"
+      ],
+      "coverSrc": "/media/originals/images/a262.png",
+      "ownership": "我负责玩法目标、美学方向和体验取舍，以 Codex 协作完成开发与迭代。",
+      "workflow": [
+        {
+          "icon": "screen",
+          "title": "让美学服务手感",
+          "text": "以沙色、奶油白和钴蓝构成明亮低多边形场景，把原创涂鸦、漫画轮廓、武器和极简 HUD 统一起来；用可见弹匣表达余弹，让注意力留在场景里。"
+        },
+        {
+          "icon": "game",
+          "title": "把爽快压进 60 秒",
+          "text": "用三阶段递增敌人、连杀反馈与快速重开组织短局节奏；最后 15 秒进入 DESTROY 阶段，最后一秒以场景爆裂收束，让一局有清晰的起伏与终点。"
+        },
+        {
+          "icon": "rules",
+          "title": "围绕体验做取舍",
+          "text": "围绕装弹到开局的衔接、逐发反馈、敌人绕障和楼梯连通持续迭代。采用 Godot / GDScript 与可编辑 Blender 模块资产，以 Codex 协作把玩法、美术和浏览器交付串成闭环。"
+        }
+      ]
+    },
+    {
       "id": "brushline",
       "title": "Brushline Rally",
       "period": "近期",
@@ -3484,6 +3534,50 @@
       "src": "/media/originals/images/a261.jpg",
       "original": "/media/originals/images/a261.jpg",
       "preview": "/media/originals/images/a261.jpg"
+    },
+    {
+      "id": "a262",
+      "type": "png",
+      "width": 1280,
+      "height": 720,
+      "chapter": "60 秒竞技场",
+      "project": "noartfps",
+      "src": "/media/originals/images/a262.png",
+      "original": "/media/originals/images/a262.png",
+      "preview": "/media/originals/images/a262.png"
+    },
+    {
+      "id": "a263",
+      "type": "png",
+      "width": 1280,
+      "height": 720,
+      "chapter": "涂鸦、色块与漫画轮廓",
+      "project": "noartfps",
+      "src": "/media/originals/images/a263.png",
+      "original": "/media/originals/images/a263.png",
+      "preview": "/media/originals/images/a263.png"
+    },
+    {
+      "id": "a264",
+      "type": "png",
+      "width": 1280,
+      "height": 720,
+      "chapter": "关卡的高低差与色彩层次",
+      "project": "noartfps",
+      "src": "/media/originals/images/a264.png",
+      "original": "/media/originals/images/a264.png",
+      "preview": "/media/originals/images/a264.png"
+    },
+    {
+      "id": "a265",
+      "type": "png",
+      "width": 1280,
+      "height": 720,
+      "chapter": "最后一秒的爆裂结算",
+      "project": "noartfps",
+      "src": "/media/originals/images/a265.png",
+      "original": "/media/originals/images/a265.png",
+      "preview": "/media/originals/images/a265.png"
     }
   ],
   "articles": [

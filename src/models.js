@@ -17,6 +17,21 @@ function screen(g,x,y,z,w,h,kind='code'){
 function plant(g,x,z){box(g,x,.15,z,.36,.3,.36,color.dark);box(g,x,.5,z,.09,.55,.09,0x80704f);for(let i=0;i<3;i++)box(g,x+(i%2)*.12,.65+i*.16,z,.42-i*.08,.25,.38-i*.07,color.green);}
 export function makeExhibit(type,index){const g=new T.Group();g.position.set(.35,0,-.45);const ref=g.userData.motion={};
  switch(type){
+ case 'arena':
+  // An original miniature echoes the demo's sand, cream, cobalt and coral palette.
+  box(g,0,.06,0,2.9,.12,2.25,0xe6c878);
+  box(g,-.8,.46,-.65,1.2,.8,.58,0xb96d54);
+  box(g,.65,.39,-.55,.9,.66,.65,0x4f8580);
+  box(g,.65,.99,-.55,.9,.54,.65,color.cream);
+  for(let i=0;i<4;i++)box(g,-1.25+i*.3,.48,-.35,.035,.55,.02,color.gold);
+  box(g,.8,.22,.65,.65,.32,.35,0x395daf);
+  ref.targets=[];
+  for(const [x,z] of [[-.65,.55],[.1,-.2]]){
+   const target=movable(new T.Group());target.position.set(x,.12,z);target.userData.home=target.position.clone();g.add(target);
+   box(target,0,.25,0,.24,.36,.2,color.dark);box(target,0,.55,0,.22,.22,.22,color.cream);
+   box(target,0,.29,.12,.12,.12,.035,color.gold);ref.targets.push(target);
+  }
+  break;
  case 'race':
   box(g,0,.04,0,2.7,.08,2.2,color.dark);box(g,0,.09,0,1.4,.04,1.05,color.green);
   for(let i=0;i<7;i++){box(g,-1.2+i*.4,.10,.9,.15,.015,.035,color.cream);box(g,-1.2+i*.4,.10,-.9,.15,.015,.035,color.cream);}

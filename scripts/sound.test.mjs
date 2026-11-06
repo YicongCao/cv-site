@@ -104,7 +104,7 @@ test('item chime is short, deterministic, audible and free of clipped edges',()=
 });
 test('every other island has audible, bounded cues without a per-frame audio flood',async()=>{
  const {sound:s,context:c}=rig();await s.activate();await s.loading;
- assert.equal(hoverSoundProjects.length,12);
+ assert.equal(hoverSoundProjects.length,13);
  for(const id of hoverSoundProjects){
   s.island({id:null});const before=s.hoverCount;
   for(let frame=0;frame<1200;frame++){const time=frame/60;c.currentTime=time;s.island({id,time});}

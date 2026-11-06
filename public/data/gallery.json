@@ -1,5 +1,45 @@
 [
   {
+    "id": "noartfps",
+    "period": "2026/11 — 至今",
+    "skills": [
+      "美学设计",
+      "短局节奏",
+      "玩法反馈",
+      "AI 协作与迭代"
+    ],
+    "images": [
+      {
+        "src": "/media/originals/images/a262.png",
+        "original": "/media/originals/images/a262.png",
+        "width": 1280,
+        "height": 720,
+        "chapter": "60 秒竞技场"
+      },
+      {
+        "src": "/media/originals/images/a263.png",
+        "original": "/media/originals/images/a263.png",
+        "width": 1280,
+        "height": 720,
+        "chapter": "涂鸦、色块与漫画轮廓"
+      },
+      {
+        "src": "/media/originals/images/a264.png",
+        "original": "/media/originals/images/a264.png",
+        "width": 1280,
+        "height": 720,
+        "chapter": "关卡的高低差与色彩层次"
+      },
+      {
+        "src": "/media/originals/images/a265.png",
+        "original": "/media/originals/images/a265.png",
+        "width": 1280,
+        "height": 720,
+        "chapter": "最后一秒的爆裂结算"
+      }
+    ]
+  },
+  {
     "id": "museum",
     "period": "2026/10 — 至今",
     "skills": [

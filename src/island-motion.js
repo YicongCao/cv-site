@@ -50,6 +50,7 @@ export class IslandMotion {
   this.bubble.hidden=true;if(index<0)return;this.elapsed+=dt;const station=this.world.stations[index],island=this.islands[index].group,ref=island.userData.motion,t=this.elapsed;
   const g=ref.exhibit;let phase='active';
   if(station.id==='brushline'){const f=rallyFrame(t);ref.car.position.set(f.x,.0,f.z);ref.car.rotation.y=f.heading-Math.PI/2;phase=f.phase;ref.dust.visible=phase==='drift';ref.dust.children.forEach((p,i)=>{p.position.set(f.x-Math.sin(f.heading)*(.2+i*.12),.13+i*.02,f.z-Math.cos(f.heading)*(.2+i*.12));p.scale.setScalar(.09+Math.sin(t*12+i)*.02);});this.onSound?.({id:'brushline',phase,speed:f.speed});}
+  else if(station.id==='noartfps'){ref.targets.forEach((target,i)=>{const u=(t+i*1.3)%2.6;target.position.x=target.userData.home.x+Math.sin(u*Math.PI/1.3)*.18;target.scale.y=u>1.8?Math.max(.15,1-(u-1.8)*3):1;});}
   else if(station.id==='museum'){const bend=ref.photos.update(t);ref.wall.visible=bend<.05;}
   else if(station.id==='cloudgame'){const f=pongFrame(t);ref.ball.position.set(f.x,1.18+f.y,-.28);ref.paddles[0].position.y=1.18+f.left;ref.paddles[1].position.y=1.18+f.right;}
   else if(station.id==='bot'){
@@ -75,6 +76,7 @@ export class IslandMotion {
  }
  reset(index){const ref=this.islands[index].group.userData.motion;if(!ref)return;ref.exhibit.position.y=ref.y;ref.exhibit.rotation.z=0;
   if(ref.car){ref.car.position.set(.25,0,.83);ref.car.rotation.y=0;ref.dust.visible=false;}
+  if(ref.targets)ref.targets.forEach(target=>{target.position.copy(target.userData.home);target.scale.set(1,1,1);});
   if(ref.photos){ref.photos.update(0);ref.wall.visible=true;}
   if(ref.ball){ref.ball.position.set(.14,1.28,-.28);ref.paddles.forEach(p=>p.position.y=1.18);}
   for(const key of ['packet','map','sync','cursor'])if(ref[key])ref[key].visible=false;

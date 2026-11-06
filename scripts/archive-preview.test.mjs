@@ -7,8 +7,8 @@ import {Exhibition} from '../src/exhibition.js';
 import {makeWorld,Journey} from '../src/world.js';
 
 const data=JSON.parse(readFileSync(new URL('../public/data/portfolio.json',import.meta.url))),world=makeWorld(data.projects);
-test('the main overview frames only the original fourteen islands regardless of archive positions',()=>{
- const stations=framedStations(world.stations,'overview',null);assert.equal(stations.length,14);assert(stations.every(s=>s.walkable));
+test('the main overview frames only the fifteen project islands regardless of archive positions',()=>{
+ const stations=framedStations(world.stations,'overview',null);assert.equal(stations.length,15);assert(stations.every(s=>s.walkable));
  const moved=world.stations.map(s=>s.walkable?s:{...s,x:10000,y:10000,z:10000});assert.deepEqual(framedStations(moved,'overview',null),stations);
  assert.deepEqual(framedStations(world.stations,'theme','km').map(s=>s.id),['km-compiler','km-bot','km-network']);
 });

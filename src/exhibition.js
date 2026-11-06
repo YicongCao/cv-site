@@ -13,8 +13,8 @@ import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
 const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
 const direction=new T.Vector3(1,1,1).normalize();
-const shortNames={brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航','km-compiler':'编译原理','km-bot':'Bot 与 NLP','km-network':'网络与 NAT'};
-const featuredLabels=new Set(['nex','pgos','bot','brushline','museum']);
+const shortNames={noartfps:'No-Art-FPS',brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航','km-compiler':'编译原理','km-bot':'Bot 与 NLP','km-network':'网络与 NAT'};
+const featuredLabels=new Set(['nex','pgos','bot','brushline','museum','noartfps']);
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview}){
   Object.assign(this,{element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview});
@@ -144,7 +144,7 @@ export class Exhibition {
   }
   // Fixed world axis (screen-right is x - z) keeps sign sides stable while panning.
   this.world.stations.forEach((s,i)=>{
-   const b=document.createElement('button');b.disabled=false;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}${['brushline','museum'].includes(s.id)?'<small class="online-demo-tag">可在线体验</small>':''}</span>`;
+   const b=document.createElement('button');b.disabled=false;b.className='island-label';b.classList.toggle('is-featured',featuredLabels.has(s.id));b.dataset.card=i;b.dataset.projectId=s.id;b.dataset.labelSide=s.x>s.z?'right':'left';b.setAttribute('aria-label',`访问 ${this.projects[i].title}`);b.setAttribute('aria-pressed',String(i===this.selected));b.innerHTML=`${projectIcon(s.id)}<span>${shortNames[s.id]}${['brushline','museum','noartfps'].includes(s.id)?'<small class="online-demo-tag">可在线体验</small>':''}</span>`;
    b.onpointerenter=()=>{this.hover=i;this.wake();};b.onpointerleave=()=>{this.hover=-1;this.wake();};b.onfocus=()=>{this.focused=i;this.wake();};b.onblur=()=>{this.focused=-1;this.wake();};b.onclick=()=>this.mode==='overview'&&!s.walkable?this.onTheme('km'):this.onSelect(i,{visit:true});layer.append(b);
   });
  }

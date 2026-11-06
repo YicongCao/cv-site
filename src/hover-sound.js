@@ -2,6 +2,7 @@
 // background loops or queued catch-up sounds when a frame/gesture arrives late.
 const cue=(at,kind,frequency=660,pan=0,volume=.35)=>({at,kind,frequency,pan,volume});
 const scores={
+ noartfps:{loop:2.6,cues:[cue(.5,'key',392,-.2,.18),cue(1.8,'pong',587,.2,.22)]},
  museum:{loop:10,cues:[cue(0,'shutter'),cue(1.1,'glass',523,-.2),cue(2.85,'glass',659,.2),cue(4.6,'glass',784,-.2),cue(6.35,'glass',659,.2),cue(8.1,'paper')]},
  cloudgame:{loop:2/1.1,cues:[cue(0,'pong',440,-.45),cue(1/1.1,'pong',587,.45)]},
  accelerator:{loop:Math.PI*2/2.1,cues:[cue(0,'packet',880,.35),cue(Math.PI/2.1,'packet',660,-.35)]},

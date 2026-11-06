@@ -169,8 +169,8 @@
     .vibe-section { padding: 16px; border: 1px solid #d9def0; border-left: 4px solid #7462bc; border-radius: 8px; background: linear-gradient(135deg, #f5f3fc, #f3f7ff); }
     .vibe-section h2 { color: #6552a8; margin-bottom: 12px; }
     .vibe-spark { width: 20px; height: 20px; flex: none; fill: currentColor; }
-    .vibe-grid { display: grid; gap: 12px; }
-    .vibe-card { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 4px 20px; min-width: 0; padding: 12px 14px; border: 1px solid #dfe3ed; border-radius: 6px; background: white; break-inside: avoid; }
+    .vibe-grid { display: grid; gap: 8px; }
+    .vibe-card { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 3px 16px; min-width: 0; padding: 10px 12px; border: 1px solid #dfe3ed; border-radius: 6px; background: white; break-inside: avoid; }
     .vibe-header { grid-column: 1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
     .vibe-card h3 { margin: 0; font-size: 18px; line-height: 1.4; }
     .vibe-card .period { font-size: 12px; color: #7462bc; }
@@ -189,10 +189,10 @@
       .vibe-card .work-shot { margin-bottom: 10px; }
     }
     @media print {
-      .vibe-section { padding: 8px; break-inside: avoid; background: #faf9fe; }
+      .vibe-section { padding: 7px; break-inside: auto; background: #faf9fe; }
       .vibe-section h2 { margin-bottom: 8px; }
-      .vibe-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-      .vibe-card { grid-template-columns: minmax(0, 1fr) 112px; gap: 3px 12px; padding: 8px 10px; }
+      .vibe-grid { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+      .vibe-card { grid-template-columns: minmax(0, 1fr) 100px; gap: 2px 10px; padding: 6px 8px; }
       .vibe-card h3 { font-size: 11pt; }
       .vibe-summary, .vibe-points, .vibe-card .period { font-size: 8pt; }
       .vibe-card .work-shot { margin: 0; }
@@ -499,14 +499,22 @@
     <section class="vibe-section" aria-labelledby="vibe-title">
       <h2 id="vibe-title"><svg class="vibe-spark" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 0h4v5h3v3h5v4h-5v3h-3v5H8v-5H5v-3H0V8h5V5h3z"/></svg>Vibe Coding 作品</h2>
       <div class="vibe-grid">
+        <article class="vibe-card" id="project-no-art-fps">
+          <div class="vibe-header"><h3>No-Art-FPS</h3><span class="period">2026/11 — 至今</span></div>
+          <p class="vibe-summary">60 秒一局的明亮低多边形 FPS · <a href="https://fps.yicong.me/" target="_blank" rel="noopener noreferrer">fps.yicong.me ↗</a></p>
+          <figure class="work-shot"><a class="shot-link" href="/resume/resources/assets/gallery/vibe-no-art-fps.png" data-lightbox aria-label="No-Art-FPS · 明亮低多边形竞技场"><img src="/resume/resources/assets/gallery/vibe-no-art-fps.png" width="1280" height="720" alt="No-Art-FPS 的原创涂鸦场景与钴蓝武器" decoding="async"></a></figure>
+          <ul class="vibe-points">
+            <li><strong>美学与玩法：</strong>以色块、漫画轮廓和极简 HUD 统一视觉；用递增敌人、连杀反馈与终局爆裂形成短局起伏。</li>
+            <li><strong>快速迭代：</strong>基于 Godot 与可编辑 Blender 资产，以 Codex 协作迭代装弹、绕障和关卡动线，交付浏览器试玩。</li>
+          </ul>
+        </article>
         <article class="vibe-card" id="project-photomuseum">
           <div class="vibe-header"><h3>PhotoMuseum</h3><span class="period">2026/10 — 至今</span></div>
           <p class="vibe-summary">把个人照片库变成可检索、可探索的空间展览。</p>
           <figure class="work-shot"><a class="shot-link" href="/resume/resources/assets/gallery/vibe-photomuseum.jpg" data-lightbox aria-label="PhotoMuseum · 空间照片展厅"><img src="/resume/resources/assets/gallery/vibe-photomuseum.jpg" width="1280" height="720" alt="PhotoMuseum 的 Cover Flow 照片展厅" decoding="async"></a></figure>
           <ul class="vibe-points">
-            <li><strong>产品与架构判断：</strong>从真实照片管理需求出发，选择 Python API／Worker、React 与 SQLite，明确 NAS 只读、本地识别和原图按需加载的边界。</li>
-            <li><strong>设计 AI 工作流：</strong>由检索与识别提供事实，受工具约束的 AI 助手完成策展；将隐私、缓存和运行成本纳入设计。</li>
-            <li><strong>以体验驱动迭代：</strong>从方案比较走到 Cover Flow、日历、地图与空间展厅，通过可撤销的人物确认、交互回归和录屏验证，持续优化加载与手势。</li>
+            <li><strong>产品与 AI 架构：</strong>以 Python／React／SQLite 串联本地检索与受工具约束的 AI 策展，明确 NAS 只读、隐私和按需加载边界。</li>
+            <li><strong>交互与迭代：</strong>设计 Cover Flow、日历、地图和空间展厅，以可撤销的人物确认、交互回归和录屏持续优化体验。</li>
           </ul>
         </article>
         <article class="vibe-card" id="project-brushline-rally">
@@ -514,9 +522,8 @@
           <p class="vibe-summary">从驾驶白盒迭代为有统一视觉风格的离线拉力赛。</p>
           <figure class="work-shot"><a class="shot-link" href="/resume/resources/assets/gallery/vibe-brushline-rally.jpg" data-lightbox aria-label="Brushline Rally · 拉力赛试玩"><img src="/resume/resources/assets/gallery/vibe-brushline-rally.jpg" width="1280" height="720" alt="Brushline Rally 的赛车、赛道与驾驶 HUD" decoding="async"></a></figure>
           <ul class="vibe-points">
-            <li><strong>拆解目标与范围：</strong>先验证驾驶手感，再扩展赛道、车辆与挑战；用分阶段里程碑指导 Codex 协作，让每一步都有可玩的结果。</li>
-            <li><strong>技术与美术取舍：</strong>采用 Godot、GDScript 与 Jolt，调校轮胎、悬挂及驾驶辅助；串联 Blender 资产、丝网印刷风格、菜单与 HUD。</li>
-            <li><strong>建立验收闭环：</strong>用输入回放、车辆遥测和回归场景检验手感与性能，再完成试玩构建和演示录制，使 AI 产出可验证、可交付。</li>
+            <li><strong>技术与美术：</strong>以 Godot／GDScript／Jolt 调校驾驶手感，串联 Blender 资产、丝网印刷风格、菜单与 HUD。</li>
+            <li><strong>AI 协作与验收：</strong>从白盒拆解里程碑，用输入回放、车辆遥测和回归场景验证，再交付可玩版本。</li>
           </ul>
         </article>
       </div>

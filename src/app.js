@@ -27,12 +27,12 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   let selected=projects.findIndex(p=>p.id==='pgos'), activeTheme=null, exhibition=null, motionBusy=false, detailSpatial=false, returnFocus=null;
   let mediaList=[], mediaIndex=0, pendingHistory=false, videoObserver=null;
   let gallery=null,galleryReturnFocus=null;
-  const shortTitles={brushline:'Brushline<span class="title-break"> </span>Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',bot:'Bot',win10:'Win10 助手',ishowfx:'iShowFX'};
+  const shortTitles={noartfps:'No-Art-FPS',brushline:'Brushline<span class="title-break"> </span>Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',bot:'Bot',win10:'Win10 助手',ishowfx:'iShowFX'};
   function thumb(a){return a?.preview?`<img src="${esc(a.preview)}" alt="${esc(a.chapter)}" loading="lazy">`:`<span>${esc(a?.type==='pdf'?'技术分享':'作品')}</span>`;}
   const projectTheme=id=>themes.find(t=>t.members.includes(id));
   function renderTimeline(preserveCamera=false){
     const p=projects[selected];$('#title').innerHTML=shortTitles[p.id]||esc(p.title);
-    $('#title').classList.toggle('latin',['brushline','museum','nex','pgos','bot','ishowfx'].includes(p.id));
+    $('#title').classList.toggle('latin',['noartfps','brushline','museum','nex','pgos','bot','ishowfx'].includes(p.id));
     $('#title').classList.toggle('long-title',!shortTitles[p.id]&&p.title.length>8);
     $('#summary').textContent=p.summary;$('#stage').dataset.project=p.id;
     $('#project-topics').innerHTML=(p.workflow||[]).map((item,i)=>`<li>${icon(item.icon||['compass','agent','screen','route'][i%4])}<span>${esc(item.title)}</span></li>`).join('');
