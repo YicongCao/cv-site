@@ -19,12 +19,14 @@
       ],
       "cover": "a262",
       "assets": [
+        "a266",
         "a262",
         "a263",
         "a264",
         "a265"
       ],
       "mediaOrder": [
+        "a266",
         "a262",
         "a263",
         "a264",
@@ -3578,6 +3580,17 @@
       "src": "/media/originals/images/a265.png",
       "original": "/media/originals/images/a265.png",
       "preview": "/media/originals/images/a265.png"
+    },
+    {
+      "id": "a266",
+      "type": "mp4",
+      "width": 1280,
+      "height": 720,
+      "chapter": "30 秒实机演示",
+      "project": "noartfps",
+      "src": "/media/originals/videos/a266.mp4",
+      "original": "/media/originals/videos/a266.mp4",
+      "preview": "/media/originals/images/a262.png"
     }
   ],
   "articles": [

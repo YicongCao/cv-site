@@ -50,10 +50,11 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function select(n){if(motionBusy||$('#detail').open)return;selected=n;activeTheme=projectTheme(projects[n].id).id;renderTimeline();}
   function browse(delta){if(!activeTheme){focusTheme(themes[delta>0?0:themes.length-1].id);return;}const ids=themes.find(t=>t.id===activeTheme).members,i=ids.indexOf(projects[selected].id);select(projects.findIndex(p=>p.id===ids[Math.max(0,Math.min(ids.length-1,i+delta))]));}
   function visitProject(index){if(motionBusy||$('#detail').open)return;void sound.tap();selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
+  function isFpsReel(a){return a?.id==='a266';}
   function mediaHtml(a){
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
     if(isImage(a))return `<img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" alt="${esc(a.chapter)}">`;
-    if(isVideo(a)){const src=href(a);return `<video controls playsinline preload="metadata" poster="${esc(a.preview||'')}" src="${esc(src)}"></video>`;}
+    if(isVideo(a)){const src=href(a);return `<video controls playsinline preload="metadata" aria-label="${esc(a.chapter)}"${isFpsReel(a)?' data-play-on-request':''} poster="${esc(a.preview||'')}" src="${esc(src)}"></video>`;}
     return `<div class="document"><a href="${esc(href(a))}" target="_blank" rel="noopener">${esc(a.title||'阅读技术分享')} ↗</a></div>`;
   }
   function watchVideo(container,a){const img=container.querySelector('img');if(img)img.addEventListener('error',()=>{container.innerHTML='<div class="document">图片暂时无法显示</div>';},{once:true});const v=container.querySelector('video');if(v)v.addEventListener('error',()=>{container.innerHTML=`<div class="document">${thumb(a)}<p><a href="${esc(a.original)}" target="_blank" rel="noopener">打开视频 ↗</a></p></div>`;},{once:true});}
@@ -61,7 +62,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function playVideo(v){v.muted=true;const result=v.play();if(result)result.catch(()=>{});}
   function startVideos(){
     videoObserver?.disconnect();
-    const videos=[...$('#media').querySelectorAll('video')];
+    const videos=[...$('#media').querySelectorAll('video:not([data-play-on-request])')];
     if(videos.length===1&&mediaList.length===1){playVideo(videos[0]);return;}
     videoObserver=new IntersectionObserver(entries=>{
       if(!$('#detail').classList.contains('detail-reveal')||$('#lightbox').open)return;
@@ -72,7 +73,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function renderMedia(){
     stopMedia($('#media'));videoObserver?.disconnect();mediaIndex=0;
     const p=projects[selected],cards=articleCards(p,data.articles,assets),collection=mediaList.length>1||!!cards;
-    const figure=(a,i)=>`<figure data-item="${i}">${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`;
+    const figure=(a,i)=>`<figure data-item="${i}"${isFpsReel(a)?' class="demo-reel"':''}>${isImage(a)?`<button data-expand="${i}" aria-label="放大：${esc(a.chapter)}"><img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" width="${a.width}" height="${a.height}" alt="${esc(a.chapter)}" loading="${i<2?'eager':'lazy'}"></button>`:mediaHtml(a)}${isVideo(a)?`<button class="video-expand" data-expand="${i}" aria-label="放大视频：${esc(a.chapter)}">⤢</button>`:''}</figure>`;
     $('#media').classList.toggle('masonry',collection);
     $('#media').innerHTML=collection?'<div class="masonry-grid">'+cards+mediaList.map(figure).join('')+'</div>':mediaHtml(mediaList[0]);
     if(collection)all('[data-item]').forEach(el=>watchVideo(el,mediaList[Number(el.dataset.item)]));else watchVideo($('#media'),mediaList[0]);
@@ -112,7 +113,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
     if(!fromHistory){if(history.state?.portfolioDetail)history.back();else history.replaceState(null,'',location.pathname+location.search);}
     (returnFocus?.isConnected?returnFocus:$('#explore')).focus({preventScroll:true});flushHistory();
   }
-  function showLarge(){const a=mediaList[mediaIndex];stopMedia($('#large-media'));$('#large-media').innerHTML=mediaHtml(a);watchVideo($('#large-media'),a);$('#original-link').href=a.original;$('#original-link').textContent=isImage(a)?'打开原图 ↗':'打开原件 ↗';$('#large-prev').hidden=$('#large-next').hidden=mediaList.length<=1;$('#large-prev').disabled=mediaIndex===0;$('#large-next').disabled=mediaIndex===mediaList.length-1;const v=$('#large-media video');if(v)playVideo(v);}
+  function showLarge(){const a=mediaList[mediaIndex];stopMedia($('#large-media'));$('#large-media').innerHTML=mediaHtml(a);watchVideo($('#large-media'),a);$('#original-link').href=a.original;$('#original-link').textContent=isImage(a)?'打开原图 ↗':'打开原件 ↗';$('#large-prev').hidden=$('#large-next').hidden=mediaList.length<=1;$('#large-prev').disabled=mediaIndex===0;$('#large-next').disabled=mediaIndex===mediaList.length-1;const v=$('#large-media video');if(v&&!isFpsReel(a))playVideo(v);}
   function openLarge(index=0){if(!mediaList[index])return;mediaIndex=index;videoObserver?.disconnect();stopMedia($('#media'));showLarge();$('#lightbox').showModal();}
   function closeLarge(resume=true){stopMedia($('#large-media'));$('#lightbox').close();$('#large-media').innerHTML='';const origin=$(`[data-expand="${mediaIndex}"]`)||$('#expand');origin.focus({preventScroll:true});if(resume)startVideos();}
   async function syncHistory({initial=false}={}){if(motionBusy){pendingHistory=true;return;}if(!initial)exhibition?.cancel();if($('#about').open)closeAbout();const id=new URLSearchParams(location.hash.slice(1)).get('project'),p=projects.find(q=>q.id===id);if($('#detail').open&&(!p||p!==projects[selected]))await closeDetail({fromHistory:true});if(location.hash==='#gallery'){openGallery({fromHistory:true});return;}if($('#major-gallery').open&&!p)closeGallery({fromHistory:true});if(id&&!p){history.replaceState(null,'',location.pathname+location.search);overview();return;}if(p&&!$('#detail').open)await openProject(p,{fromHistory:true});}

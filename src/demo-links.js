@@ -10,6 +10,7 @@ export function installDemoLinks(link, dialog, nativePanel = null) {
   let origin=null;
   const close=()=>{if(dialog.open)dialog.close();};
   link.addEventListener('click',event=>{
+    if(link.href===demos.noartfps.url)return;
     if(!matchMedia('(max-width: 850px), (pointer: coarse)').matches)return;
     event.preventDefault();origin=link;
     proceed.href=link.href;

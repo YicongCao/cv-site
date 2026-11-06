@@ -5968,5 +5968,23 @@
     "original": "/media/originals/images/a265.png",
     "display": "/media/originals/images/a265.png",
     "preview": "/media/originals/images/a265.png"
+  },
+  {
+    "id": "a266",
+    "type": "mp4",
+    "width": 1280,
+    "height": 720,
+    "project": "noartfps",
+    "chapter": "30 秒实机演示",
+    "original": "/media/originals/videos/a266.mp4",
+    "preview": "/media/originals/images/a262.png",
+    "path": "/Users/cong/Documents/Projects/No-Art-FPS/builds/demo/no-art-fps-demo.mp4",
+    "bytes": 15804704,
+    "sha256": "f7f0db98a51b4cfc06ea3a47373aef5eecf37729b3a5db16658639d5b5aab37b",
+    "status": "included",
+    "note": "Godot Movie Maker 脚本实机录制，FFmpeg 输出 30 秒 H.264/AAC。",
+    "duplicateOf": null,
+    "imported": true,
+    "display": "/media/originals/videos/a266.mp4"
   }
 ]

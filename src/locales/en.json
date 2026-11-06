@@ -423,5 +423,6 @@
   "以 Godot／GDScript／Jolt 调校驾驶手感，串联 Blender 资产、丝网印刷风格、菜单与 HUD。": "Tuned driving in Godot, GDScript and Jolt, connecting Blender assets, screen-print styling, menus and the HUD.",
   "AI 协作与验收：": "AI collaboration and validation: ",
   "从白盒拆解里程碑，用输入回放、车辆遥测和回归场景验证，再交付可玩版本。": "Set milestones from the driving prototype, validated with input replay, vehicle telemetry and regression scenarios, then shipped playable builds.",
-  "打开 No-Art-FPS": "Open No-Art-FPS"
+  "打开 No-Art-FPS": "Open No-Art-FPS",
+  "30 秒实机演示": "30-second gameplay demo"
 }

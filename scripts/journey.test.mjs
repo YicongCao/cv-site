@@ -12,7 +12,7 @@ test('four themes cover fifteen projects and three article islands once, preserv
  assert.equal(world.edges.filter(e=>e.bridge&&!e.shortcut).length,17); // fifteen main-world bridges, plus two within the isolated KM group
  assert.equal(world.edges.filter(e=>e.shortcut).length,3);
  assert.match(data.projects.find(p=>p.id==='cloudgame').period,/2019/);assert.match(data.projects.find(p=>p.id==='xidian').period,/毕业/);
- assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,242);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
+ assert.ok(!members.includes('kinect'));assert.ok(!data.projects.some(p=>p.id==='kinect'));assert.equal(data.assets.length,243);assert.ok(!data.projects.find(p=>p.id==='pgos').assets.includes('a184'));
 });
 test('all 225 walkable station pairs follow shortest paths and stay continuous',()=>{
  const n=world.nodes.length,costs=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?0:Infinity));
