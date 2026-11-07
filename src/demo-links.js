@@ -1,6 +1,6 @@
 const demos = {
-  noartfps: {url:'https://yicongcao.github.io/No-Art-FPS/', label:'打开 No-Art-FPS', action:'在线试玩'},
-  museum: {url:'https://yicongcao.github.io/photo-museum-demo/', label:'打开 PhotoMuseum', action:'在线观展'},
+  noartfps: {url:'https://yicongcao.github.io/No-Art-FPS/', label:'打开 No Art FPS', action:'在线试玩'},
+  museum: {url:'https://yicongcao.github.io/photo-museum-demo/', label:'打开 Photo Museum', action:'在线观展'},
   brushline: {url:'https://yicongcao.github.io/Brushline-Rally-web/', label:'打开 Brushline Rally', action:'在线试玩'},
 };
 

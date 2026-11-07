@@ -27,7 +27,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   let selected=projects.findIndex(p=>p.id==='pgos'), activeTheme=null, exhibition=null, motionBusy=false, detailSpatial=false, returnFocus=null;
   let mediaList=[], mediaIndex=0, pendingHistory=false, videoObserver=null;
   let gallery=null,galleryReturnFocus=null;
-  const shortTitles={noartfps:'No-Art-FPS',brushline:'Brushline<span class="title-break"> </span>Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',bot:'Bot',win10:'Win10 助手',ishowfx:'iShowFX'};
+  const shortTitles={noartfps:'No Art FPS',brushline:'Brushline<span class="title-break"> </span>Rally',museum:'Photo Museum',nex:'Nex',pgos:'PGOS',bot:'Bot',win10:'Win10 助手',ishowfx:'iShowFX'};
   function thumb(a){return a?.preview?`<img src="${esc(a.preview)}" alt="${esc(a.chapter)}" loading="lazy">`:`<span>${esc(a?.type==='pdf'?'技术分享':'作品')}</span>`;}
   const projectTheme=id=>themes.find(t=>t.members.includes(id));
   function renderTimeline(preserveCamera=false){

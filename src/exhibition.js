@@ -13,7 +13,7 @@ import {box,color,makeIsland,makeTraveler,batchBoxes} from './models.js';
 const clamp=T.MathUtils.clamp;
 const right=new T.Vector3(1,0,-1).normalize(),up=new T.Vector3(-1,2,-1).normalize();
 const direction=new T.Vector3(1,1,1).normalize();
-const shortNames={noartfps:'No-Art-FPS',brushline:'Brushline Rally',museum:'PhotoMuseum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航','km-compiler':'编译原理','km-bot':'Bot 与 NLP','km-network':'网络与 NAT'};
+const shortNames={noartfps:'No Art FPS',brushline:'Brushline Rally',museum:'Photo Museum',nex:'Nex',pgos:'PGOS',cloudgame:'云游戏',bot:'Bot',accelerator:'网游加速器',desktop:'桌面玩机',cleaner:'垃圾清理',win10:'Win10 助手',uwp:'爱看段子',reader:'简致阅读',ishowfx:'iShowFX',xidian:'西电导航','km-compiler':'编译原理','km-bot':'Bot 与 NLP','km-network':'网络与 NAT'};
 const featuredLabels=new Set(['nex','pgos','bot','brushline','museum','noartfps']);
 export class Exhibition {
  constructor({element,projects,onSelect,onOpen,onTheme,onFailure,onWalk,onPortal,onAbout,onIslandSound,onOverview}){

@@ -2,7 +2,7 @@
   "projects": [
     {
       "id": "noartfps",
-      "title": "No-Art-FPS",
+      "title": "No Art FPS",
       "period": "2026/11 — 至今",
       "summary": "60 秒一局的明亮低多边形 FPS：用鲜明色块、漫画轮廓和层层升温的反馈，做一个短平快的爽快体验。",
       "contributions": [
@@ -99,7 +99,7 @@
     },
     {
       "id": "museum",
-      "title": "PhotoMuseum",
+      "title": "Photo Museum",
       "period": "近期",
       "summary": "把个人照片库变成可探索的展览：从本地检索、活动整理，到空间化观展和 AI 策展。",
       "contributions": [
