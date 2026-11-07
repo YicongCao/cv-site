@@ -6,7 +6,7 @@ export function preferredLanguage(languages = []) {
     const base = String(language).toLowerCase().split(/[-_]/)[0];
     if (supported(base)) return base;
   }
-  return 'en';
+  return 'zh';
 }
 
 export function languageDestination(href, saved, languages) {

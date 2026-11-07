@@ -6,11 +6,11 @@ import {preferredLanguage,languageDestination} from '../src/locale.js';
 import {localizeData,localizeHtml,translate} from './localize.mjs';
 const origin='https://cv.yicong.me';
 
-test('browser languages: Chinese variants, preference order and English fallback',()=>{
+test('browser languages: Chinese variants, preference order and Chinese fallback',()=>{
   for(const locale of ['zh-CN','zh-TW','zh-Hant','zh-HK','zh'])assert.equal(preferredLanguage([locale]),'zh');
   assert.equal(preferredLanguage(['en-GB','zh-CN']),'en');
   assert.equal(preferredLanguage(['fr-FR','zh-CN']),'zh');
-  for(const languages of [[],['ja-JP'],['de-DE','fr-FR']])assert.equal(preferredLanguage(languages),'en');
+  for(const languages of [[],['ja-JP'],['de-DE','fr-FR']])assert.equal(preferredLanguage(languages),'zh');
 });
 test('manual choice wins; shared English URLs are stable; queries and project anchors survive',()=>{
   assert.equal(languageDestination(origin+'/?bootdebug#museum','en',['zh']).url,origin+'/en/?bootdebug#museum');
