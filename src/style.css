@@ -1151,6 +1151,9 @@ dialog#about{width:min(790px,calc(100vw - 40px));max-height:calc(100svh - 40px);
 .about-school span{display:block;font-size:12px;color:#697565;margin-top:6px}
 .about-links{display:flex;gap:24px;flex-wrap:wrap;margin-top:26px;font:12px/1.5 var(--pixel-font)}
 .about-links a{display:flex;gap:8px;align-items:center;min-height:36px}
+.about-resources{display:flex;align-items:center;gap:clamp(10px,3vw,24px)}
+.about-links .about-archive{color:var(--muted);font-size:.875em;white-space:nowrap}
+.about-links .about-archive:hover,.about-links .about-archive:focus-visible{color:var(--red)}
 .about-links .pixel-icon{width:16px;height:16px}
 @media(max-width:850px){#detail:has(#workflow:not([hidden])) .media-column{position:static}dialog#about{padding:58px 23px 24px}.about-heading{gap:14px;padding:0}#about h2{font-size:24px}#about h2 span{display:block;font-size:24px;margin:5px 0 0}.portrait{width:58px}.about-heading p{font-size:12px}.about-lead{font-size:24px;margin:24px 0}.about-skills{gap:23px;grid-template-columns:1fr}.about-links{gap:10px 20px}.skip-intro{font-size:12px}#workflow p{font-size:14px}}
 @media(max-width:850px){

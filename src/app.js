@@ -139,7 +139,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
     ['compass','AI 协作','定义目标、做技术与设计取舍，用 Codex 实现并持续验证。']
   ].map(([key,title,text])=>`<section>${icon(key)}<h3>${title}</h3><p>${text}</p></section>`).join('')}</div>
   <div class="about-school">${icon('school')}<div>西安电子科技大学<span>智能科学与技术</span></div></div>
-  <div class="about-links"><a href="https://github.com/yicongcao" target="_blank" rel="noopener">${icon('github')}GitHub ↗</a><a href="tel:18126045570">${icon('phone')}181 2604 5570</a><a href="/resume/" target="_blank" rel="noopener">完整简历 ↗</a></div>`;
+  <div class="about-links"><a href="https://github.com/yicongcao" target="_blank" rel="noopener">${icon('github')}GitHub ↗</a><a href="tel:18126045570">${icon('phone')}181 2604 5570</a><span class="about-resources"><a href="/resume/" target="_blank" rel="noopener">完整简历 ↗</a><a class="about-archive" href="https://yicongcao.github.io/old-blog/">旧博客 · 已归档</a></span></div>`;
   let aboutReturnFocus=null;
   function closeAbout(){$('#about').close();(aboutReturnFocus?.isConnected?aboutReturnFocus:$('.brand')).focus({preventScroll:true});exhibition?.wake();}
   function openAbout(origin=$('.brand')){sound.island({id:null});if(motionBusy||$('#detail').open||$('#about').open)return;aboutReturnFocus=origin;exhibition?.cancel();$('#about').showModal();$('#close-about').focus({preventScroll:true});}
