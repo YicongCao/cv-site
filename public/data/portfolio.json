@@ -19,6 +19,7 @@
       ],
       "cover": "a262",
       "assets": [
+        "a267",
         "a266",
         "a262",
         "a263",
@@ -26,6 +27,7 @@
         "a265"
       ],
       "mediaOrder": [
+        "a267",
         "a266",
         "a262",
         "a263",
@@ -3591,6 +3593,17 @@
       "src": "/media/originals/videos/a266.mp4",
       "original": "/media/originals/videos/a266.mp4",
       "preview": "/media/originals/images/a262.png"
+    },
+    {
+      "id": "a267",
+      "type": "mp4",
+      "width": 1152,
+      "height": 816,
+      "chapter": "完整 QA 实机演示",
+      "project": "noartfps",
+      "src": "/media/originals/videos/qa-run.mp4",
+      "original": "/media/originals/videos/qa-run.mp4",
+      "preview": "/media/previews/a267.jpg"
     }
   ],
   "articles": [

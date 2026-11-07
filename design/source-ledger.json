@@ -5986,5 +5986,23 @@
     "duplicateOf": null,
     "imported": true,
     "display": "/media/originals/videos/a266.mp4"
+  },
+  {
+    "id": "a267",
+    "type": "mp4",
+    "width": 1152,
+    "height": 816,
+    "project": "noartfps",
+    "chapter": "完整 QA 实机演示",
+    "original": "/media/originals/videos/qa-run.mp4",
+    "preview": "/media/previews/a267.jpg",
+    "path": "/Users/cong/Documents/Projects/No-Art-FPS/artifacts/qa-run.mp4",
+    "bytes": 20069720,
+    "sha256": "287ea7f02e20056c8e10a405dad736113e248918e4ae133797cd710e556a423f",
+    "status": "included",
+    "note": "No-Art-FPS 提交 7523f32 中的未剪辑自动 QA 实机录像，直接复制。预览取自视频第 8 秒。",
+    "duplicateOf": null,
+    "imported": true,
+    "display": "/media/originals/videos/qa-run.mp4"
   }
 ]

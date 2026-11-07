@@ -424,5 +424,6 @@
   "AI 协作与验收：": "AI collaboration and validation: ",
   "从白盒拆解里程碑，用输入回放、车辆遥测和回归场景验证，再交付可玩版本。": "Set milestones from the driving prototype, validated with input replay, vehicle telemetry and regression scenarios, then shipped playable builds.",
   "打开 No-Art-FPS": "Open No-Art-FPS",
-  "30 秒实机演示": "30-second gameplay demo"
+  "30 秒实机演示": "30-second gameplay demo",
+  "完整 QA 实机演示": "Full automated QA gameplay"
 }
