@@ -50,7 +50,7 @@ import {installBlankDismiss} from './dialog-dismiss.js';
   function select(n){if(motionBusy||$('#detail').open)return;selected=n;activeTheme=projectTheme(projects[n].id).id;renderTimeline();}
   function browse(delta){if(!activeTheme){focusTheme(themes[delta>0?0:themes.length-1].id);return;}const ids=themes.find(t=>t.id===activeTheme).members,i=ids.indexOf(projects[selected].id);select(projects.findIndex(p=>p.id===ids[Math.max(0,Math.min(ids.length-1,i+delta))]));}
   function visitProject(index){if(motionBusy||$('#detail').open)return;void sound.tap();selected=index;activeTheme=projectTheme(projects[index].id).id;returnFocus=document.activeElement;renderTimeline(true);if(exhibition)exhibition.visit(index);else openProject(projects[index]);}
-  function isFpsReel(a){return ['a266','a267'].includes(a?.id);}
+  function isFpsReel(a){return a?.project==='noartfps'&&isVideo(a);}
   function mediaHtml(a){
     if(!a)return '<div class="document">'+esc(projects[selected].summary)+'</div>';
     if(isImage(a))return `<img class="${a.surface==='light'?'media-illustration':''}" src="${esc(href(a))}" alt="${esc(a.chapter)}">`;

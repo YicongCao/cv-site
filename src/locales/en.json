@@ -426,5 +426,15 @@
   "从白盒拆解里程碑，用输入回放、车辆遥测和回归场景验证，再交付可玩版本。": "Set milestones from the driving prototype, validated with input replay, vehicle telemetry and regression scenarios, then shipped playable builds.",
   "打开 No Art FPS": "Open No Art FPS",
   "30 秒实机演示": "30-second gameplay demo",
-  "完整 QA 实机演示": "Full automated QA gameplay"
+  "完整 QA 实机演示": "Full automated QA gameplay",
+  "标题画面与三张地图": "Title screen and the three maps",
+  "货场 · 集装箱、叉车与涂鸦": "Container Yard · Containers, forklift and graffiti",
+  "货场 · 上层露台": "Container Yard · Upper terrace",
+  "货场 · 仓库过道": "Container Yard · Warehouse aisle",
+  "夕阳游乐园 · 旋转木马广场": "Sunset Amusement Park · Carousel plaza",
+  "夕阳游乐园 · 滑板碗池": "Sunset Amusement Park · Skate bowl",
+  "夕阳游乐园 · 过山车站台": "Sunset Amusement Park · Coaster station",
+  "末班渡轮 · 夜航甲板": "Last Ferry · Main deck at night",
+  "末班渡轮 · 高处步道": "Last Ferry · Upper catwalk",
+  "45 秒游戏预告片": "45-second gameplay trailer"
 }
