@@ -3,6 +3,10 @@ const demos = {
   museum: {url:'https://yicongcao.github.io/photo-museum-demo/', label:'打开 Photo Museum', action:'在线观展'},
   brushline: {url:'https://yicongcao.github.io/Brushline-Rally-web/', label:'打开 Brushline Rally', action:'在线试玩'},
 };
+const clientDownloads = {
+  noartfps: 'https://github.com/YicongCao/No-Art-FPS/releases/tag/v0.3.0',
+  brushline: 'https://github.com/YicongCao/Brushline-Rally/releases/tag/v0.5.0',
+};
 
 export function installDemoLinks(link, dialog, nativePanel = null) {
   const image=link.querySelector('img'), action=link.querySelector('[data-demo-action]');
@@ -30,8 +34,14 @@ export function installDemoLinks(link, dialog, nativePanel = null) {
     close,
     setProject(project){
       const demo=demos[project.id];link.hidden=!demo;
-      if(nativePanel)nativePanel.hidden=project.id!=='brushline';
-      if(project.id==='brushline')link.setAttribute('aria-describedby','rally-experience-note');
+      const clientUrl=clientDownloads[project.id];
+      if(nativePanel){
+        nativePanel.hidden=!clientUrl;
+        const clientLink=nativePanel.querySelector('a');
+        if(clientUrl)clientLink.href=clientUrl;
+        else clientLink.removeAttribute('href');
+      }
+      if(clientUrl)link.setAttribute('aria-describedby','rally-experience-note');
       else link.removeAttribute('aria-describedby');
       if(!demo){link.removeAttribute('href');image.removeAttribute('src');return;}
       link.href=demo.url;link.setAttribute('aria-label',demo.label+'（新标签页）');
