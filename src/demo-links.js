@@ -4,7 +4,7 @@ const demos = {
   brushline: {url:'https://yicongcao.github.io/Brushline-Rally-web/', label:'打开 Brushline Rally', action:'在线试玩'},
 };
 const clientDownloads = {
-  noartfps: 'https://github.com/YicongCao/No-Art-FPS/releases/tag/v0.3.0',
+  noartfps: 'https://github.com/YicongCao/No-Art-FPS/releases/tag/v0.4.0',
   brushline: 'https://github.com/YicongCao/Brushline-Rally/releases/tag/v0.5.0',
 };
 
